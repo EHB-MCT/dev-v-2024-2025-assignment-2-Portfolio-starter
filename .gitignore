@@ -62,6 +62,7 @@ playground.xcworkspace
 # Add this line if you want to avoid checking in source code from Carthage dependencies.
 # Carthage/Checkouts
 
+
 Carthage/Build/
 
 # Accio dependency management
@@ -107,4 +108,9 @@ xcuserdata
 /*.gcno
 **/xcshareddata/WorkspaceSettings.xcsettings
 
-# End of https://www.toptal.com/developers/gitignore/api/swift,swiftpackagemanager,swiftpm,xcode
+Weather-Data/Other/GoogleService-Info.plist
+Weather_Data/.DS_Store
+Weather_Data/Source/.DS_Store
+Weather-Data/Other/GoogleService-Info.plist
+Weather-Data/GoogleService-Info.plist
+.DS_Store
