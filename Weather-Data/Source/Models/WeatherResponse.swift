@@ -7,15 +7,16 @@
 
 import Foundation
 
-struct WeatherResponse: Decodable {
+struct WeatherResponse: Decodable, Equatable {
     let main: Main
     let weather: [Weather]
     
-    struct Main: Decodable {
-        let temp: Double
-    }
-    
-    struct Weather: Decodable {
-        let description: String
-    }
+}
+
+struct Main: Decodable, Equatable {
+    let temp: Double
+}
+
+struct Weather: Decodable, Equatable {
+    let description: String
 }

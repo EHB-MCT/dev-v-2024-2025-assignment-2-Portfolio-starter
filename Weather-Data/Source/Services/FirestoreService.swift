@@ -15,8 +15,6 @@ class FirestoreService {
         
         let data: [String: Any] = [
             "city": city,
-            "latitude": latitude,
-            "longitude": longitude,
             "timestamp": timestamp
         ]
         
