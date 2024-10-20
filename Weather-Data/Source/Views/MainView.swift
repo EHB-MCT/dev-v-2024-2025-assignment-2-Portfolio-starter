@@ -13,42 +13,66 @@ struct MainView: View {
     @State private var showWeatherDetail: Bool = false
 
     var body: some View {
-            NavigationView {
-                VStack {
-                    Text("Weather App")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
+        NavigationStack {
+            VStack {
+                Text("Weather App")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding(.top, 40)
+                    .foregroundColor(.white)
+
+                InputView(city: $city, fetchWeather: {
+                    if !city.isEmpty {
+                        viewModel.fetchWeather(for: city)
+                        showWeatherDetail = true
+                    }
+                })
+                .padding(.horizontal)
+
+                Button(action: {
+                    if !city.isEmpty {
+                        viewModel.fetchWeather(for: city)
+                        showWeatherDetail = true
+                    }
+                }) {
+                    Text("Get Weather")
                         .padding()
                         .foregroundColor(.white)
-
-                    InputView(city: $city, fetchWeather: {
-                        if !city.isEmpty {
-                            viewModel.fetchWeather(for: city)
-                        }
-                    })
-                    .padding()
-
-                    NavigationLink(destination: WeatherDetailView(weather: viewModel.weather ?? WeatherResponse(main: Main(temp: 0), weather: [Weather(description: "Unknown")]), city: city), isActive: $showWeatherDetail) {
-                        EmptyView()
-                    }
-
-                    if viewModel.weather == nil {
-                        Text("Enter a city to get weather data.")
-                            .foregroundColor(.white)
-                            .padding()
-                    }
+                        .background(Color.blue)
+                        .cornerRadius(10)
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .top, endPoint: .bottom))
-                .edgesIgnoringSafeArea(.all)
-                .onChange(of: viewModel.weather) { newWeather in
+                .disabled(city.isEmpty)
+
+                .navigationDestination(isPresented: $showWeatherDetail) {
+                    WeatherDetailView(
+                        weather: viewModel.weather ?? WeatherResponse(
+                            name: city, 
+                            main: WeatherResponse.Main(temp: 0, humidity: 0, pressure: 0),
+                            weather: [WeatherResponse.Weather(description: "Unknown")],
+                            wind: WeatherResponse.Wind(speed: 0),
+                            timezone: 0
+                        ),
+                        city: city
+                    )
+                }
+
+                if viewModel.weather == nil {
+                    Text("Enter a city to get weather data.")
+                        .foregroundColor(.white)
+                        .padding()
+                }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .top, endPoint: .bottom))
+            .edgesIgnoringSafeArea(.all)
+        }
+        .onChange(of: viewModel.weather) { newWeather in
                     if newWeather != nil {
                         showWeatherDetail = true
                     }
                 }
-            }
-        }
     }
+}
 
 #Preview {
     MainView()

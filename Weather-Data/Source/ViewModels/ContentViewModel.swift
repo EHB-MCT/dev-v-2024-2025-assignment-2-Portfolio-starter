@@ -9,16 +9,14 @@ import Foundation
 import Combine
 
 class ContentViewModel: ObservableObject {
-    @Published var weather: WeatherResponse?
-        private var weatherService = WeatherService()
-        private var cancellables = Set<AnyCancellable>()
+    @Published var weather: WeatherResponse? 
+    private var weatherService = WeatherService()
 
-        func fetchWeather(for city: String) {
-            weatherService.fetchWeather(for: city)
-                .sink { [weak self] weatherResponse in
-                    self?.weather = weatherResponse
-                }
-                .store(in: &cancellables)
+    func fetchWeather(for city: String) {
+        weatherService.fetchWeather(for: city) { [weak self] weatherResponse in
+            DispatchQueue.main.async {
+                self?.weather = weatherResponse
+            }
         }
+    }
 }
-

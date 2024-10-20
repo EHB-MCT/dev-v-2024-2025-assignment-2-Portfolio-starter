@@ -9,27 +9,16 @@ import SwiftUI
 
 struct InputView: View {
     @Binding var city: String
-    var fetchWeather: () -> Void
+    let fetchWeather: () -> Void
 
     var body: some View {
         VStack {
             TextField("Enter city name", text: $city)
-                .textFieldStyle(PlainTextFieldStyle())
                 .padding()
-                .background(Color.white.opacity(0.7))
-                .cornerRadius(10)
-                .shadow(radius: 5)
-
-            Button("Get Weather") {
-                fetchWeather()
-            }
-            .padding()
-            .background(Color.white)
-            .foregroundColor(Color.blue)
-            .fontWeight(.bold)
-            .cornerRadius(10)
-            .shadow(radius: 5)
+                .background(Color.white)
+                .cornerRadius(5)
+                .padding(.horizontal)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
         }
-        .padding()
     }
 }
