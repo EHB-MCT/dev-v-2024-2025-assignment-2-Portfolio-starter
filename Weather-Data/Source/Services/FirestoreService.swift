@@ -10,22 +10,6 @@ import FirebaseFirestore
 class FirestoreService {
     private var db = Firestore.firestore()
     
-    func logUserInteraction(city: String) {
-        let data: [String: Any] = [
-            "city": city,
-            "timestamp": Timestamp(date: Date())
-        ]
-        let docRef = Firestore.firestore().collection("user_interactions").document()
-        
-        docRef.setData(data) { error in
-            if let error = error {
-                print("Error logging user interaction: \(error.localizedDescription)")
-            } else {
-                print("User interaction logged successfully.")
-            }
-        }
-    }
-    
     func logWeatherData(city: String, temperature: Double, humidity: Int, pressure: Int, windSpeed: Double) {
         let timestamp = Timestamp(date: Date())
         

@@ -10,13 +10,19 @@ import Firebase
 
 @main
 struct Weather_DataApp: App {
+    @AppStorage("hasSelectedRegion") private var hasSelectedRegion: Bool = false
+
     init() {
             FirebaseApp.configure()
         }
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if hasSelectedRegion {
+                MainView()
+            } else {
+                RegionSelectionView()
+            }
         }
     }
 }
