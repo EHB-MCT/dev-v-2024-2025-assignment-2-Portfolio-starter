@@ -19,7 +19,7 @@ struct MainView: View {
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .padding(.top, 40)
-                    .foregroundColor(.white)
+                    .foregroundColor(.blue)
 
                 InputView(city: $city, fetchWeather: {
                     if !city.isEmpty {
@@ -58,12 +58,12 @@ struct MainView: View {
 
                 if viewModel.weather == nil {
                     Text("Enter a city to get weather data.")
-                        .foregroundColor(.white)
+                        .foregroundColor(.blue)
                         .padding()
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .top, endPoint: .bottom))
+            .background(.white)
             .edgesIgnoringSafeArea(.all)
         }
         .onChange(of: viewModel.weather) { newWeather in

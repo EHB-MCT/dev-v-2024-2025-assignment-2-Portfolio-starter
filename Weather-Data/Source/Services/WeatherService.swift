@@ -49,7 +49,6 @@ class WeatherService {
                     completion(nil)
                 }
             }.resume()
-            firestoreService.logUserInteraction(city: city)
         }
     
     private func logWeatherData(weather: WeatherResponse) {
