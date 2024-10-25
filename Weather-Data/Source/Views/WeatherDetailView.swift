@@ -25,6 +25,7 @@ struct WeatherDetailView: View {
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .padding()
+                .foregroundColor(.blue)
 
             Text("Temperature: \(weather.main.temp, specifier: "%.1f")°C")
                 .font(.system(size: 40))
@@ -50,22 +51,10 @@ struct WeatherDetailView: View {
             Text("Time Zone: \(formattedTimeZone(weather.timezone))")
                 .font(.title3)
                 .padding(.top)
-
-            Button("Back to City Selection") {
-                presentationMode.wrappedValue.dismiss()
-            }
-            .padding()
-            .background(Color.blue)
-            .foregroundColor(.white)
-            .fontWeight(.bold)
-            .cornerRadius(10)
-            .shadow(radius: 5)
-            .padding(.bottom)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .foregroundStyle(Color.white)
         .padding()
-        .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .top, endPoint: .bottom))
+        .background(.white)
         .edgesIgnoringSafeArea(.all)
     }
 }
