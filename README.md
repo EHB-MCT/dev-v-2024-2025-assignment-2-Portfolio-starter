@@ -16,6 +16,12 @@ The data sent to the API is the following:
 
 This data is recorded to find out which cities have the most unpredictable weather, what kind of weather is the most common in those cities and at what time of day in the specific time zone the users request to try and find patterns depending on the weather conditions as well (ex: the most requested city is london, at 7 AM and when it is cloudy).
 
+In addition to this, another set of data is sent to a different collection to the Firestore database:
+- Timestamp
+- Region selected
+
+This data is used to analyse in which region the app is used the most to compare with other regions on a higher level than just cities. 
+
 ## Installing
 
 Clone the repository on your machine directly from the Xcode app in a dedicated folder on your machine. If there are any problems, please submit a ticket or pull request with the problems.
@@ -38,19 +44,23 @@ If you add elements to an already existing module, please use "//MARK:" to organ
 
 ## Guidelines
 
-Don't be a bitch with a small ego. Everybody can make mistakes. Corrections with the use of verbal abuse as well as threats will not be tolerated and the guilty will be banned without a warning or second chance.
+No exceptions will be made and no quarters will be given to people disrespecting each other. There will be no second chances as well. Minor offenses will be given a fair warning first as well as a time out of 1 month. Bigger offenses will be met with a permanent ban with no option to appeal. Swearing and insults towards others in any way, shape or form are strictly forbidden. 
 
-## Controllers
+## Data flow
 
-Project files that handle the connection to databases or API calls. This folder is also for "Services" as they work in the same way and just have a different name (depends on your way of working).
+The data within the app (both from and to API's) follow the following route: Service <---> Model <---> ViewModel <---> View(s). The double arrows signify the fact that this gan go both ways (data to the firestore API for example). Data from an API in JSON form can be decoded directly into a Model with a decoder (see WeatherService.swift). Data towards the Firestore database can be put inside a collection (see FirestoreService.swift) to get passed through, the conversion to JSON is not needed thanks to the package dependencies. 
+
+## Services
+
+Project files that handle the connection to databases or API calls. This folder is also for "Controllers" as they work in the same way and just have a different name (depends on your way of working).
 
 Be sure to import "Foundation".
 
-Use  upper CamelCase to name files. Name them as controllers in the folder as well. In case you make multiple controllers for your contribution, put them in a subfolder named according to the use of the controllers. Use upper CamelCase for the naming of the folder as well.
+Use  upper CamelCase to name files. Name them as services in the folder as well. In case you make multiple services for your contribution, put them in a subfolder named according to the use of the services. Use upper CamelCase for the naming of the folder as well.
 
 ## Models
 
-Models are used to parse data into from the database or API using the controllers. View them as objects or templates for the data to transform into.
+Models are used to parse data into from the database or API using the services. View them as objects or templates for the data to transform into.
 
 Use upper CamelCase to name files. Name them according to the type of "object" or use they will have.
 
@@ -60,7 +70,7 @@ In case multiple models are being made for a single purpose, put them together i
 
 ## ViewModels
 
-Use ViewModels to keep the views lightweight and focused on rendering. They handle the transformation of data and the interactions made by users (ex: button clicked calls an API) and connect to controllers. Some ViewModels may be shared or abstract based and can be put in the Shared folder. Please be sure to put multiple ViewModels that are linked inside a subfolder EVEN if they are in the shared folder.
+Use ViewModels to keep the views lightweight and focused on rendering. They handle the transformation of data and the interactions made by users (ex: button clicked calls an API) and connect to services. Some ViewModels may be shared or abstract based and can be put in the Shared folder. Please be sure to put multiple ViewModels that are linked inside a subfolder EVEN if they are in the shared folder.
 
 Make sur to import "Combine" and "Foundation".
 

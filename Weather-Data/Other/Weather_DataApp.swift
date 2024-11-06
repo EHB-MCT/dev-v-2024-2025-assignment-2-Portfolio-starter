@@ -19,7 +19,7 @@ struct Weather_DataApp: App {
     var body: some Scene {
         WindowGroup {
             if hasSelectedRegion {
-                MainView()
+                ContentView()
             } else {
                 RegionSelectionView()
             }
