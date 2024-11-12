@@ -13,5 +13,5 @@ struct JournalEntry: Identifiable {
     var text: String
     var timestamp: Date
     var emotionData: EmotionData
-    var sessionMood: String  // New property to store the session's mood
+    var sessionMood: String
 }

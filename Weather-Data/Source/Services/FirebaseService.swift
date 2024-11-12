@@ -16,7 +16,7 @@ class FirebaseService {
         let data: [String: Any] = [
             "text": entry.text,
             "timestamp": entry.timestamp,
-            "sessionMood": entry.sessionMood,  // Save the mood in Firebase
+            "sessionMood": entry.sessionMood,  
             "emotionData": entry.emotionData.emotionScores
         ]
         
