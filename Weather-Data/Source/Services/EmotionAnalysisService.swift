@@ -5,39 +5,45 @@
 //  Created by Guillaume Dochy on 08/11/2024.
 //
 
-
 import Foundation
-import Combine
 
 class EmotionAnalysisService {
     private var emotionDataList: [EmotionData] = []
-    
-    // Add current emotion data to the list (called from ARKit session)
+
     func addEmotionData(_ data: EmotionData) {
         emotionDataList.append(data)
     }
-    
-    // Calculate average scores over time to determine the overall mood
+
     func calculateAverageEmotion() -> String {
-        var totalScores: [String: Float] = ["happiness": 0, "sadness": 0, "surprise": 0]
-        let dataCount = Float(emotionDataList.count)
+        guard !emotionDataList.isEmpty else { return "Neutral" }
 
-        for data in emotionDataList {
-            let scores = data.emotionScores
-            totalScores["happiness"]? += scores["happiness"] ?? 0
-            totalScores["sadness"]? += scores["sadness"] ?? 0
-            totalScores["surprise"]? += scores["surprise"] ?? 0
+        let totalSmile = emotionDataList.reduce(0) { $0 + $1.smile }
+        let totalFrown = emotionDataList.reduce(0) { $0 + $1.frown }
+        let totalEyebrowRaise = emotionDataList.reduce(0) { $0 + $1.raisedEyebrow }
+        let totalJawOpen = emotionDataList.reduce(0) { $0 + $1.jawOpen }
+
+        let count = Float(emotionDataList.count)
+
+        let averageSmile = totalSmile / count
+        let averageFrown = totalFrown / count
+        let averageEyebrowRaise = totalEyebrowRaise / count
+        let averageJawOpen = totalJawOpen / count
+
+        print("Average Smile: \(averageSmile), Average Frown: \(averageFrown), Average Eyebrow Raise: \(averageEyebrowRaise), Average Jaw Open: \(averageJawOpen)")
+
+        if averageSmile > 0.5 {
+            return "Happy"
+        } else if averageFrown > 0.5 {
+            return "Sad"
+        } else if averageEyebrowRaise > 0.5 {
+            return "Surprised"
+        } else if averageJawOpen > 0.5 {
+            return "Excited"
+        } else {
+            return "Neutral"
         }
-
-        // Calculate average for each emotion score
-        totalScores = totalScores.mapValues { $0 / dataCount }
-
-        // Determine the dominant mood
-        let dominantEmotion = totalScores.max(by: { $0.value < $1.value })?.key ?? "neutral"
-        return dominantEmotion
     }
-    
-    // Reset data (optional, for when the session ends)
+
     func resetData() {
         emotionDataList.removeAll()
     }

@@ -1,10 +1,8 @@
 # Progess
 
-## October 25 2024
-
 ### Data gathering
 
-Het opnemen van data in Swift is moeilijk. Momenteel heb ik enkel implementaties gevonden waar een button drukken als informatie gebruikt kan worden. Dit heb ik omgevormd naar een button drukken stuurt de info van de button en de timestamp door naar firestore. Hetzelfde geldt voor bij het fetchen van de weer voor een bepaald stad. De details van de weer, de stad en de timestamp worden doorgegeven. Ik zou graag ook manieren vinden om mogelijk de eyetracking systeem van Apple te gebruiken (indien dit kan).
+Het opnemen van data doe ik via ARKit en het emotion detection systeem van deze library. Deze gebruikt de camera van de iPhone om patterns te vinden aan de hand van een data set die komt met de library.
 
 ### Uploading the data
 
@@ -12,4 +10,12 @@ Het pushen van de data naar firebase is zeer simpel in Swift. Het is direct geï
 
 ### GDPR
 
-Ik wou in het begin ook de locatie van de user uploaden (zie commits rond de start van deze opdracht). Dit is iets dat enkel mag indien de user dit toelaat, maar voor een reden die ik niet ken (en ggen oplossing of uitleg voor heb gevonden) kon ik dit niet implementeren. Er zijn ook heel stricte regels rond deze topic via GDPR en ik wil dit momenteel liever vermijden.
+GDPR is heel makkelijk om te volgen. De camera wordt enkel gebruikt als de user dit toelaat. De prompt wordt de eerste keer dat de app geopoend wordt getoont.
+
+### Readme
+
+Language was een probleem dat nu gefixt is. Documentatie over data flow werdt ook toegevoegd.
+
+### Single factor and reusability of functions
+
+Sommige functies hebben meerdere functies die dienen om de algemene functie volledig functioneel te maken. Deze dienen ook om de functie reusable te maken en om de werking van de app simpel te houden.

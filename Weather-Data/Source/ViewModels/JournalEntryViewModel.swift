@@ -5,7 +5,6 @@
 //  Created by Guillaume Dochy on 08/11/2024.
 //
 
-
 import SwiftUI
 import Combine
 
@@ -17,16 +16,15 @@ class JournalEntryViewModel: ObservableObject {
     func saveJournalEntry() {
         guard !journalText.isEmpty else { return }
         
-        // Get the current emotion data and session mood from FaceTrackingViewModel
         let emotionData = faceTrackingViewModel.getCurrentEmotionData()
-        let sessionMood = faceTrackingViewModel.sessionMood  // Access the session mood
+        let sessionMood = faceTrackingViewModel.sessionMood
         
         let entry = JournalEntry(
             id: UUID().uuidString,
             text: journalText,
             timestamp: Date(),
             emotionData: emotionData,
-            sessionMood: sessionMood  // Include the mood in the journal entry
+            sessionMood: sessionMood
         )
         
         firebaseService.save(entry: entry) { success in

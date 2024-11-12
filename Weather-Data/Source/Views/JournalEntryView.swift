@@ -22,7 +22,7 @@ struct JournalEntryView: View {
                 .frame(height: 200)
                 .padding()
                 .border(Color.gray, width: 1)
-                .highPriorityGesture(DragGesture()) // This can help prioritize `TextEditor` gestures
+                .highPriorityGesture(DragGesture()) 
 
             Button(action: {
                 viewModel.saveJournalEntry()

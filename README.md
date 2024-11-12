@@ -1,26 +1,14 @@
 # Challenge 2
 
-This app is a simple weather app that records the demanded data. Every time someone requests the weather for a city, the data gets sent to a firebase database. 
+This is a simple journal entry app that records the human facial emotions of the user when entering entries. These will later be used to 
 
 ### Data recording
 
 The data sent to the API is the following: 
-- Date & time of the request
-- City for which the weather was requested
-- Temperature recorded
-- Wind speed
-- Condition
-- Humidity
-- Pressure
-- Time zone of the city
-
-This data is recorded to find out which cities have the most unpredictable weather, what kind of weather is the most common in those cities and at what time of day in the specific time zone the users request to try and find patterns depending on the weather conditions as well (ex: the most requested city is london, at 7 AM and when it is cloudy).
-
-In addition to this, another set of data is sent to a different collection to the Firestore database:
-- Timestamp
-- Region selected
-
-This data is used to analyse in which region the app is used the most to compare with other regions on a higher level than just cities. 
+- Date & time of entry
+- General emotion
+- Emotion scores of Happy, Sad and Frowning
+- Journal entry
 
 ## Installing
 
@@ -44,7 +32,7 @@ If you add elements to an already existing module, please use "//MARK:" to organ
 
 ## Guidelines
 
-No exceptions will be made and no quarters will be given to people disrespecting each other. There will be no second chances as well. Minor offenses will be given a fair warning first as well as a time out of 1 month. Bigger offenses will be met with a permanent ban with no option to appeal. Swearing and insults towards others in any way, shape or form are strictly forbidden. 
+No exceptions will be made and no quarters will be given to people disrespecting each other. There will be no second chances as well. Minor offenses will be given a fair warning first as well as a time out of 1 month. Bigger offenses will be met with a permanent ban with no option to appeal. Swearing and insults towards others in any way, shape or form are strictly forbidden and regarded as major offenses. 
 
 ## Data flow
 
