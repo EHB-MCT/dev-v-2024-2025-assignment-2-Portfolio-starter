@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct JournalEntry: Identifiable {
+struct JournalEntry {
     var id: String
     var text: String
     var timestamp: Date

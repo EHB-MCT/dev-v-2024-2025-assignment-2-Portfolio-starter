@@ -10,18 +10,29 @@ import Firebase
 import Foundation
 
 class FirebaseService {
-    private let db = Firestore.firestore()
-    
     func save(entry: JournalEntry, completion: @escaping (Bool) -> Void) {
-        let data: [String: Any] = [
+//        print("Saving entry to Firebase: \(entry)")
+
+        let db = Firestore.firestore()
+        db.collection("journalEntries").addDocument(data: [
+            "id": entry.id,
             "text": entry.text,
             "timestamp": entry.timestamp,
-            "sessionMood": entry.sessionMood,  
-            "emotionData": entry.emotionData.emotionScores
-        ]
-        
-        db.collection("journalEntries").document(entry.id).setData(data) { error in
-            completion(error == nil)
+            "emotionData": [
+                "smile": entry.emotionData.smile,
+                "frown": entry.emotionData.frown,
+                "raisedEyebrow": entry.emotionData.raisedEyebrow,
+                "jawOpen": entry.emotionData.jawOpen
+            ],
+            "sessionMood": entry.sessionMood
+        ]) { error in
+            if let error = error {
+                print("Error saving entry: \(error.localizedDescription)")
+                completion(false)
+            } else {
+                print("Entry saved successfully.")
+                completion(true)
+            }
         }
     }
 }
