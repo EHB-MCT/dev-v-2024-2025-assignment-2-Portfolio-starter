@@ -14,6 +14,15 @@ The data sent to the API is the following:
 
 Clone the repository on your machine directly from the Xcode app in a dedicated folder on your machine. If there are any problems, please submit a ticket or pull request with the problems.
 
+### Warning
+
+Please use the following in the Info.plist file of the project to be able to use ARKit and the camera features of the app:
+
+<key>NSCameraUsageDescription</key>
+<string>We use the camera to track your facial expressions while journaling.</string>
+<key>NSFaceIDUsageDescription</key>
+<string>This app uses Face ID to gather subtle emotional data during journaling.</string>
+
 ## Requirements
 
 - Xcode 16.0 or higher
