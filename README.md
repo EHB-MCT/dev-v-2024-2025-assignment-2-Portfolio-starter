@@ -5,19 +5,22 @@ This is a simple journal entry app that records the human facial emotions of the
 ### Data recording
 
 ### The data sent to the API is the following: 
-
-|emotionData|Scores of each of the blendshapes tracked (0 to 1)|Collection of Doubles|
-|id|Id of each entry|UUID|
-|sessionMood|Overall mood of the session upon saving a journal entry|String|
-|text|Text input from the journal entry|String|
-|timestamp|Time and date of the entry (date/month/year - hours:minutes:seconds - timezone)|Date|
+| Name        | Description                                                                     | Type                  |
+| ----- | ----- | ----- |
+| emotionData | Scores of each of the blendshapes tracked (0 to 1)                              | Collection of Doubles |
+| id          | Id of each entry                                                                | UUID                  |
+| sessionMood | Overall mood of the session upon saving a journal entry                         | String                |
+| text        | Text input from the journal entry                                               | String                |
+| timestamp   | Time and date of the entry (date/month/year - hours:minutes:seconds - timezone) | Date                  |
 
 ### The following model is used to keep track of the emotions of a person as well as calculate the overall mood of a person:
 
-|smile|Score of the blendshape 'smile' (0 to 1)|Double|
-|frown|Score of the blendshape 'frown' (0 to 1)|Double|
-|raisedEyeBrow|Score of the blendshape 'raisedEyeBrow' (0 to 1)|Double|
-|jawOpen|Score of the blendshape 'jawOpen' (0 to 1)|Double|
+| Name | Description | Type |
+| ----- | ----- | ----- |
+| smile | Score of the blendshape 'smile' (0 to 1) | Double |
+| frown | Score of the blendshape 'frown' (0 to 1) | Double |
+| raisedEyeBrow | Score of the blendshape 'raisedEyeBrow' (0 to 1) | Double |
+| jawOpen | Score of the blendshape 'jawOpen' (0 to 1) | Double |
 
 ## Installing
 
