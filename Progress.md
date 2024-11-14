@@ -18,4 +18,4 @@ Language was een probleem dat nu gefixt is. Documentatie over data flow werdt oo
 
 ### Single factor and reusability of functions
 
-Sommige functies hebben meerdere functies die dienen om de algemene functie volledig functioneel te maken. Deze dienen ook om de functie reusable te maken en om de werking van de app simpel te houden.
+Sommige functies hebben meerdere functies die dienen om de algemene functie volledig functioneel te maken. Deze dienen ook om de functie reusable te maken en om de werking van de app simpel te houden. De service voor emotion data analysis heeft veel functies om het modulair, reusable en compleet te maken zonder dat alle andere viewmodels te ingewikkeld worden met te veel functies.
