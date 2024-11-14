@@ -1,17 +1,24 @@
 //
 //  JournalEntryView.swift
-//  test eyetracking
+//
 //
 //  Created by Guillaume Dochy on 08/11/2024.
 //
 
-
 import SwiftUI
 
+/// A view for creating and saving a journal entry, with integrated face tracking.
+/// `JournalEntryView` allows users to type their journal entry, view their detected mood, and save the entry to Firebase.
+/// It leverages `FaceTrackingViewModel` for real-time emotion tracking and `JournalEntryViewModel` for managing the entry text and save functionality.
 struct JournalEntryView: View {
+    
+    /// The view model that handles the journal entry text and save functionality.
     @StateObject private var viewModel = JournalEntryViewModel()
+    
+    /// The view model responsible for face tracking and mood analysis.
     @StateObject private var faceTrackingViewModel = FaceTrackingViewModel()
 
+    /// The main view body displaying a text editor for the journal entry, a button to save, and a mood indicator.
     var body: some View {
         VStack {
             Text("Journal Entry")
@@ -22,7 +29,7 @@ struct JournalEntryView: View {
                 .frame(height: 200)
                 .padding()
                 .border(Color.gray, width: 1)
-                .highPriorityGesture(DragGesture()) 
+                .highPriorityGesture(DragGesture())
 
             Button(action: {
                 viewModel.saveJournalEntry()
@@ -46,7 +53,7 @@ struct JournalEntryView: View {
             faceTrackingViewModel.startTracking()
         }
         .onDisappear {
-            faceTrackingViewModel.stopTracking()
+            faceTrackingViewModel.stopTracking()  
         }
     }
 }

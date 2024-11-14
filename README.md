@@ -1,14 +1,23 @@
 # Challenge 2
 
-This is a simple journal entry app that records the human facial emotions of the user when entering entries. These will later be used to 
+This is a simple journal entry app that records the human facial emotions of the user when saving journal entries. These will later be used to make data charts to analyse the overall mood of a person in their life.
 
 ### Data recording
 
-The data sent to the API is the following: 
-- Date & time of entry
-- General emotion
-- Emotion scores of Happy, Sad and Frowning
-- Journal entry
+### The data sent to the API is the following: 
+
+|emotionData|Scores of each of the blendshapes tracked (0 to 1)|Collection of Doubles|
+|id|Id of each entry|UUID|
+|sessionMood|Overall mood of the session upon saving a journal entry|String|
+|text|Text input from the journal entry|String|
+|timestamp|Time and date of the entry (date/month/year - hours:minutes:seconds - timezone)|Date|
+
+### The following model is used to keep track of the emotions of a person as well as calculate the overall mood of a person:
+
+|smile|Score of the blendshape 'smile' (0 to 1)|Double|
+|frown|Score of the blendshape 'frown' (0 to 1)|Double|
+|raisedEyeBrow|Score of the blendshape 'raisedEyeBrow' (0 to 1)|Double|
+|jawOpen|Score of the blendshape 'jawOpen' (0 to 1)|Double|
 
 ## Installing
 
@@ -16,12 +25,14 @@ Clone the repository on your machine directly from the Xcode app in a dedicated 
 
 ### Warning
 
-Please use the following in the Info.plist file of the project to be able to use ARKit and the camera features of the app:
+Please add the following in the Info.plist file of the project to be able to use ARKit and the camera features of the app:
 
+```xml
 <key>NSCameraUsageDescription</key>
 <string>We use the camera to track your facial expressions while journaling.</string>
 <key>NSFaceIDUsageDescription</key>
 <string>This app uses Face ID to gather subtle emotional data during journaling.</string>
+```
 
 ## Requirements
 
@@ -104,6 +115,13 @@ If this folder is not directly in your directory, this may be because it was not
 ## Tests
 
 Put all types of tests inside the dedicated subfolder. In case you wish to add a kind of test that does not have a dedicated subfolder, please make a subfolder for it. Be sure to use upper CamelDase when naming the tests and subfolders.
+
+## Sources
+
+- [ARKit Blendschapes](https://arkit-face-blendshapes.com) - Used to figure out and decide which blendshapes are used in the app.
+- [Apple ARKit documentation](https://developer.apple.com/documentation/arkit) - Used to implement the ARKit side of the app following conventions stated in the documentation as much as possible.
+- [ChatGPT](https://chatgpt.com/share/6735ee26-2c44-8002-aaee-08c2216764a3) - Used to resolve an issue that prevented the app from passing data to the Firebase API.
+- [ChatGPT](https://chatgpt.com/share/6735f01c-421c-8002-9732-374707d6d757) - Used to find the language of a code snippet inside this Readme file (I did not recognize it...).
 
 ## License
 
