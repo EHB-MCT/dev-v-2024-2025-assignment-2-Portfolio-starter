@@ -36,6 +36,38 @@ app.get('/api/data', async (req, res) => {
     }
 });
 
+/*Get a specific series*/
+app.get('/api/:series', async (req, res) => {
+    try {
+        await client.connect();
+
+        const database = client.db('JustLilGuys');
+        const collection = database.collection('Smiskis');
+
+        const seriesName = req.params.series;
+
+        const series = await collection.find({
+            series: seriesName
+        }).toArray();
+
+        if (!series) {
+            res.status(404).json({
+                error: 'series not found'
+            });
+            return;
+        }
+
+        res.json(series);
+    } catch (error) {
+        console.error('Error fetching series:', error);
+        res.status(500).json({
+            error: 'Internal Server Error'
+        });
+    } finally {
+        await client.close();
+    }
+});
+
 app.listen(port, () => {
     console.log(`Server is running on port  http://localhost:${port}`);
 });

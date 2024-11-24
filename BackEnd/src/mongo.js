@@ -13,11 +13,11 @@ async function run() {
         const smiskis = database.collection('Smiskis');
 
         const query = {
-            'serie': '@ Work',
-            'name': 'Group Think',
-            "inCollection": 'No',
-            'description': 'SMISKI are deliberating in the meeting. They think that three heads are better than one!',
-            'picture': './assets/images/work6.png'
+            'name': 'Hugging Knees',
+            "inCollection": false,
+            'description': 'Always in the corner hugging onto the knees, staring out into the distance pensive in thought.',
+            'picture': './assets/images/series1_1.png',
+            'series': 'Series 1'
 
         };
 
