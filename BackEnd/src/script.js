@@ -68,6 +68,42 @@ app.get('/api/:series', async (req, res) => {
     }
 });
 
+
+/* Switch the inCollection boolean using the name */
+app.patch('/api/toggleInCollection/:name', async (req, res) => {
+    try {
+        await client.connect();
+
+        const database = client.db('JustLilGuys');
+        const collection = database.collection('Smiskis');
+
+        const smiskiName = req.params.name;
+        
+
+        const result = await collection.findOneAndUpdate(
+            { name: smiskiName },
+            [{ $set: { inCollection: { $not: "$inCollection" } } }], 
+            { returnDocument: 'after' } 
+        );
+
+        if (!result.value) {
+            res.status(404).json({ error: 'Smiski not found' });
+            return;
+        }
+
+        res.json(result.value);
+    } catch (error) {
+        console.error('Error toggling inCollection:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    } finally {
+        await client.close();
+    }
+});
+
+
+
+
+
 app.listen(port, () => {
     console.log(`Server is running on port  http://localhost:${port}`);
 });
