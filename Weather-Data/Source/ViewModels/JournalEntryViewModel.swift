@@ -16,6 +16,12 @@ class JournalEntryViewModel: ObservableObject {
     /// The text content of the journal entry entered by the user.
     @Published var journalText = ""
     
+    /// The title of the journal entry entered by the user.
+    @Published var journalTitle = ""
+        
+    /// The selected topic for the journal entry.
+    @Published var selectedTopic: String = "Friends"
+    
     /// A service instance responsible for saving journal entries to Firebase.
     private let firebaseService = FirebaseService()
     
@@ -34,22 +40,26 @@ class JournalEntryViewModel: ObservableObject {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             self?.faceTrackingViewModel.stopTracking()
             
-            guard let self = self, !self.journalText.isEmpty else { return }
+            guard let self = self,
+                !self.journalText.isEmpty,
+                !self.journalTitle.isEmpty else { return }
             
-            let emotionData = self.faceTrackingViewModel.getCurrentEmotionData()
             let sessionMood = self.faceTrackingViewModel.sessionMood
             
             let entry = JournalEntry(
                 id: UUID().uuidString,
-                text: journalText,
+                title: self.journalTitle,
+                topic: self.selectedTopic,
+                text: self.journalText,
                 timestamp: Date(),
-                emotionData: emotionData,
                 sessionMood: sessionMood
             )
             
             self.firebaseService.save(entry: entry) { success in
                 if success {
-                    self.journalText = ""  
+                    self.journalText = ""
+                    self.journalTitle = ""
+                    self.selectedTopic = "Friends"
                 } else {
                     print("Failed to save entry.")
                 }

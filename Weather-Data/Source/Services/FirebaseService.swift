@@ -29,14 +29,10 @@ class FirebaseService {
         
         db.collection("journalEntries").addDocument(data: [
             "id": entry.id,
+            "title": entry.title,
+            "topic": entry.topic,
             "text": entry.text,
             "timestamp": entry.timestamp,
-            "emotionData": [
-                "smile": entry.emotionData.smile,
-                "frown": entry.emotionData.frown,
-                "raisedEyebrow": entry.emotionData.raisedEyebrow,
-                "jawOpen": entry.emotionData.jawOpen
-            ],
             "sessionMood": entry.sessionMood
         ]) { error in
             if let error = error {
