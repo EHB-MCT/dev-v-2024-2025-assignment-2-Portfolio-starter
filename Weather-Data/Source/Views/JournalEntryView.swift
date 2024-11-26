@@ -21,41 +21,56 @@ struct JournalEntryView: View {
     /// The main view body displaying a text editor for the journal entry, a button to save, and a mood indicator.
     var body: some View {
         VStack {
-            Text("Journal Entry")
-                .font(.largeTitle)
-                .padding()
+                    Text("Journal Entry")
+                        .font(.largeTitle)
+                        .padding()
 
-            TextEditor(text: $viewModel.journalText)
-                .frame(height: 200)
-                .padding()
-                .border(Color.gray, width: 1)
-                .highPriorityGesture(DragGesture())
+                    TextField("Title", text: $viewModel.journalTitle)
+                        .padding()
+                        .border(Color.gray, width: 1)
 
-            Button(action: {
-                viewModel.saveJournalEntry()
-            }) {
-                Text("Save Entry")
+                    Picker("Topic", selection: $viewModel.selectedTopic) {
+                        Text("Friends").tag("Friends")
+                        Text("Family").tag("Family")
+                        Text("Love interest/Significant other").tag("Love interest/Significant other")
+                        Text("School").tag("School")
+                        Text("Work").tag("Work")
+                    }
+                    .pickerStyle(MenuPickerStyle())
                     .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
-            }
 
-            if !faceTrackingViewModel.sessionMood.isEmpty {
-                Text("Your Mood: \(faceTrackingViewModel.sessionMood)")
-                    .font(.headline)
-                    .padding()
-            }
+                    TextEditor(text: $viewModel.journalText)
+                        .frame(height: 200)
+                        .padding()
+                        .border(Color.gray, width: 1)
+                        .highPriorityGesture(DragGesture())
 
-            Spacer()
-        }
-        .onAppear {
-            faceTrackingViewModel.startTracking()
-        }
-        .onDisappear {
-            faceTrackingViewModel.stopTracking()  
-        }
-    }
+                    Button(action: {
+                        viewModel.saveJournalEntry()
+                    }) {
+                        Text("Save Entry")
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(8)
+                    }
+
+                    if !faceTrackingViewModel.sessionMood.isEmpty {
+                        Text("Your Mood: \(faceTrackingViewModel.sessionMood)")
+                            .font(.headline)
+                            .padding()
+                    }
+
+                    Spacer()
+                }
+                .onAppear {
+                    faceTrackingViewModel.startTracking()
+                }
+                .onDisappear {
+                    faceTrackingViewModel.stopTracking()
+                }
+                .padding()
+            }
 }
 
 #Preview {

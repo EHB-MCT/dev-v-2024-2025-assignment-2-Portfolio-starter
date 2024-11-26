@@ -15,14 +15,17 @@ struct JournalEntry {
     /// A unique identifier for the journal entry.
     var id: String
     
+    /// Title of the journal entry.
+    var title: String
+    
+    /// Topic of the journal entry (e.g., Friends, Family, etc.).
+    var topic: String
+    
     /// The text content of the journal entry written by the user.
     var text: String
     
     /// The date and time when the journal entry was created.
     var timestamp: Date
-    
-    /// An `EmotionData` object that captures various emotion metrics at the time of the entry.
-    var emotionData: EmotionData
     
     /// A general description of the user’s mood during the session (e.g., "Happy", "Sad").
     var sessionMood: String
