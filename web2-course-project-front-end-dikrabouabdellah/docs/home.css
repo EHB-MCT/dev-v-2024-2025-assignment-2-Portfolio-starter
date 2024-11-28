@@ -1,0 +1,116 @@
+body {
+	background-color: #020129;
+}
+
+h2 {
+	color: white;
+	font-size: 30px;
+}
+
+.navigation {
+	display: flex;
+	justify-content: space-between;
+	text-align: center;
+	padding: 0px 85px;
+	margin-bottom: 60px;
+}
+
+/* source searchbar: https://www.w3schools.com/howto/howto_css_searchbar.asp*/
+
+.navigation .searchbar {
+	align-self: center;
+}
+
+.navigation input[type="text"] {
+	font-family: Roboto, "sans-serif";
+	padding: 12px 110px 12px 20px;
+	margin-top: 8px;
+	font-size: 14px;
+	border: none;
+	border-radius: 30px;
+}
+
+.navigation .searchbar button {
+	cursor: pointer;
+	border: none;
+	background-color: #020129;
+}
+
+.navigation .searchbar button img {
+	margin-left: -70px;
+	margin-bottom: -8px;
+	width: 26px;
+}
+
+.sidenav {
+	color: white;
+	border-radius: 0px 30px 30px 0px;
+	width: 10%;
+	height: 460px;
+	padding: 10px 0px 50px 60px;
+	border-color: white;
+	border: 0.2rem solid #fff;
+	box-shadow: 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 1.5rem #e80074, 0 0 0.6rem #e80074, 0 0 1.6rem #e80074, inset 0 0 0.7rem #e80074;
+	flex-shrink: 0;
+}
+
+.sidenav h4 {
+	font-size: 25px;
+	text-shadow: 0 0 0.5px #fff, 0 0 1px #fff, 0 0 1.5px #fff, 0 0 2px #e80074, 0 0 11px #e80074, 0 0 13px #e80074, 0 0 17px #e80074, 0 0 20px #e80074;
+}
+
+.sidenav h5 {
+	font-size: 18px;
+}
+
+.container {
+	display: flex;
+	width: 100%;
+}
+
+.animes {
+	display: flex;
+	justify-content: space-evenly;
+	flex-wrap: wrap;
+	margin-left: 60px;
+	margin-right: 60px;
+}
+
+.animes a {
+	text-decoration: none;
+}
+
+.animes p {
+	background-color: #fff;
+	font-size: 16px;
+	color: #020129;
+	padding: 15px;
+	margin-top: -5px;
+}
+
+.anime {
+	margin: 10px;
+	width: 180px;
+}
+
+.anime img {
+	width: 100%;
+}
+
+.footer {
+	margin-top: 100px;
+}
+
+.activeFilter {
+	background-color: #e80074;
+}
+
+input[type="button"] {
+	border: none;
+	cursor: pointer;
+	margin-bottom: -5px;
+}
+
+#filterStyle {
+	margin-bottom: 10px;
+}

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>GemRecs</title>
+		<link href="favicon (1).ico" rel="shortcut icon" type="image/x-icon" />
+		<link rel="stylesheet" href="home.css" />
+		<link rel="stylesheet" href="index.css" />
+
+		<script src="main.js" defer></script>
+	</head>
+	<body>
+		<div class="header">
+			<a href="index.html" class="logo">GemRecs</a>
+			<div class="header-right">
+				<a class="active" href="home.html">Home</a>
+				<a href="allGemRecs.html">All GemRecs</a>
+				<a href="quiz.html">Quiz</a>
+				<a href="FAQ.html">FAQ</a>
+			</div>
+		</div>
+		<div class="navigation">
+			<h2>Find the anime you need</h2>
+			<div class="searchbar">
+				<form>
+					<input type="text" placeholder="Search.." name="search" />
+					<button type="submit">
+						<i class="fa fa-search"><img src="./images/Icon feather-search.png" alt="" /></i>
+					</button>
+				</form>
+			</div>
+		</div>
+		<div class="container">
+			<div class="sidenav">
+				<h4>Filters</h4>
+				<h5>Genre</h5>
+				<form id="genreFilterForm">
+					<div id="filterStyle">
+						<input type="button" id="resetFiltersButton" />
+						<label for="resetFiltersButton">Everything</label><br />
+					</div>
+					<div id="filterStyle">
+						<input type="button" id="romance" />
+						<label for="romance">Romance</label><br />
+					</div>
+					<div id="filterStyle">
+						<input type="button" id="action" />
+						<label for="action">Action</label><br />
+					</div>
+					<div id="filterStyle">
+						<input type="button" id="mystery" />
+						<label for="mystery">Mystery</label><br />
+					</div>
+					<div id="filterStyle">
+						<input type="button" id="comedy" />
+						<label for="comedy">Comedy</label><br />
+					</div>
+					<div id="filterStyle">
+						<input type="button" id="drama" />
+						<label for="drama">Drama</label><br />
+					</div>
+					<div id="filterStyle">
+						<input type="button" id="isekai" />
+						<label for="isekai">Isekai</label><br />
+					</div>
+					<div id="filterStyle">
+						<input type="button" id="life" />
+						<label for="life">Slice of life</label><br />
+					</div>
+					<div id="filterStyle">
+						<input type="button" id="shoujo" />
+						<label for="shoujo">Shoujo</label><br />
+					</div>
+					<div id="filterStyle">
+						<input type="button" id="shounen" />
+						<label for="shounen">Shounen</label><br />
+					</div>
+					<div id="filterStyle">
+						<input type="button" id="sports" />
+						<label for="sports">Sports</label><br />
+					</div>
+				</form>
+			</div>
+			<div class="animes" id="animeContainer"></div>
+		</div>
+		<div class="footer">
+			<h3>
+				<a href="./allGemRecs.html">Discover the Gemrecs of the previous month<img src="./images/Icon ionic-ios-arrow-back.png" alt="" /></a>
+			</h3>
+			<p>
+				A GemRec is a recommendation that I give every month. In order for it to be a GemRec it has to be underrated and <br />
+				really good. Under the category All GemRecs you will find the GemRecs of the previous months.
+			</p>
+		</div>
+	</body>
+</html>

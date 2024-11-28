@@ -1,0 +1,67 @@
+body {
+	background-color: #020129;
+}
+
+.arrow {
+	margin-left: 50px;
+}
+
+.arrow img {
+	width: 35px;
+}
+
+.answers {
+	display: flex;
+	justify-content: space-evenly;
+}
+
+/* source neon question + answers: https://css-tricks.com/how-to-create-neon-text-with-css/*/
+
+.answers a {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	min-width: 300px;
+	margin: 50px 0px;
+	text-decoration: none;
+	color: white;
+	font-size: 25px;
+	padding: 15px;
+	border-color: white;
+	text-align: center;
+	border: 0.2rem solid #fff;
+	border-radius: 4rem;
+	box-shadow: 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 1.5rem #00cfe5, 0 0 0.6rem #00cfe5, 0 0 1.6rem #00cfe5, inset 0 0 0.7rem #00cfe5;
+	text-shadow: 0 0 0.5px #fff, 0 0 1px #fff, 0 0 1.5px #fff, 0 0 2px #00cfe5, 0 0 11px #00cfe5, 0 0 13px #00cfe5, 0 0 17px #00cfe5, 0 0 20px #00cfe5;
+}
+
+/* source neon question + answers: https://css-tricks.com/how-to-create-neon-text-with-css/*/
+
+.question {
+	color: #fff;
+	text-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 42px #e80074, 0 0 82px #e80074, 0 0 92px #e80074, 0 0 102px #e80074, 0 0 151px #e80074;
+	display: flex;
+	justify-content: center;
+}
+
+h2 {
+	color: white;
+	text-align: center;
+	font-weight: 400;
+	font-size: 30px;
+	animation: pulsatePink 1.5s infinite alternate;
+	border: 0.2rem solid #fff;
+	border-radius: 4rem;
+	padding: 20px 140px;
+	box-shadow: 0 0 0.2rem #fff, 0 0 0.2rem #fff, 0 0 2rem #e80074, 0 0 0.8rem #e80074, 0 0 2.8rem #e80074, inset 0 0 1.3rem #e80074;
+}
+
+@keyframes pulsatePink {
+	100% {
+		text-shadow: 0 0 4px #fff, 0 0 11px #fff, 0 0 19px #fff, 0 0 40px #e80074, 0 0 80px #e80074, 0 0 90px #e80074, 0 0 100px #e80074, 0 0 150px #e80074;
+	}
+
+	0% {
+		text-shadow: 0 0 2px #fff, 0 0 4px #fff, 0 0 6px #fff, 0 0 10px #e80074, 0 0 45px #e80074, 0 0 55px #e80074, 0 0 70px #e80074, 0 0 80px #e80074;
+	}
+}

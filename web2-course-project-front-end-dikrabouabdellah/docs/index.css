@@ -1,0 +1,131 @@
+@import url("https://fonts.googleapis.com/css2?family=Play&family=Roboto&display=swap");
+
+body {
+	font-family: Play, "sans-serif";
+	margin: 0;
+}
+
+p {
+	font-family: Roboto, "sans-serif";
+	color: white;
+}
+
+.intro {
+	background-image: url(./images/vecteezy_cyber-punk-night-city-landscape-concept-light-glowing-on_25938694.jpg);
+	background-size: cover;
+	width: 100%;
+	height: 100vh;
+}
+
+/*source header: https://www.w3schools.com/howto/howto_css_responsive_header.asp*/
+
+.header {
+	overflow: hidden;
+	padding: 10px;
+}
+
+.header a {
+	float: left;
+	color: white;
+	text-align: center;
+	padding: 20px;
+	text-decoration: none;
+	font-size: 20px;
+	line-height: 25px;
+}
+
+.header a.logo {
+	font-size: 25px;
+	font-weight: bold;
+}
+
+.header a:hover {
+	text-decoration: underline;
+	text-underline-offset: 10px;
+	text-decoration-thickness: 5px;
+}
+
+.header a.active {
+	text-decoration: underline;
+	text-underline-offset: 10px;
+	text-decoration-thickness: 5px;
+}
+
+.header-right {
+	float: right;
+}
+
+h1 {
+	position: relative;
+	color: white;
+	text-align: center;
+	font-size: 45px;
+}
+
+h3 {
+	color: #fff;
+	font-size: 25px;
+}
+
+h1::before {
+	content: "";
+	position: absolute;
+	inset: -40px;
+	background-color: #070218;
+	filter: blur(40px);
+	z-index: -1;
+}
+
+.homePageTitel {
+	width: 100%;
+	height: 85%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.homePageTitel a {
+	font-size: 20px;
+	text-decoration: none;
+	background: #070218;
+	backdrop-filter: blur(7px);
+	text-align: center;
+	border-radius: 50px;
+	width: 450px;
+	height: 80px;
+	margin: 15px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: white;
+	border-color: white;
+	border: 0.2rem solid #fff;
+	border-radius: 4rem;
+	box-shadow: 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 1.5rem #00cfe5, 0 0 0.6rem #00cfe5, 0 0 1.6rem #00cfe5, inset 0 0 0.7rem #00cfe5;
+}
+
+.footer {
+	text-align: center;
+	padding: 40px 0px;
+	margin-bottom: 15px;
+	border-color: white;
+	border: 0.2rem solid #fff;
+	box-shadow: 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 1.5rem #00cfe5, 0 0 0.6rem #00cfe5, 0 0 1.6rem #00cfe5, inset 0 0 0.7rem #00cfe5;
+}
+
+.footer h3 {
+	text-shadow: 0 0 0.5px #fff, 0 0 1px #fff, 0 0 1.5px #fff, 0 0 2px #00cfe5, 0 0 11px #00cfe5, 0 0 13px #00cfe5, 0 0 17px #00cfe5, 0 0 20px #00cfe5;
+}
+
+.footer h3 a {
+	align-self: flex-start;
+	color: #fff;
+	font-size: 25px;
+	text-decoration: none;
+}
+
+.footer h3 img {
+	margin-left: 10px;
+	margin-bottom: -3px;
+}
