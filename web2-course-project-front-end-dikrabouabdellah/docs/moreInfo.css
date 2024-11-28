@@ -1,0 +1,98 @@
+body {
+	background-color: #020129;
+}
+
+h3 {
+	text-align: center;
+}
+
+.arrow {
+	margin-left: 50px;
+}
+
+.arrow img {
+	width: 35px;
+}
+
+.animeInfo {
+	display: flex;
+	justify-content: space-evenly;
+	margin: 15px 80px 80px 80px;
+	padding-right: 60px;
+}
+
+.animeInfoText {
+	font-size: 18px;
+	width: 65%;
+	animation: pulsatePink 1.5s infinite alternate;
+	border: 0.2rem solid #fff;
+	border-radius: 1rem;
+	padding: 30px;
+	box-shadow: 0 0 0.2rem #fff, 0 0 0.2rem #fff, 0 0 2rem #e80074, 0 0 0.8rem #e80074, 0 0 2.8rem #e80074, inset 0 0 1.3rem #e80074;
+}
+
+.score img {
+	object-fit: contain;
+	margin-top: -6px;
+}
+
+.animeInfoImage {
+	text-align: center;
+	width: 35%;
+}
+
+.animeInfoImage img {
+	width: 60%;
+}
+
+.score,
+.aired,
+.episode,
+.genre {
+	display: flex;
+}
+
+.score p,
+.aired p,
+.episode p,
+.genre p {
+	padding-right: 15px;
+}
+
+.watch p {
+	margin-bottom: 30px;
+}
+
+.watch a {
+	color: #fff;
+	text-decoration: none;
+	padding: 10px 20px;
+	border-color: white;
+	border: 0.2rem solid #fff;
+	border-radius: 4rem;
+	box-shadow: 0 0 0.07rem #fff, 0 0 0.07rem #fff, 0 0 0.9rem #00cfe5, 0 0 0.5rem #00cfe5, 0 0 1rem #00cfe5, inset 0 0 0.5rem #00cfe5;
+	text-shadow: 0 0 0.2px #fff, 0 0 0.5px #fff, 0 0 0.7px #fff, 0 0 1px #00cfe5, 0 0 6px #00cfe5, 0 0 7px #00cfe5, 0 0 8px #00cfe5, 0 0 10px #00cfe5;
+}
+
+.title h3 {
+	font-size: 30px;
+}
+
+.otherGemRecs {
+	display: flex;
+	justify-content: space-evenly;
+	padding: 30px;
+	margin-bottom: 50px;
+}
+
+.otherGemRecs p {
+	background-color: #fff;
+	font-size: 20px;
+	color: #020129;
+	padding: 15px;
+	margin-top: -5px;
+}
+
+.gemRec a {
+	text-decoration: none;
+}
