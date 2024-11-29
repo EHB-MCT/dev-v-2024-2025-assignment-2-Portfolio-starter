@@ -22,10 +22,10 @@ struct JournalApplication: App {
     
     /// The main scene of the application.
     /// The `body` property defines the main user interface of the app.
-    /// `WindowGroup` is a container for the app's windows, displaying `ContentView` as the initial view.
+    /// `WindowGroup` is a container for the app's windows, displaying `HomeView` as the initial view.
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeView()
         }
     }
 }
