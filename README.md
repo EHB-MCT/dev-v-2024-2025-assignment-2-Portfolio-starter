@@ -5,13 +5,19 @@ This is a simple journal entry app that records the human facial emotions of the
 ### Data recording
 
 ### The data sent to the API is the following: 
+
 | Name        | Description                                                                     | Type                  |
 | ----- | ----- | ----- |
-| emotionData | Scores of each of the blendshapes tracked (0 to 1)                              | Collection of Doubles |
 | id          | Id of each entry                                                                | UUID                  |
-| sessionMood | Overall mood of the session upon saving a journal entry                         | String                |
-| text        | Text input from the journal entry                                               | String                |
+| title		  | Title of the entrypoint								                            | String                |
+| topic       | Topic of the journal entrypoint                                                 | String                |
+| text        | The text content of the journal entry written by the users						| String                |
 | timestamp   | Time and date of the entry (date/month/year - hours:minutes:seconds - timezone) | Date                  |
+| sessionMood | A general description of the user’s mood during the sessionMood					| String                |
+
+### Note:
+
+This model is also used as another name: EntryModel in the case of fetching entries. This is done to ensure no problems arise when fetching or posting entries to the database.
 
 ### The following model is used to keep track of the emotions of a person as well as calculate the overall mood of a person:
 
@@ -125,6 +131,7 @@ Put all types of tests inside the dedicated subfolder. In case you wish to add a
 - [Apple ARKit documentation](https://developer.apple.com/documentation/arkit) - Used to implement the ARKit side of the app following conventions stated in the documentation as much as possible.
 - [ChatGPT](https://chatgpt.com/share/6735ee26-2c44-8002-aaee-08c2216764a3) - Used to resolve an issue that prevented the app from passing data to the Firebase API.
 - [ChatGPT](https://chatgpt.com/share/6735f01c-421c-8002-9732-374707d6d757) - Used to find the language of a code snippet inside this Readme file (I did not recognize it...).
+- [Firebase database](https://firebase.google.com/docs/firestore) - Used to implement the logic in FirebaseService.swift and to ensure the modularity of the functions.
 
 ## License
 
