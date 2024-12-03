@@ -7,9 +7,8 @@
 
 import Foundation
 
-/// A model representing a single day in the calendar with its associated mood.
-struct CalendarDay: Identifiable {
-    var id: String { "\(date)" }  
-    let date: Date
-    let mood: MoodColor
+/// Model to represent each day in the calendar
+struct CalendarDay {
+    var date: Date
+    var mood: MoodColor
 }

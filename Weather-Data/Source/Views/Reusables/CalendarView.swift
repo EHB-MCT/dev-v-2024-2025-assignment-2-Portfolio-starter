@@ -21,7 +21,7 @@ struct CalendarView: View {
             }
             
             LazyVGrid(columns: Array(repeating: GridItem(), count: 7), spacing: 10) {
-                ForEach(viewModel.days) { day in
+                ForEach(viewModel.days, id: \.date) { day in
                     DayView(day: day.date, mood: day.mood)
                 }
             }
@@ -30,5 +30,12 @@ struct CalendarView: View {
                 .padding(.top)
         }
         .padding()
+        .background(Color(UIColor.systemBackground))
+        .cornerRadius(10)
+        .foregroundColor(.primary)  
     }
+}
+
+#Preview {
+    CalendarView(viewModel: CalendarViewModel(moodsViewModel: MoodsViewModel()))
 }

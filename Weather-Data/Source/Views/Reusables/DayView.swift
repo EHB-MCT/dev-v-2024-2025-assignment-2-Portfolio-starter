@@ -8,24 +8,30 @@
 import SwiftUI
 
 struct DayView: View {
-    let day: Date
-    let mood: MoodColor
+    var day: Date
+    var mood: MoodColor
     
     var body: some View {
         VStack {
-            Text(dayFormatted())
+            Text(dayNumber)
                 .font(.caption)
-                .padding(4)
-            
+                .foregroundColor(mood == .neutral ? .black : .white)
+                .padding(5)
+                .background(mood == .neutral ? Color.white.opacity(0.1) : Color.clear)
+                
             Circle()
                 .fill(mood.color)
-                .frame(width: 30, height: 30)
+                .frame(width: 20, height: 20)
         }
+        .padding(5)
+        .background(mood == .neutral ? Color.white.opacity(0.2) : mood.color)
+        .cornerRadius(8)
+        .shadow(radius: 5)
     }
     
-    private func dayFormatted() -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "d"
-        return formatter.string(from: day)
+    private var dayNumber: String {
+        let calendar = Calendar.current
+        let day = calendar.component(.day, from: day) 
+        return "\(day)"
     }
 }

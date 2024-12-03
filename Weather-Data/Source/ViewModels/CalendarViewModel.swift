@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import Combine
 
 class CalendarViewModel: ObservableObject {
     @Published var days: [CalendarDay] = []
     
     private var moodsViewModel: MoodsViewModel
-
+    
     init(moodsViewModel: MoodsViewModel) {
         self.moodsViewModel = moodsViewModel
         generateCalendar()
@@ -21,10 +22,22 @@ class CalendarViewModel: ObservableObject {
     func generateCalendar() {
         let calendar = Calendar.current
         let today = Date()
+        
+        let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: today))!
+        
+        let firstWeekday = calendar.component(.weekday, from: startOfMonth)
+        
+        let range = calendar.range(of: .day, in: .month, for: today)!
+        let numDaysInMonth = range.count
+        
         var calendarDays: [CalendarDay] = []
         
-        for index in 0..<30 {
-            let date = calendar.date(byAdding: .day, value: index, to: today)!
+        for _ in 1..<firstWeekday {
+            calendarDays.append(CalendarDay(date: Date(), mood: .neutral))
+        }
+        
+        for index in 0..<numDaysInMonth {
+            let date = calendar.date(byAdding: .day, value: index, to: startOfMonth)!
             let moodForDay = moodForDate(date)
             let day = CalendarDay(date: date, mood: moodForDay)
             calendarDays.append(day)
@@ -41,14 +54,11 @@ class CalendarViewModel: ObservableObject {
             return .neutral
         }
         
-        let moodCounts = matchingEntries.reduce(into: [String: Int]()) { counts, entry in
-            let moodString = entry.mood.stringValue
-            counts[moodString, default: 0] += 1
+        let moodCounts = matchingEntries.reduce(into: [MoodColor: Int]()) { counts, entry in
+            counts[entry.mood, default: 0] += 1
         }
         
-        let mostCommonMoodString = moodCounts.max { $0.value < $1.value }?.key ?? "neutral"
-        
-        let mostCommonMood = MoodColor(rawValue: mostCommonMoodString) ?? .neutral
+        let mostCommonMood = moodCounts.max { $0.value < $1.value }?.key ?? .neutral
         return mostCommonMood
     }
     
