@@ -5,55 +5,41 @@
 //  Created by Guillaume Dochy on 03/12/2024.
 //
 
-import Foundation
+import SwiftUI
 import Combine
 
 class MoodsViewModel: ObservableObject {
-    @Published var dailyMoodColors: [Date: MoodColor] = [:]
-    @Published var weeklyMoodSummary: [String: MoodColor] = [:]
-
-    private let firebaseService = FirebaseService()
-    private var cancellables = Set<AnyCancellable>()
-
-    func fetchMoods() {
-        firebaseService.fetchEntries { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let entries):
-                    self?.processEntries(entries)
-                case .failure(let error):
-                    print("Failed to fetch entries: \(error.localizedDescription)")
-                }
+    @Published var moodEntries: [MoodEntry] = []
+    
+    private var firebaseService = FirebaseService()
+    
+    init() {
+        fetchMoodEntries()
+    }
+    
+    /// Fetches the mood entries from Firebase and processes them.
+    func fetchMoodEntries() {
+        // Fetch entries and process them into MoodEntries.
+        firebaseService.fetchEntries { result in
+            switch result {
+            case .success(let entries):
+                self.moodEntries = self.processEntries(entries)
+            case .failure(let error):
+                print("Error fetching entries: \(error)")
             }
         }
     }
-
-    private func processEntries(_ entries: [EntryModel]) {
-        let groupedByDay = Dictionary(grouping: entries) { entry in
-            Calendar.current.startOfDay(for: entry.timestamp)
+    
+    /// Processes entries and categorizes them by day and mood.
+    private func processEntries(_ entries: [EntryModel]) -> [MoodEntry] {
+        var moodEntries: [MoodEntry] = []
+        
+        for entry in entries {
+            let mood = MoodColor(rawValue: entry.sessionMood.lowercased()) ?? .neutral
+            let moodEntry = MoodEntry(date: entry.timestamp, mood: mood)
+            moodEntries.append(moodEntry)
         }
-
-        dailyMoodColors = groupedByDay.mapValues { entries in
-            let moodCounts = entries.reduce(into: [String: Int]()) { counts, entry in
-                counts[entry.sessionMood, default: 0] += 1
-            }
-            let mostCommonMood = moodCounts.max { $0.value < $1.value }?.key ?? "Neutral"
-            return MoodColor(mood: mostCommonMood)
-        }
-
-        let groupedByWeek = Dictionary(grouping: groupedByDay.keys) { date in
-            Calendar.current.component(.weekOfYear, from: date)
-        }
-
-        weeklyMoodSummary = groupedByWeek.reduce(into: [String: MoodColor]()) { result, weekData in
-            let weekNumber = "Week \(weekData.key)"
-            let days = weekData.value
-
-            let moodCounts = days.compactMap { dailyMoodColors[$0]?.mood }.reduce(into: [String: Int]()) { counts, mood in
-                counts[mood, default: 0] += 1
-            }
-            let mostCommonMood = moodCounts.max { $0.value < $1.value }?.key ?? "Neutral"
-            result[weekNumber] = MoodColor(mood: mostCommonMood)
-        }
+        
+        return moodEntries
     }
 }
