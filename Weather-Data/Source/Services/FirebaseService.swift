@@ -64,7 +64,6 @@ class FirebaseService {
                 return
             }
 
-            // Map the documents into EntryModel instances.
             let entries = documents.compactMap { document -> EntryModel? in
                 let data = document.data()
                 guard
