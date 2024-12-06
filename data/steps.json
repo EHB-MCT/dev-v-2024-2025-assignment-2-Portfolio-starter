@@ -1,0 +1,104 @@
+[
+    {
+        "datum": "2024-11-20",
+        "stappen": 8123,
+        "afstand_km": 6.2,
+        "actieve_tijd_min": 74
+    },
+    {
+        "datum": "2024-11-21",
+        "stappen": 9187,
+        "afstand_km": 7.1,
+        "actieve_tijd_min": 83
+    },
+    {
+        "datum": "2024-11-22",
+        "stappen": 6475,
+        "afstand_km": 5.4,
+        "actieve_tijd_min": 62
+    },
+    {
+        "datum": "2024-11-23",
+        "stappen": 12148,
+        "afstand_km": 9.3,
+        "actieve_tijd_min": 98
+    },
+    {
+        "datum": "2024-11-24",
+        "stappen": 5239,
+        "afstand_km": 4.2,
+        "actieve_tijd_min": 46
+    },
+    {
+        "datum": "2024-11-25",
+        "stappen": 11085,
+        "afstand_km": 8.1,
+        "actieve_tijd_min": 94
+    },
+    {
+        "datum": "2024-11-26",
+        "stappen": 7423,
+        "afstand_km": 6.3,
+        "actieve_tijd_min": 67
+    },
+    {
+        "datum": "2024-11-27",
+        "stappen": 12957,
+        "afstand_km": 10.2,
+        "actieve_tijd_min": 118
+    },
+    {
+        "datum": "2024-11-28",
+        "stappen": 3965,
+        "afstand_km": 3.1,
+        "actieve_tijd_min": 36
+    },
+    {
+        "datum": "2024-11-29",
+        "stappen": 13842,
+        "afstand_km": 10.8,
+        "actieve_tijd_min": 123
+    },
+    {
+        "datum": "2024-11-30",
+        "stappen": 6053,
+        "afstand_km": 5.2,
+        "actieve_tijd_min": 56
+    },
+    {
+        "datum": "2024-12-01",
+        "stappen": 10167,
+        "afstand_km": 8.3,
+        "actieve_tijd_min": 91
+    },
+    {
+        "datum": "2024-12-02",
+        "stappen": 8492,
+        "afstand_km": 6.6,
+        "actieve_tijd_min": 80
+    },
+    {
+        "datum": "2024-12-03",
+        "stappen": 4728,
+        "afstand_km": 3.7,
+        "actieve_tijd_min": 39
+    },
+    {
+        "datum": "2024-12-04",
+        "stappen": 11983,
+        "afstand_km": 9.4,
+        "actieve_tijd_min": 105
+    },
+    {
+        "datum": "2024-12-05",
+        "stappen": 7364,
+        "afstand_km": 5.9,
+        "actieve_tijd_min": 63
+    },
+    {
+        "datum": "2024-12-06",
+        "stappen": 15028,
+        "afstand_km": 11.7,
+        "actieve_tijd_min": 128
+    }
+]
