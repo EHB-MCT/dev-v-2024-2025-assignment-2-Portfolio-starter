@@ -1,71 +1,65 @@
-const stepsData = [
-    { date: '2024-11-20', steps: 5825 },
-    { date: '2024-11-21', steps: 6172 },
-    { date: '2024-11-22', steps: 5541 },
-    { date: '2024-11-23', steps: 7035 },
-    { date: '2024-11-24', steps: 6264 },
-    { date: '2024-11-25', steps: 7581 },
-    { date: '2024-11-26', steps: 6804 },
-    { date: '2024-11-27', steps: 6453 },
-    { date: '2024-11-28', steps: 7321 },
-    { date: '2024-11-29', steps: 7993 },
-    { date: '2024-11-30', steps: 6754 },
-    { date: '2024-12-01', steps: 7032 },
-    { date: '2024-12-02', steps: 7601 },
-    { date: '2024-12-03', steps: 6890 },
-    { date: '2024-12-04', steps: 7212 },
-    { date: '2024-12-05', steps: 6543 },
-    { date: '2024-12-06', steps: 7125 },
-];
+fetch('../data/steps.json')  // Laad de stappen data van de steps.json file
+    .then(response => response.json())
+    .then(stepsData => {
+        // Haal de gegevens uit de response en toon ze in de HTML
+        fetch('../scripts/output/results.json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('avgSteps').textContent = data.avgSteps;
+                document.getElementById('mostActiveDay').textContent = `${data.mostActiveDay.datum}: ${data.mostActiveDay.stappen} stappen`;  // Correctie hier
+                document.getElementById('trend').textContent = data.trend;
 
-const labels = stepsData.map(entry => entry.date);
-const data = stepsData.map(entry => entry.steps);
+                // Stap 2: Laad de ruwe stapdata om de grafiek te maken
+                const labels = stepsData.map(entry => entry.datum); // Gebruik 'datum' uit de JSON
+                const dataPoints = stepsData.map(entry => entry.stappen); // Gebruik 'stappen' uit de JSON
 
-const config = {
-    type: 'line',
-    data: {
-        labels: labels, 
-        datasets: [{
-            label: 'Aantal Stappen per Dag',
-            data: data, 
-            fill: false,
-            borderColor: 'rgb(75, 192, 192)',
-            tension: 0.1
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            title: {
-                display: true,
-                text: 'Trends in Aantal Stappen per Dag'
-            },
-            tooltip: {
-                callbacks: {
-                    label: function(tooltipItem) {
-                        return 'Stappen: ' + tooltipItem.raw.toLocaleString();
+                // Maak de grafiek met Chart.js
+                const ctx = document.getElementById('stepsChart').getContext('2d');
+                const stepsChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Aantal Stappen per Dag',
+                            data: dataPoints,
+                            fill: false,
+                            borderColor: 'rgb(75, 192, 192)',
+                            tension: 0.1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Trends in Aantal Stappen per Dag'
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(tooltipItem) {
+                                        return 'Stappen: ' + tooltipItem.raw.toLocaleString();
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Datum'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Aantal Stappen'
+                                },
+                                beginAtZero: true
+                            }
+                        }
                     }
-                }
-            }
-        },
-        scales: {
-            x: {
-                title: {
-                    display: true,
-                    text: 'Datum'
-                }
-            },
-            y: {
-                title: {
-                    display: true,
-                    text: 'Aantal Stappen'
-                },
-                beginAtZero: true
-            }
-        }
-    }
-};
-
-// Render de grafiek op het canvas-element
-const ctx = document.getElementById('stepsChart').getContext('2d');
-const stepsChart = new Chart(ctx, config);
+                });
+            })
+            .catch(error => console.error('Fout bij het laden van resultaten:', error));
+    })
+    .catch(error => console.error('Fout bij het laden van stappen data:', error));
