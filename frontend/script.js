@@ -1,7 +1,6 @@
-fetch('../data/steps.json')  // Laad de stappen data van de steps.json file
+fetch('../data/steps.json')  
     .then(response => response.json())
     .then(stepsData => {
-        // Haal de gegevens uit de response en toon ze in de HTML
         fetch('../scripts/output/results.json')
             .then(response => response.json())
             .then(data => {
@@ -9,11 +8,9 @@ fetch('../data/steps.json')  // Laad de stappen data van de steps.json file
                 document.getElementById('mostActiveDay').textContent = `${data.mostActiveDay.datum}: ${data.mostActiveDay.stappen} stappen`;  // Correctie hier
                 document.getElementById('trend').textContent = data.trend;
 
-                // Stap 2: Laad de ruwe stapdata om de grafiek te maken
                 const labels = stepsData.map(entry => entry.datum); // Gebruik 'datum' uit de JSON
                 const dataPoints = stepsData.map(entry => entry.stappen); // Gebruik 'stappen' uit de JSON
 
-                // Maak de grafiek met Chart.js
                 const ctx = document.getElementById('stepsChart').getContext('2d');
                 const stepsChart = new Chart(ctx, {
                     type: 'line',
