@@ -24,13 +24,25 @@
             max-width: 100%;
             max-height: 400px;
         }
+
+        .info {
+            margin-top: 20px;
+            font-size: 18px;
+        }
     </style>
 </head>
 
 <body>
     <h1>Stappen Trend Analyse</h1>
-    <!-- Canvas voor de grafiek -->
+
     <canvas id="stepsChart"></canvas>
+
+    <div class="info">
+        <p><strong>Gemiddelde Stappen per Dag:</strong> <span id="avgSteps"></span></p>
+        <p><strong>Meest Actieve Dag:</strong> <span id="mostActiveDay"></span></p>
+        <p><strong>Trend in Stappen:</strong> <span id="trend"></span></p>
+    </div>
+
     <script src="script.js"></script>
 </body>
 
