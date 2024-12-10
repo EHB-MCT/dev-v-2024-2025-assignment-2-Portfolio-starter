@@ -30,7 +30,7 @@ struct HomeView: View {
                     HomeButton(title: "Moods", color: .purple)
                 }
                 
-                NavigationLink(destination: FrustrationsView()) {
+                NavigationLink(destination: FrustrationsView(frustrationsViewModel: FrustrationsViewModel(moodsViewModel: MoodsViewModel(), firebaseService: FirebaseService()))) {
                     HomeButton(title: "Frustrations", color: .red)
                 }
                 
