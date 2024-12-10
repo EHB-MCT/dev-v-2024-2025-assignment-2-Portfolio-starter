@@ -131,6 +131,7 @@ Put all types of tests inside the dedicated subfolder. In case you wish to add a
 - [Apple ARKit documentation](https://developer.apple.com/documentation/arkit) - Used to implement the ARKit side of the app following conventions stated in the documentation as much as possible.
 - [ChatGPT](https://chatgpt.com/share/6735ee26-2c44-8002-aaee-08c2216764a3) - Used to resolve an issue that prevented the app from passing data to the Firebase API.
 - [ChatGPT](https://chatgpt.com/share/6735f01c-421c-8002-9732-374707d6d757) - Used to find the language of a code snippet inside this Readme file (I did not recognize it...).
+- [ChatGPT](https://chatgpt.com/share/67581d9f-6b48-8002-b144-8a2d6baaaf85) - Used to resolve an issue in a mindset of preventing a full breakdown of the app.
 - [Firebase database](https://firebase.google.com/docs/firestore) - Used to implement the logic in FirebaseService.swift and to ensure the modularity of the functions.
 
 ## License
