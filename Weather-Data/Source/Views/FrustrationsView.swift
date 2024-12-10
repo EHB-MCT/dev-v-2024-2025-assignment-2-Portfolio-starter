@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+/// The view that displays frustration-related data including mood for the last 5 days, frustrations by topic,
+/// and links to potential solutions for each frustration.
 struct FrustrationsView: View {
     @ObservedObject var frustrationsViewModel: FrustrationsViewModel
 
@@ -83,21 +85,26 @@ struct FrustrationsView: View {
 }
 
 extension DateFormatter {
+    /// A DateFormatter that formats dates to show the day number (e.g., 01, 02, etc.)
     static var shortDate: DateFormatter {
         let formatter = DateFormatter()
-        formatter.dateFormat = "dd"
+        formatter.dateFormat = "dd"  // day only
         return formatter
     }
 
+    /// A DateFormatter that formats dates to a medium date format (e.g., "Jan 01, 2024")
     static var mediumDate: DateFormatter {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MMM dd, yyyy"
+        formatter.dateFormat = "MMM dd, yyyy"  // full date format
         return formatter
     }
 }
 
 #Preview {
     FrustrationsView(
-        frustrationsViewModel: FrustrationsViewModel(moodsViewModel: MoodsViewModel())
+        frustrationsViewModel: FrustrationsViewModel(
+            moodsViewModel: MoodsViewModel(),
+            firebaseService: FirebaseService() 
         )
+    )
 }

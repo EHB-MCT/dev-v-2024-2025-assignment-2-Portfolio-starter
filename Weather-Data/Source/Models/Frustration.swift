@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Represents a frustration entry with a topic, description and timestamp.
 struct Frustration {
     var topic: String
     var description: String

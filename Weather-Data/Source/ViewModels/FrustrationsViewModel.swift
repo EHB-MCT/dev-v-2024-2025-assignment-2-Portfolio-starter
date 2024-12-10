@@ -6,40 +6,41 @@
 //
 
 
-import SwiftUI
+import Foundation
 import Combine
 
+/// ViewModel for handling frustration-related data logic.
+/// This class is responsible for fetching, filtering, and processing frustration entries and providing data to the `FrustrationsView`.
 class FrustrationsViewModel: ObservableObject {
     @Published var frustrations: [Frustration] = []
     @Published var filteredFrustrations: [Frustration] = []
-    @Published var selectedTopic: String = "All"
-    
-    private let moodsViewModel: MoodsViewModel
-    
-    init(moodsViewModel: MoodsViewModel) {
+    @Published var selectedTopic: String = "All" {
+        didSet {
+            filterFrustrations()
+        }
+    }
+
+    private var moodsViewModel: MoodsViewModel
+    private var firebaseService: FirebaseService
+
+    init(moodsViewModel: MoodsViewModel, firebaseService: FirebaseService) {
         self.moodsViewModel = moodsViewModel
-        self.frustrations = []
-        self.filteredFrustrations = frustrations
+        self.firebaseService = firebaseService
+        self.fetchFrustrations()
     }
 
-    var last5DaysMoodEntries: [MoodEntry] {
-        let calendar = Calendar.current
-        let fiveDaysAgo = calendar.date(byAdding: .day, value: -5, to: Date()) ?? Date()
-        return moodsViewModel.moodEntries.filter { entry in
-            return entry.date >= fiveDaysAgo
+    func fetchFrustrations() {
+        firebaseService.fetchEntries(with: ["topic": "Frustration"]) { result in
+            switch result {
+            case .success(let entries):
+                self.frustrations = entries.map { entry in
+                    Frustration(topic: entry.topic, description: entry.text, timestamp: entry.timestamp)
+                }
+                self.filterFrustrations()
+            case .failure(let error):
+                print("Error fetching frustrations: \(error.localizedDescription)")
+            }
         }
-    }
-
-    var mostFrequentFrustrationTopic: String? {
-        let frustrationTopics = frustrations
-            .filter { $0.topic == "Frustration" }
-            .map { $0.topic }
-
-        let frequency = frustrationTopics.reduce(into: [String: Int]()) { counts, topic in
-            counts[topic, default: 0] += 1
-        }
-
-        return frequency.max { $0.value < $1.value }?.key
     }
 
     func filterFrustrations() {
@@ -50,9 +51,20 @@ class FrustrationsViewModel: ObservableObject {
         }
     }
 
+    var mostFrequentFrustrationTopic: String? {
+        let topicCounts = frustrations.reduce(into: [String: Int]()) { counts, frustration in
+            counts[frustration.topic, default: 0] += 1
+        }
+        return topicCounts.max(by: { $0.value < $1.value })?.key
+    }
+
     var uniqueTopics: [String] {
         let topics = frustrations.map { $0.topic }
-        let uniqueTopics = Set(topics)
-        return Array(uniqueTopics)
+        return Array(Set(topics)).sorted()
+    }
+
+    var last5DaysMoodEntries: [MoodEntry] {
+        let fiveDaysAgo = Calendar.current.date(byAdding: .day, value: -5, to: Date()) ?? Date()
+        return moodsViewModel.moodEntries.filter { $0.date >= fiveDaysAgo }
     }
 }
