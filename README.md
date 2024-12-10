@@ -2,7 +2,46 @@
 
 This is a simple journal entry app that records the human facial emotions of the user when saving journal entries. These will later be used to make data charts to analyse the overall mood of a person in their life.
 
-### Data recording
+## Features
+
+### 1. **See All Entries**
+The **See All Entries** feature allows users to view a comprehensive list of all frustration entries recorded in the app. These entries can include various topics such as work-related frustrations, personal challenges, or other aspects that affect the user's well-being. 
+
+**Key Points:**
+- Users can view a complete list of frustration entries.
+- Each entry includes relevant details such as the frustration topic, a description, and the timestamp when the frustration was recorded.
+- The entries are fetched dynamically from the backend, ensuring the list is always up-to-date with the latest data.
+
+### 2. **Moods**
+The **Moods** feature enables users to track and view their emotional state over a specified period. This feature visualizes the user's mood entries over the past five days and provides insights into the patterns or trends in their emotional well-being.
+
+**Key Points:**
+- Users can see mood data for the last 5 days.
+- Mood entries are displayed in a grid format, showing the date and corresponding mood (e.g., happy, sad, stressed, etc.).
+- The moods are color-coded for quick recognition (e.g., green for happy, red for frustrated).
+- The moods are linked to the corresponding frustrations, providing a context for each emotional state.
+- Data is gathered from mood entries, which can be viewed alongside frustration-related data for deeper analysis.
+
+### 3. **Frustrations**
+The **Frustrations** feature allows users to log, filter, and view frustrations they have experienced over time. This feature is valuable for reflecting on the sources of stress or negative emotions and provides a clear understanding of recurring frustrations. Users can select specific topics to filter frustrations or view all frustrations in general.
+
+**Key Points:**
+- Users can view frustrations categorized by topic (e.g., work, personal life, etc.).
+- A picker control allows users to select which topic to filter frustrations by (e.g., "All", "Work", "Family").
+- Frustrations include detailed information, such as the topic, description, and timestamp.
+- The app also identifies the most frequent frustration topic, helping users recognize recurring patterns.
+- Frustrations can be linked to potential solutions (e.g., external resources or guides to help users address their frustrations).
+
+### 4. **Enter Entry**
+The **Enter Entry** feature allows users to record new frustration entries with details such as the topic, description, and timestamp. This feature enables users to capture their feelings and challenges at any given time, contributing to the data used for tracking moods and frustrations.
+
+**Key Points:**
+- Users can add new entries by selecting a topic, describing their frustration, and setting a timestamp.
+- The entries are automatically saved to the backend and are available for future reference and analysis.
+- This feature provides a way for users to track their emotional and mental well-being by documenting frustrations and linking them to mood entries.
+- Users can enter frustrations related to various topics like "Work," "Personal Life," or any other custom topics they wish to log.
+
+## Data recording
 
 ### The data sent to the API is the following: 
 
