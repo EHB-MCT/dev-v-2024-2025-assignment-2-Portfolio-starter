@@ -94,6 +94,13 @@ struct FrustrationsView: View {
                     }
                 }
             }
+            
+            Divider()
+            
+            Text("Legend:")
+                .font(.body)
+            MoodLegend()
+            
         }
         .padding()
         /// Observe changes in the selected topic and trigger filtering
