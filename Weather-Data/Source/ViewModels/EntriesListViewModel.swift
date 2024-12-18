@@ -10,7 +10,7 @@ import Combine
 
 /// ViewModel for managing and displaying a list of entries.
 class EntriesListViewModel: ObservableObject {
-    @Published var entries: [EntryModel] = []
+    @Published var entries: [JournalEntry] = []
     private let firebaseService = FirebaseService()
 
     /// Fetches all entries and updates the `entries` property.

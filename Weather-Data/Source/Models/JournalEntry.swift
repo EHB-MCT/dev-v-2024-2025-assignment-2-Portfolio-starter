@@ -10,7 +10,7 @@ import Foundation
 /// A data model representing a journal entry created by the user.
 /// Each `JournalEntry` contains the entry's text content, timestamp, associated emotion data,
 /// and a general mood for the session.
-struct JournalEntry {
+struct JournalEntry: Identifiable {
     
     /// A unique identifier for the journal entry.
     var id: String
