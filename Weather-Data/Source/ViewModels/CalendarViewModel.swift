@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 
 class CalendarViewModel: ObservableObject {
-    @Published var days: [CalendarDay] = []
+    @Published var days: [MoodEntry] = []
     
     private var moodsViewModel: MoodsViewModel
     
@@ -30,16 +30,16 @@ class CalendarViewModel: ObservableObject {
         let range = calendar.range(of: .day, in: .month, for: today)!
         let numDaysInMonth = range.count
         
-        var calendarDays: [CalendarDay] = []
+        var calendarDays: [MoodEntry] = []
         
         for _ in 1..<firstWeekday {
-            calendarDays.append(CalendarDay(date: Date(), mood: .neutral))
+            calendarDays.append(MoodEntry(date: Date(), mood: .neutral))
         }
         
         for index in 0..<numDaysInMonth {
             let date = calendar.date(byAdding: .day, value: index, to: startOfMonth)!
             let moodForDay = moodForDate(date)
-            let day = CalendarDay(date: date, mood: moodForDay)
+            let day = MoodEntry(date: date, mood: moodForDay)
             calendarDays.append(day)
         }
         

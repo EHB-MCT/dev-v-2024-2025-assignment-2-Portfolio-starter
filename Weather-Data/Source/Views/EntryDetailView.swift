@@ -9,7 +9,7 @@ import SwiftUI
 
 /// Displays detailed information for a single entry.
 struct EntryDetailView: View {
-    let entry: EntryModel
+    let entry: JournalEntry
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -47,5 +47,5 @@ struct EntryDetailView: View {
 }
 
 #Preview {
-    EntryDetailView(entry: EntryModel(id: "1", title: "Title", topic: "Topic", text: "Text", timestamp: .now, sessionMood: "Happy"))
+    EntryDetailView(entry: JournalEntry(id: "1", title: "Title", topic: "Topic", text: "Text", timestamp: .now, sessionMood: "Happy"))
 }

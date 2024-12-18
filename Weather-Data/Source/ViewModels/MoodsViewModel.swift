@@ -31,7 +31,7 @@ class MoodsViewModel: ObservableObject {
     }
     
     /// Processes entries and categorizes them by day and mood.
-    private func processEntries(_ entries: [EntryModel]) -> [MoodEntry] {
+    private func processEntries(_ entries: [JournalEntry]) -> [MoodEntry] {
         var moodEntries: [MoodEntry] = []
         
         for entry in entries {

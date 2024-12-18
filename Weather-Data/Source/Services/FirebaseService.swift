@@ -12,7 +12,7 @@ import Foundation
 class FirebaseService {
     /// Saves an entry to Firebase.
     /// - Parameters:
-    ///   - entry: The `EntryModel` to save.
+    ///   - entry: The `JournalEntry` to save.
     ///   - completion: A closure indicating success or failure.
     func save(entry: JournalEntry, completion: @escaping (Bool) -> Void) {
         print("Saving entry to Firebase: \(entry)")
@@ -39,10 +39,10 @@ class FirebaseService {
     /// Fetches entries from Firebase based on specified conditions.
     /// - Parameters:
     ///   - filter: A dictionary of key-value pairs to filter the results (e.g., `["topic": "Friends"]`).
-    ///   - completion: A closure returning an array of `EntryModel` or an error.
+    ///   - completion: A closure returning an array of `JournalEntry` or an error.
     func fetchEntries(
         with filter: [String: Any] = [:],
-        completion: @escaping (Result<[EntryModel], Error>) -> Void
+        completion: @escaping (Result<[JournalEntry], Error>) -> Void
     ) {
         let db = Firestore.firestore()
         var query: Query = db.collection("entries")
@@ -64,7 +64,7 @@ class FirebaseService {
                 return
             }
 
-            let entries = documents.compactMap { document -> EntryModel? in
+            let entries = documents.compactMap { document -> JournalEntry? in
                 let data = document.data()
                 guard
                     let id = data["id"] as? String,
@@ -77,7 +77,7 @@ class FirebaseService {
                     return nil
                 }
 
-                return EntryModel(
+                return JournalEntry(
                     id: id,
                     title: title,
                     topic: topic,

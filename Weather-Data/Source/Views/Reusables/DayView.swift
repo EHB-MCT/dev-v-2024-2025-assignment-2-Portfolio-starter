@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DayView: View {
-    var day: CalendarDay
+    var day: MoodEntry
     
     var body: some View {
         VStack {
