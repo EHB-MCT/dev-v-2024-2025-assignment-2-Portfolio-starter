@@ -1,6 +1,6 @@
 # Challenge 2
 
-This is a simple journal entry app that records the human facial emotions of the user when saving journal entries. These will later be used to make data charts to analyse the overall mood of a person in their life.
+This is a simple journal entry app that records the human facial emotions of the user when saving journal entries. The app allows the user to see their mood in the previous 5 days, their recent frustrations, the reason for their frustrations as well as an overview of their emotions for each day of the month.
 
 ## Features
 

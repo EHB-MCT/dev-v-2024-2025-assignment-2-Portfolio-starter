@@ -2,6 +2,10 @@
 
 This document outlines coding conventions for Swift projects, including those following the MVVM (Model-View-ViewModel) architecture.
 
+## Data flow conventions
+
+The data in this app follows the MVVM method and architecture for ease of use, contribution and adaptation. The MVVM method allows us to better format data (in this case as Models) that can be used in multiple instances and are easy to adapt. This also allows every file to have a single use, but in the case of ViewModels to have multiple functions related to the use of the app while keeping Views clean and only about UI and without functions.
+
 ## Swift General Conventions
 
 ### Code Formatting
