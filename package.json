@@ -1,0 +1,17 @@
+{
+  "name": "assignment-2-RachellevanUden",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix src/frontend\" \"npm run server --prefix src/backend\"",
+    "dev:frontend": "vite --prefix src/frontend",
+    "dev:backend": "nodemon src/backend/app.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "vite": "^6.0.3",
+    "concurrently": "^7.0.0",
+    "nodemon": "^2.0.0"
+  }
+}
