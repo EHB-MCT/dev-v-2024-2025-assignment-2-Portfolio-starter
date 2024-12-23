@@ -56,21 +56,3 @@ class GoogleSearchService {
         }.resume()
     }
 }
-
-/// Model for an article returned by the Google Custom Search API.
-struct Article: Identifiable {
-    let id = UUID()
-    let title: String
-    let link: String
-}
-
-/// Decodable response structure for the Google Custom Search API.
-struct GoogleSearchResponse: Decodable {
-    let items: [GoogleSearchItem]
-}
-
-/// Decodable structure for individual search items.
-struct GoogleSearchItem: Decodable {
-    let title: String
-    let link: String
-}
