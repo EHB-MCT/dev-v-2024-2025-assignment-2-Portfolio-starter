@@ -12,6 +12,7 @@ import SwiftUI
 struct FrustrationsView: View {
     /// The ViewModel that handles the business logic and data for frustrations.
     @ObservedObject var frustrationsViewModel: FrustrationsViewModel
+    @StateObject private var articleListViewModel = ArticleListViewModel()
 
     var body: some View {
         VStack {
@@ -77,23 +78,23 @@ struct FrustrationsView: View {
 
             Divider()
 
-            /// Section displaying potential solutions for frustrations
-            Section(header: Text("Potential Solutions").font(.headline)) {
-                /// Loop through filtered frustrations and provide potential solutions
-                ForEach(frustrationsViewModel.filteredFrustrations, id: \.timestamp) { frustration in
-                    VStack(alignment: .leading) {
-                        /// Display a title for potential solutions
-                        Text("Potential solutions for \(frustration.topic):")
-                            .font(.subheadline)
-                            .bold()
+            /// Section for selecting a topic and fetching related articles.
+                        Section(header: Text("Related Articles").font(.headline)) {
+                            Picker("Select Topic", selection: $frustrationsViewModel.selectedTopic) {
+                                Text("All").tag("All")
+                                ForEach(frustrationsViewModel.uniqueTopics, id: \.self) { topic in
+                                    Text(topic).tag(topic)
+                                }
+                            }
+                            .pickerStyle(MenuPickerStyle())
+                            .onChange(of: frustrationsViewModel.selectedTopic) { newTopic in
+                                if newTopic != "All" {
+                                    articleListViewModel.fetchArticles(for: newTopic)
+                                }
+                            }
 
-                        /// Link to explore potential solutions for the given frustration topic
-                        Link("Explore Solutions", destination: URL(string: "https://example.com/solutions/\(frustration.topic)")!)
-                            .font(.body)
-                            .foregroundColor(.blue)
-                    }
-                }
-            }
+                            ArticleListView(viewModel: articleListViewModel)
+                        }
             
             Divider()
             
