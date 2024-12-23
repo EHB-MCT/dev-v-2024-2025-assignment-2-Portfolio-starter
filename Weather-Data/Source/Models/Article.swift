@@ -7,9 +7,10 @@
 
 import Foundation
 
-/// Model for an article returned by the Google Custom Search API.
+/// Model representing an article returned by the Google Custom Search API.
+/// The model stores the `title` and `link` of each article.
 struct Article: Identifiable {
     let id = UUID()
     let title: String
-    let link: String
+    let link: String        
 }

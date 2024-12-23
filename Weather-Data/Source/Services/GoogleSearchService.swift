@@ -5,14 +5,15 @@
 //  Created by Guillaume Dochy on 23/12/2024.
 //
 
-
 import Foundation
 
-/// A service to interact with the Google Custom Search API for fetching articles related to a topic.
+/// A service class to interact with the Google Custom Search API.
+/// This service is responsible for fetching articles related to a specific topic from the Google Search Engine.
 class GoogleSearchService {
     private let apiKey: String
     private let searchEngineId: String
 
+    /// Initializes the service by fetching the API key and Search Engine ID from the Info.plist.
     init() {
         guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "GoogleAPIKey") as? String,
               let searchEngineId = Bundle.main.object(forInfoDictionaryKey: "GoogleSearchEngineID") as? String else {
@@ -22,10 +23,10 @@ class GoogleSearchService {
         self.searchEngineId = searchEngineId
     }
 
-    /// Fetches articles related to a given topic using the Google Custom Search API.
+    /// Fetches articles for a given topic using the Google Custom Search API.
     /// - Parameters:
-    ///   - topic: The topic to search for.
-    ///   - completion: Completion handler returning a result with either an array of articles or an error.
+    ///   - topic: The topic to search articles for.
+    ///   - completion: A closure that returns a `Result` with either an array of `Article` or an error.
     func fetchArticles(for topic: String, completion: @escaping (Result<[Article], Error>) -> Void) {
         let baseURL = "https://www.googleapis.com/customsearch/v1"
         let query = "\(baseURL)?key=\(apiKey)&cx=\(searchEngineId)&q=\(topic)"

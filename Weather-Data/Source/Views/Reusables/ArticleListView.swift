@@ -5,10 +5,10 @@
 //  Created by Guillaume Dochy on 23/12/2024.
 //
 
-
 import SwiftUI
 
 /// A reusable view that displays a list of articles fetched for a specific topic.
+/// The view displays the list of articles, a loading state, and any error messages.
 struct ArticleListView: View {
     @ObservedObject var viewModel: ArticleListViewModel
 
@@ -20,14 +20,14 @@ struct ArticleListView: View {
                 Text(errorMessage)
                     .foregroundColor(.red)
                     .multilineTextAlignment(.center)
-            } else if $viewModel.articles.isEmpty {
+            } else if viewModel.articles.isEmpty {
                 Text("No articles found.")
                     .foregroundColor(.gray)
                     .font(.footnote)
             } else {
                 List(viewModel.articles) { article in
                     VStack(alignment: .leading) {
-                        Text(article.title)
+                        Text(article.title)   
                             .font(.body)
                             .bold()
                         Link("Read More", destination: URL(string: article.link)!)

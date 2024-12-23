@@ -7,8 +7,9 @@
 
 import Foundation
 
-/// Decodable structure for individual search items.
+/// Decodable structure representing an individual search item returned from the Google Custom Search API.
+/// This structure contains the title and link of each search result.
 struct GoogleSearchItem: Decodable {
     let title: String
-    let link: String
+    let link: String        
 }
