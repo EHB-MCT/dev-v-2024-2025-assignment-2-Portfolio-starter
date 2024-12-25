@@ -10,10 +10,11 @@
 
 ## 3
 - Extened app with more pages: Blog, Contact, Services 
-- 
+- Extend tailwind config - Dark mode for all pages
 
 ## 4
-- 
+- Extend tailwind config - Typography, Forms, Aspect Ratio
+- Extend app with more pages: Team, Careers, FAQ, testimonials
 
 ## 5
 - 

@@ -1,228 +1,201 @@
 'use client';
 
-import { useState, FormEvent, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useState } from 'react';
 
 export default function Contact() {
-  const searchParams = useSearchParams();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    message: '',
-    service: searchParams.get('service') || ''
+    company: '',
+    message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  useEffect(() => {
-    const service = searchParams.get('service');
-    if (service) {
-      setFormData(prev => ({
-        ...prev,
-        message: `I'm interested in learning more about your ${service} service.`
-      }));
-    }
-  }, [searchParams]);
-
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+    setSubmitStatus('idle');
+
+    // Simulate API call
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise(resolve => setTimeout(resolve, 1500));
       setSubmitStatus('success');
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        message: '',
-        service: ''
-      });
-    } catch {
+      setFormData({ name: '', email: '', phone: '', company: '', message: '' });
+    } catch (error) {
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
-      setTimeout(() => setSubmitStatus('idle'), 3000);
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Contact Us
+    <div className="min-h-screen bg-transparent">
+      {/* Header Section */}
+      <section className="pt-20 pb-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto text-center">
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white">
+            Get in Touch
           </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Get in touch with our team to learn more about how we can help improve your user experience.
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            Have questions about our analytics platform? We're here to help you get started
+            and make the most of your data.
           </p>
         </div>
+      </section>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Contact Form */}
-          <div className="bg-white rounded-xl shadow-lg p-8">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label htmlFor="name" className="form-label">Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  className="input-field"
-                  required
+      {/* Contact Grid */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Contact Form */}
+            <div className="card">
+              <h2 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-white">
+                Send us a Message
+              </h2>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="name" className="form-label">
+                      Name
+                    </label>
+                    <input
+                      id="name"
+                      type="text"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      className="input-field"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="form-label">
+                      Email
+                    </label>
+                    <input
+                      id="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      className="input-field"
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="phone" className="form-label">
+                      Phone (optional)
+                    </label>
+                    <input
+                      id="phone"
+                      type="tel"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      className="input-field"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="company" className="form-label">
+                      Company (optional)
+                    </label>
+                    <input
+                      id="company"
+                      type="text"
+                      value={formData.company}
+                      onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                      className="input-field"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label htmlFor="message" className="form-label">
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    rows={6}
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    className="input-field"
+                    required
+                  />
+                </div>
+                <button
+                  type="submit"
                   disabled={isSubmitting}
-                />
-              </div>
-
-              <div>
-                <label htmlFor="email" className="form-label">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className="input-field"
-                  required
-                  disabled={isSubmitting}
-                />
-              </div>
-
-              <div>
-                <label htmlFor="phone" className="form-label">Phone (optional)</label>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  className="input-field"
-                  disabled={isSubmitting}
-                />
-              </div>
-
-              <div>
-                <label htmlFor="service" className="form-label">Service of Interest</label>
-                <select
-                  id="service"
-                  name="service"
-                  value={formData.service}
-                  onChange={handleInputChange}
-                  className="input-field"
-                  disabled={isSubmitting}
+                  className={`btn-primary w-full ${isSubmitting ? 'opacity-75 cursor-not-allowed' : ''}`}
                 >
-                  <option value="">Select a service</option>
-                  <option value="User Behavior Analytics">User Behavior Analytics</option>
-                  <option value="Conversion Optimization">Conversion Optimization</option>
-                  <option value="Performance Monitoring">Performance Monitoring</option>
-                  <option value="Custom Analytics Solutions">Custom Analytics Solutions</option>
-                </select>
-              </div>
-
-              <div>
-                <label htmlFor="message" className="form-label">Message</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  className="input-field min-h-[150px]"
-                  required
-                  disabled={isSubmitting}
-                />
-              </div>
-
-              <button
-                type="submit"
-                className={`btn-primary w-full ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? 'Sending...' : 'Send Message'}
-              </button>
-
-              {submitStatus === 'success' && (
-                <div className="text-green-600 text-center mt-4">
-                  Message sent successfully! We'll get back to you soon.
-                </div>
-              )}
-              {submitStatus === 'error' && (
-                <div className="text-red-600 text-center mt-4">
-                  Failed to send message. Please try again.
-                </div>
-              )}
-            </form>
-          </div>
-
-          {/* Map and Contact Info */}
-          <div className="space-y-8">
-            {/* Map Placeholder */}
-            <div className="bg-gray-200 rounded-xl overflow-hidden aspect-video">
-              <div className="w-full h-full flex items-center justify-center text-gray-500">
-                Google Maps will be integrated here
-              </div>
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
+                </button>
+                {submitStatus === 'success' && (
+                  <p className="text-green-600 dark:text-green-400 text-center">
+                    Message sent successfully!
+                  </p>
+                )}
+                {submitStatus === 'error' && (
+                  <p className="text-red-600 dark:text-red-400 text-center">
+                    Failed to send message. Please try again.
+                  </p>
+                )}
+              </form>
             </div>
 
-            {/* Contact Information */}
-            <div className="bg-white rounded-xl shadow-lg p-8">
-              <h2 className="text-2xl font-semibold mb-6">Contact Information</h2>
-              <div className="space-y-4">
-                <div className="flex items-start space-x-4">
-                  <span className="text-2xl">📍</span>
-                  <div>
-                    <h3 className="font-medium">Address</h3>
-                    <p className="text-gray-600">123 Analytics Street<br />Tech City, TC 12345</p>
+            {/* Contact Info */}
+            <div className="space-y-8">
+              <div className="card">
+                <h2 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-white">
+                  Contact Information
+                </h2>
+                <div className="space-y-4">
+                  <div className="flex items-start">
+                    <svg className="w-6 h-6 mt-1 mr-4 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    <div>
+                      <h3 className="font-medium text-gray-900 dark:text-white">Email</h3>
+                      <p className="text-gray-600 dark:text-gray-300">support@analyticsdemo.com</p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-start space-x-4">
-                  <span className="text-2xl">📞</span>
-                  <div>
-                    <h3 className="font-medium">Phone</h3>
-                    <p className="text-gray-600">+1 (555) 123-4567</p>
+                  <div className="flex items-start">
+                    <svg className="w-6 h-6 mt-1 mr-4 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                    <div>
+                      <h3 className="font-medium text-gray-900 dark:text-white">Phone</h3>
+                      <p className="text-gray-600 dark:text-gray-300">+1 (555) 123-4567</p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-start space-x-4">
-                  <span className="text-2xl">✉️</span>
-                  <div>
-                    <h3 className="font-medium">Email</h3>
-                    <p className="text-gray-600">contact@analyticsdemo.com</p>
+                  <div className="flex items-start">
+                    <svg className="w-6 h-6 mt-1 mr-4 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <div>
+                      <h3 className="font-medium text-gray-900 dark:text-white">Office</h3>
+                      <p className="text-gray-600 dark:text-gray-300">
+                        123 Analytics Street<br />
+                        San Francisco, CA 94105<br />
+                        United States
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* Business Hours */}
-            <div className="bg-white rounded-xl shadow-lg p-8">
-              <h2 className="text-2xl font-semibold mb-6">Business Hours</h2>
-              <div className="space-y-2">
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Monday - Friday</span>
-                  <span className="font-medium">9:00 AM - 6:00 PM</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Saturday</span>
-                  <span className="font-medium">10:00 AM - 4:00 PM</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Sunday</span>
-                  <span className="font-medium">Closed</span>
+              {/* Map Placeholder */}
+              <div className="card overflow-hidden">
+                <div className="aspect-w-16 aspect-h-9 bg-gray-200 dark:bg-gray-700">
+                  <div className="flex items-center justify-center text-gray-500 dark:text-gray-400">
+                    Google Maps Integration
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 } 
