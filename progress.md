@@ -3,6 +3,20 @@
 - Configured Supabase
 
 ## 2
-- Implemented data tracking
-- Created Supabase table
+- About page
+- Home page
+- Dashboard page
+- File & Folder/routing structure
 
+## 3
+- Extened app with more pages: Blog, Contact, Services 
+- 
+
+## 4
+- 
+
+## 5
+- 
+
+## 6
+- 
