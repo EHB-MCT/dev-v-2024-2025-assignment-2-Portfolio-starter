@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { trackPageView, trackFormSubmission, useScrollTracking } from '@/app/utils/tracker';
 
 export default function About() {
   const [formData, setFormData] = useState({
@@ -12,10 +13,21 @@ export default function About() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
+  // Track page view on mount
+  useEffect(() => {
+    trackPageView('/about');
+  }, []);
+
+  // Track scroll depth
+  useScrollTracking('/about');
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus('idle');
+
+    // Track form submission
+    trackFormSubmission('contact_form', '/about', formData);
 
     // Simulate API call
     try {

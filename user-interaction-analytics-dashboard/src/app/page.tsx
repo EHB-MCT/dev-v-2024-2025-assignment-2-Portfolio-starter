@@ -1,7 +1,30 @@
 "use client";
 import Link from 'next/link';
+import { useEffect } from 'react';
+import { trackPageView, trackButtonClick, useScrollTracking } from '@/app/utils/tracker';
 
 export default function Home() {
+  // Track page view on mount
+  useEffect(() => {
+    trackPageView('/');
+  }, []);
+
+  // Track scroll depth
+  useScrollTracking('/');
+
+  // Track button clicks
+  const handleGetStartedClick = () => {
+    trackButtonClick('get_started', '/', { location: 'hero' });
+  };
+
+  const handleLearnMoreClick = () => {
+    trackButtonClick('learn_more', '/', { location: 'hero' });
+  };
+
+  const handleFreeTrialClick = () => {
+    trackButtonClick('free_trial', '/', { location: 'cta' });
+  };
+
   return (
     <main className="min-h-screen bg-transparent">
       {/* Hero Section */}
@@ -17,10 +40,18 @@ export default function Home() {
             Discover how we can help you track and analyze user interactions to create exceptional digital experiences.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/dashboard" className="btn-primary text-lg">
+            <Link 
+              href="/dashboard" 
+              className="btn-primary text-lg"
+              onClick={handleGetStartedClick}
+            >
               Get Started Now
             </Link>
-            <Link href="/about" className="btn-secondary text-lg">
+            <Link 
+              href="/about" 
+              className="btn-secondary text-lg"
+              onClick={handleLearnMoreClick}
+            >
               Learn More
             </Link>
           </div>
@@ -155,7 +186,10 @@ export default function Home() {
           <h2 className="text-3xl font-bold text-white mb-8">
             Ready to get started?
           </h2>
-          <button className="bg-white text-blue-600 hover:bg-gray-100 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 px-8 py-3 rounded-lg text-lg font-semibold transition-colors">
+          <button 
+            className="bg-white text-blue-600 hover:bg-gray-100 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 px-8 py-3 rounded-lg text-lg font-semibold transition-colors"
+            onClick={handleFreeTrialClick}
+          >
             Start Your Free Trial
           </button>
         </div>
