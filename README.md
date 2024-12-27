@@ -82,6 +82,58 @@ Install my-project with npm
 - List of historical events
 - Search by name, keyword, year, day, month
 
+### Contributing Guidelines
+
+We welcome contributions to the **Historical Events Web Application**! Below, you will find the guidelines for contributing to the project effectively.
+
+---
+
+#### **Bug Reporting**
+- Clearly describe the bug, including the steps to reproduce it, expected behavior, and observed behavior.  
+- Include relevant screenshots or error logs, if applicable.  
+- Submit your bug reports via the [GitHub Issues](#) page.
+
+---
+
+#### **Suggesting New Features**
+- Provide a clear and concise description of the proposed feature.  
+- Explain the problem the feature solves or the value it adds to the application.  
+- Include any potential technical considerations or related references.  
+
+
+---
+
+#### **Set Up Environment and Testing**
+- Clone the repository and follow the setup instructions in the `README.md`.  
+- Ensure your development environment matches the prerequisites outlined in the documentation.  
+- Test your changes thoroughly and include unit tests when applicable.  
+
+---
+
+#### **Types of Contributions Needed**
+We appreciate contributions in the following areas:  
+- Bug fixes and optimizations.  
+- UI/UX improvements.  
+- Enhancing application documentation.  
+- Creating or updating automated tests.  
+- Suggestions for API integrations.  
+
+---
+
+#### **Roadmap and Vision**
+
+- Feel free to discuss long-term vision ideas in our via mail (see below).  
+
+---
+
+#### **Get in Touch**
+- For detailed queries or collaborations, feel free to contact us via [email](mailto:kobe.berckmans@student.ehb.be).  
+
+
+--- 
+
+**We look forward to your contributions and helping grow this project together!**
+
 
 ## MIT License
 
