@@ -1,3 +1,4 @@
+/* General body styling */
 body {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
@@ -7,10 +8,12 @@ body {
     text-align: center;
 }
 
+/* Header styling */
 h1 {
     margin-bottom: 20px;
 }
 
+/* Input Fields Styling */
 input[type="text"],
 input[type="number"] {
     padding: 10px;
@@ -22,6 +25,7 @@ input[type="number"] {
     transition: all 0.3s ease-in-out;
 }
 
+/* Focus effect on input fields */
 input[type="text"]:focus,
 input[type="number"]:focus {
     border-color: #007bff;
@@ -29,6 +33,7 @@ input[type="number"]:focus {
     outline: none;
 }
 
+/* Button Styling */
 button {
     padding: 10px 20px;
     background-color: #007BFF;
@@ -40,10 +45,12 @@ button {
     transition: background-color 0.3s ease-in-out;
 }
 
+/* Hover effect on button */
 button:hover {
     background-color: #0056b3;
 }
 
+/* Event List Styling */
 #eventList {
     margin-top: 20px;
     display: flex;
@@ -52,6 +59,7 @@ button:hover {
     gap: 15px;
 }
 
+/* Styling for individual event cards */
 #eventList div {
     background-color: white;
     padding: 15px;
@@ -63,12 +71,14 @@ button:hover {
     transition: transform 0.3s ease;
 }
 
+/* Hover effect on event cards */
 #eventList div:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-color: #007BFF;
 }
 
+/* Styling for event titles and descriptions inside event cards */
 #eventList h3 {
     margin: 0 0 10px;
 }
