@@ -1,31 +1,40 @@
-const axios = require('axios');
+document.getElementById('searchButton').addEventListener('click', async () => {
+  const searchInput = document.getElementById('searchInput').value.trim();
 
-const API_KEY = '4ooZ2Ap3SG3KxK7FcriAgu9OHwdH7LXgR0Gda67I';
-const API_URL = 'https://api.api-ninjas.com/v1/historicalevents';
-
-async function getHistoricalEvents(text, year, month, day) {
-  try {
-    const response = await axios.get(API_URL, {
-      headers: {
-        'X-Api-Key': API_KEY
-      },
-      params: {
-        text: text,
-        year: year,
-        month: month,
-        day: day
-      }
-    });
-
-    if (response.data && response.data.length > 0) {
-      console.log(response.data);  
-    } else {
-      console.log('Geen evenementen gevonden met de opgegeven parameters.');
-    }
-  } catch (error) {
-    console.error('Fout bij het ophalen van historische evenementen:', error.response ? error.response.data : error.message);
+  if (searchInput === '') {
+      alert('Voer een zoekterm in.');
+      return;
   }
-}
 
+  try {
+      const response = await axios.get(`https://api.api-ninjas.com/v1/historicalevents`, {
+          headers: {
+              'X-Api-Key': '4ooZ2Ap3SG3KxK7FcriAgu9OHwdH7LXgR0Gda67I'
+          },
+          params: {
+              text: searchInput
+          }
+      });
 
-getHistoricalEvents('independence', 1776);  
+      const events = response.data;
+      const eventList = document.getElementById('eventList');
+      eventList.innerHTML = '';
+
+      if (events.length === 0) {
+          eventList.innerHTML = '<p>Geen evenementen gevonden met de opgegeven zoekterm.</p>';
+      } else {
+          events.forEach(event => {
+              const eventDiv = document.createElement('div');
+              eventDiv.innerHTML = `
+                  <h3>${event.year || 'Onbekend'}</h3>
+                  <p><strong>Uitleg:</strong> ${event.event || 'Geen beschrijving beschikbaar'}</p>
+                  
+              `;
+              eventList.appendChild(eventDiv);
+          });
+      }
+  } catch (error) {
+      console.error('Fout bij het ophalen van evenementen:', error);
+      alert('Er is een fout opgetreden bij het ophalen van evenementen. Probeer het later opnieuw.');
+  }
+});
