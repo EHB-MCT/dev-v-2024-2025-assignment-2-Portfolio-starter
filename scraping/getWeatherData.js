@@ -16,12 +16,12 @@ async function getWeatherData(page, url) {
             }
 
             // Haal de gegevens uit dit element
-            const date = detailIndex.querySelector('[data-testid="daypartName"]')?.innerText || '';
-            const condition = detailIndex.querySelector('[data-testid="wxIcon"] .DetailsSummary--extendedData--eJzhb')?.innerText || '';
-            const temperature = (detailIndex.querySelector('[data-testid="detailsTemperature"] .DetailsSummary--highTempValue--VHKaO')?.innerText || '')
+            const date = detailIndex.querySelector('[data-testid="daypartName"]')?.innerText || ''; //datum 
+            const condition = detailIndex.querySelector('[data-testid="wxIcon"] .DetailsSummary--extendedData--eJzhb')?.innerText || ''; //conditie (regen, sneeuw,...)
+            const temperature = (detailIndex.querySelector('[data-testid="detailsTemperature"] .DetailsSummary--highTempValue--VHKaO')?.innerText || '') 
                 + '/' + (detailIndex.querySelector('[data-testid="detailsTemperature"] .DetailsSummary--lowTempValue--ogrzb')?.innerText || ''); // Temperatuur
-            const precip = detailIndex.querySelector('[data-testid="Precip"] .DetailsSummary--precipIcon--6CgcC + span')?.innerText || '';
-            const wind = detailIndex.querySelector('[data-testid="wind"] .Wind--windWrapper--NsCjc')?.innerText || '';
+            const precip = detailIndex.querySelector('[data-testid="Precip"] .DetailsSummary--precipIcon--6CgcC + span')?.innerText || ''; //kans op regen
+            const wind = detailIndex.querySelector('[data-testid="wind"] .Wind--windWrapper--NsCjc')?.innerText || ''; //windrichting & snelheid.
 
             data.push({
                 date,
