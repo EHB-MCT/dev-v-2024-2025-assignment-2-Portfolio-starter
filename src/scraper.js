@@ -1,37 +1,35 @@
 const puppeteer = require('puppeteer');
 
-// Functie om weerinformatie te scrapen
-const scrapeWeather = async () => {
-    const url = 'https://weather.com/nl-NL/weer/10dagen/l/feec7bad826562e9203ce8595a2fbdf1b297ea39ffcf16755cf68963f1caf759';  // Weather page
+async function scrapeWeatherData() {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto('https://weather.com/nl-NL/weer/10dagen/l/feec7bad826562e9203ce8595a2fbdf1b297ea39ffcf16755cf68963f1caf759');  // Vervang met de URL van de website
 
-    const browser = await puppeteer.launch({ headless: false });  // Maak de browser zichtbaar voor debuggen
-    const page = await browser.newPage();  // Open een nieuwe pagina
-    await page.goto(url, { waitUntil: 'domcontentloaded' });  // Laad de pagina en wacht tot de inhoud is geladen
+    // Scrape de gewenste data uit detailIndex2
+    const weatherData = await page.evaluate(() => {
+        // Zoek naar het details element met id="detailIndex2"
+        const detailIndex = document.querySelector('#detailIndex3'); // neemt het element van detailindex
 
-    try {
-        // Wacht op de specifieke elementen voor temperatuur en dag
-        await page.waitForSelector('.DailyContent--temp--axgOn', { visible: true, timeout: 60000 });
-        await page.waitForSelector('.DailyContent--daypartDate--KXrEE', { visible: true, timeout: 60000 });
+        // Haal de gegevens uit dit element
+        const date = detailIndex.querySelector('[data-testid="daypartName"]').innerText; // Datum
+        const condition = detailIndex.querySelector('[data-testid="wxIcon"] .DetailsSummary--extendedData--eJzhb').innerText; // Weersomstandigheid
+        const temperature = detailIndex.querySelector('[data-testid="detailsTemperature"] .DetailsSummary--highTempValue--VHKaO').innerText 
+            + '/' + detailIndex.querySelector('[data-testid="detailsTemperature"] .DetailsSummary--lowTempValue--ogrzb').innerText; // Temperatuur
+        const precip = detailIndex.querySelector('[data-testid="Precip"] .DetailsSummary--precipIcon--6CgcC + span').innerText; // Neerslagpercentage
+        const wind = detailIndex.querySelector('[data-testid="wind"] .Wind--windWrapper--NsCjc').innerText; // Windrichting en snelheid
 
-        // Scrape de temperatuur en de dag
-        const weatherData = await page.evaluate(() => {
-            const temperatureElement = document.querySelector('.DailyContent--temp--axgOn');
-            const dayElement = document.querySelector('.DailyContent--daypartDate--KXrEE');
+        return {
+            date,
+            condition,
+            temperature,
+            precip,
+            wind
+        };
+    });
 
-            const temperature = temperatureElement ? temperatureElement.innerText.trim() : 'Temperatuur niet gevonden';
-            const day = dayElement ? dayElement.innerText.trim() : 'Dag niet gevonden';
+    console.log(weatherData);
 
-            return { temperature, day };
-        });
+    await browser.close();
+}
 
-        console.log('Temperatuur:', weatherData.temperature);
-        console.log('Dag:', weatherData.day);
-    } catch (error) {
-        console.log('Fout bij het wachten op selector of scrapen:', error);
-    }
-
-    await browser.close();  // Sluit de browser
-};
-
-// Voer de functie uit
-scrapeWeather().catch(console.error);
+scrapeWeatherData();
