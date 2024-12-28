@@ -1,63 +1,78 @@
-/* Reset some default styles */
-body, h1, h2, p, ul, li {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+@import url("https://use.typekit.net/vys0aik.css");
 
-/* Body styling */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-    line-height: 1.6;
+    margin: 0px;
+    background-color: #F1EBE1;
 }
 
-/* Header styling */
-header {
-    background-color: #333;
-    color: #fff;
-    padding: 20px 0;
+.nav .title {
+    font-family: "decoy", serif;
+    font-weight: 600;
+    margin-right: 550px;
+}
+
+.nav {
+    padding: 25px 0px;
     text-align: center;
+    background-color: #C0CFB2;
 }
 
-nav ul {
-    list-style: none;
+.nav a {
+    font-family: "roc-grotesk", sans-serif;
+    color: #44624A;
+    font-size: 25px;
+    text-decoration: none;
+    margin: 40px;
+}
+
+h1 {
+    font-family: "decoy", serif;
+    color: #44624A;
+    font-size: 40px;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 30px;
+}
+
+h2 {
+    font-family: "decoy", serif;
+    color: #44624A;
+    background-color: #C0CFB2;
+    font-size: 30px;
+    font-weight: 400;
+    text-align: center;
+    padding: 100px 125px;
+}
+
+progress {
+    accent-color: #44624A;
+    width: 355px;
+    height: 50px;
+    border-radius: 0;
+    border-style: solid;
+    border-color: #44624A;
+    border-width: 1.5px;
+    background-color: #F1EBE1;
+}
+
+progress::-webkit-progress-bar {
+    background-color: #F1EBE1;
+
+}
+  
+progress::-webkit-progress-value {
+    background-color: #44624A;
+}
+
+.collections{
     display: flex;
     justify-content: center;
+    column-gap: 100px;
+    row-gap: 80px;
+    margin: 0 200px;
+    flex-wrap: wrap;
 }
 
-nav ul li {
-    margin: 0 10px;
-}
-
-nav ul li a {
-    color: #fff;
-    text-decoration: none;
-}
-
-/* Main section */
-main {
-    padding: 20px;
-}
-
-button {
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-/* Footer styling */
-footer {
-    text-align: center;
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #333;
-    color: #fff;
+.collection{
+    align-self: center;
 }
