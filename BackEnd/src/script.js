@@ -69,6 +69,34 @@ app.get('/api/:series', async (req, res) => {
 });
 
 
+/* Get all series names */
+app.get('/api/series', async (req, res) => {
+    try {
+        await client.connect();
+
+        const database = client.db('JustLilGuys');
+        const collection = database.collection('Smiskis');
+
+        // Use distinct to get all unique series names
+        const seriesNames = await collection.distinct('series');
+
+        const collections = await database.listCollections().toArray();
+        console.log(collections);
+
+        res.json(seriesNames);
+    } catch (error) {
+        console.error('Error fetching series names:', error);
+        res.status(500).json({
+            error: 'Internal Server Error'
+        });
+    } finally {
+        await client.close();
+    }
+});
+
+
+
+
 /* Switch the inCollection boolean using the name */
 app.patch('/api/toggleInCollection/:name', async (req, res) => {
     try {
