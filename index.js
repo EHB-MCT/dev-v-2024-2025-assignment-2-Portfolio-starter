@@ -1,27 +1,52 @@
+require('dotenv').config(); // Load environment variables from .env file
+const mongoose = require('mongoose');
 const puppeteer = require('puppeteer');
 const getWeatherData = require('./scraping/getWeatherData');
-const { connectToDatabase, getDatabase } = require('./database/mongo');
+const WeatherModel = require('./models/weatherData');
 
-(async () => {
-    // Connect to MongoDB
-    await connectToDatabase();
-    const db = getDatabase();
-    const collection = db.collection('weather'); // Replace with your collection name
+// MongoDB Connection
+const connectDB = async () => {
+    try {
+        await mongoose.connect(process.env.MONGO_URI, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
+        console.log('MongoDB connected successfully');
+    } catch (err) {
+        console.error('Error connecting to MongoDB:', err);
+        process.exit(1);
+    }
+};
 
-    // Start Puppeteer and scrape data
+// Scrape and Save Data
+const scrapeAndSaveWeatherData = async () => {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    const url = 'https://weather.com/nl-NL/weer/10dagen/l/feec7bad826562e9203ce8595a2fbdf1b297ea39ffcf16755cf68963f1caf759';
-
+    
     try {
+        const url = 'https://weather.com/nl-NL/weer/10dagen/l/feec7bad826562e9203ce8595a2fbdf1b297ea39ffcf16755cf68963f1caf759';
         const weatherData = await getWeatherData(page, url);
 
         // Save to MongoDB
-        const result = await collection.insertMany(weatherData);
-        console.log(`${result.insertedCount} weather records saved to database.`);
-    } catch (error) {
-        console.error('Error scraping or saving data:', error);
+        for (const data of weatherData) {
+            const weatherEntry = new WeatherModel(data);
+            await weatherEntry.save();
+        }
+
+        console.log('Weather data successfully scraped and saved to database');
+    } catch (err) {
+        console.error('Error scraping and saving weather data:', err);
     } finally {
         await browser.close();
+        mongoose.connection.close();
     }
-})();
+};
+
+// Main Function
+const main = async () => {
+    await connectDB();
+    await scrapeAndSaveWeatherData();
+};
+
+// Start the script
+main();
