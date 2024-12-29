@@ -1,7 +1,8 @@
+require('dotenv').config(); 
+
 const { MongoClient, ServerApiVersion } = require('mongodb');
 
-// Je correcte connection string (controleer gebruikersnaam, wachtwoord en database)
-const uri = "mongodb+srv://kobeberckmans:passwordpassword@cluster1.tpiy3cp.mongodb.net/<course_project>?retryWrites=true&w=majority";
+const uri = `mongodb+srv://kobeberckmans:${process.env.MONGODB_PASSWORD}@cluster1.tpiy3cp.mongodb.net/course_project?retryWrites=true&w=majority`;
 
 const client = new MongoClient(uri, {
   serverApi: {
@@ -16,11 +17,12 @@ async function testConnection() {
     console.log("Attempting to connect...");
     await client.connect();
     console.log("Successfully connected to MongoDB!");
-
-    const database = client.db("Course_Project"); // Vervang "test" door je database naam
+    
+    const database = client.db("Course_Project"); 
+    const collections = await database.listCollections().toArray();
+    console.log("Available collections:", collections.map(coll => coll.name));
+    
     const collection = database.collection("strava");
-
-    // Voorbeeld: haal data op uit de collectie
     const data = await collection.find({}).toArray();
     console.log("Data from collection:", data);
   } catch (error) {
