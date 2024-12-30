@@ -134,3 +134,22 @@ h1 {
     /* Geen extra padding */
     font-family: sporter, sans-serif;
 }
+
+button {
+    background-color: #8B4513;
+    /* Bruine achtergrondkleur */
+    color: white;
+    /* Witte tekstkleur */
+    border: 2px solid white;
+    /* Witte rand */
+    padding: 10px 20px;
+    /* Padding binnen de knop */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover-effect voor de knoppen */
+button:hover {
+    background-color: #6A3E10;
+    /* Donkerdere bruine achtergrondkleur bij hover */
+}
