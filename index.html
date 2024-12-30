@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My JogJournal</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <!-- Bovenste afbeelding met titel -->
+    <div class="header-image">
+        <img src="/assets/images/running-sunset.jpg" alt="JogJournal" class="header-img">
+        <h1 class="header-title">My Jog-Journal</h1>
+    </div>
+
+    <!-- Data container -->
+    <div class="data-container" id="data-container"></div>
+
+    <!-- Modaal venster -->
+    <div id="image-modal" class="modal">
+        <span class="close-button">&times;</span>
+        <img class="modal-content" id="modal-image" alt="Zoomed Image">
+    </div>
+
+    <script>
+        async function fetchData() {
+            try {
+                const response = await fetch('/api/strava');
+                const data = await response.json();
+
+                const container = document.getElementById('data-container');
+                container.innerHTML = '';
+
+                data.forEach(item => {
+                    const div = document.createElement('div');
+                    div.classList.add('data-item');
+                    div.innerHTML = `
+                        <h2>${item.type}</h2>
+                        <p><strong>Datum:</strong> <span>${item.datum}</span><input type="text" class="edit-input" style="display: none;" value="${item.datum}" data-field="datum" data-id="${item._id}"></p>
+                        <p><strong>Afstand:</strong> <span>${item.afstand_km} km</span><input type="text" class="edit-input" style="display: none;" value="${item.afstand_km}" data-field="afstand_km" data-id="${item._id}"></p>
+                        <p><strong>Tempo:</strong> <span>${item.tempo_min_per_km} min/km</span><input type="text" class="edit-input" style="display: none;" value="${item.tempo_min_per_km}" data-field="tempo_min_per_km" data-id="${item._id}"></p>
+                        <p><strong>Plaats:</strong> <span>${item.plaats}</span><input type="text" class="edit-input" style="display: none;" value="${item.plaats}" data-field="plaats" data-id="${item._id}"></p>
+                        <p><strong>Hoogteverschil:</strong> <span>${item.hoogteverschil_m} m</span><input type="text" class="edit-input" style="display: none;" value="${item.hoogteverschil_m}" data-field="hoogteverschil_m" data-id="${item._id}"></p>
+                        ${item.duur_min !== undefined ? `<p><strong>Duur:</strong> <span>${item.duur_min} minuten</span><input type="text" class="edit-input" style="display: none;" value="${item.duur_min}" data-field="duur_min" data-id="${item._id}"></p>` : ''}
+                        ${item.duur_uur !== undefined ? `<p><strong>Duur:</strong> <span>${item.duur_uur} uur</span><input type="text" class="edit-input" style="display: none;" value="${item.duur_uur}" data-field="duur_uur" data-id="${item._id}"></p>` : ''}
+                        <img src="/assets/images/${item.image}" alt="${item.type}" class="data-image" onclick="openModal('${encodeURIComponent(item.image)}')">
+                        <button onclick="editData(event)">Edit</button>
+                        <button onclick="saveData(event)">Save</button>
+                    `;
+                    container.appendChild(div);
+                });
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        function editData(event) {
+            const button = event.target;
+            const inputs = button.parentElement.querySelectorAll('.edit-input');
+            inputs.forEach(input => {
+                input.style.display = 'inline';
+            });
+            button.textContent = 'Cancel';
+            button.setAttribute('onclick', 'cancelEdit(event)');
+        }
+
+        function saveData(event) {
+            const button = event.target;
+            const div = button.parentElement;
+            const inputs = div.querySelectorAll('.edit-input');
+            const updateData = {};
+
+            inputs.forEach(input => {
+                if (input.style.display !== 'none' && input.value.trim() !== '') {
+                    const field = input.getAttribute('data-field');
+                    const id = input.getAttribute('data-id');
+                    updateData[field] = input.value;
+                    updateData['_id'] = id; // Voeg de id toe om te identificeren welke record wordt bijgewerkt
+                }
+            });
+
+            fetch('/api/strava', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updateData),
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Data updated successfully!');
+                        fetchData(); // Herlaad de data na succesvolle update
+                    } else {
+                        throw new Error('Failed to update data');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating data:', error);
+                    alert('Error updating data.');
+                });
+        }
+
+        function cancelEdit(event) {
+            const button = event.target;
+            const inputs = button.parentElement.querySelectorAll('.edit-input');
+            inputs.forEach(input => {
+                input.style.display = 'none';
+            });
+            button.textContent = 'Edit';
+            button.setAttribute('onclick', 'editData(event)');
+        }
+
+        function openModal(imageName) {
+            const modal = document.getElementById('image-modal');
+            const modalImage = document.getElementById('modal-image');
+            modal.style.display = 'block';
+            modalImage.src = `/assets/images/${decodeURIComponent(imageName)}`;
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('image-modal');
+            modal.style.display = 'none';
+        }
+
+        document.querySelector('.close-button').addEventListener('click', closeModal);
+
+        window.addEventListener('click', function (event) {
+            const modal = document.getElementById('image-modal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        fetchData();
+    </script>
+</body>
+
+</html>
