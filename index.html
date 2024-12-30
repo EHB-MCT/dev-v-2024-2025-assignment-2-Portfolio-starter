@@ -12,6 +12,12 @@
     <h1>My Jog-Journal</h1>
     <div class="data-container" id="data-container"></div>
 
+    <!-- Modaal venster -->
+    <div id="image-modal" class="modal">
+        <span class="close-button">&times;</span>
+        <img class="modal-content" id="modal-image" alt="Zoomed Image">
+    </div>
+
     <script>
         async function fetchData() {
             try {
@@ -25,21 +31,43 @@
                     const div = document.createElement('div');
                     div.classList.add('data-item');
                     div.innerHTML = `
-            <h2>${item.type}</h2>
-            <p><strong>Datum:</strong> ${item.datum}</p>
-            <p><strong>Afstand:</strong> ${item.afstand_km} km</p>
-            <p><strong>Tempo:</strong> ${item.tempo_min_per_km} min/km</p>
-            <p><strong>Plaats:</strong> ${item.plaats}</p>
-            <p><strong>Hoogteverschil:</strong> ${item.hoogteverschil_m} m</p>
-             ${item.duur_min !== undefined ? `<p><strong>Duur:</strong> ${item.duur_min} minuten</p>` : ''}
+                        <h2>${item.type}</h2>
+                        <p><strong>Datum:</strong> ${item.datum}</p>
+                        <p><strong>Afstand:</strong> ${item.afstand_km} km</p>
+                        <p><strong>Tempo:</strong> ${item.tempo_min_per_km} min/km</p>
+                        <p><strong>Plaats:</strong> ${item.plaats}</p>
+                        <p><strong>Hoogteverschil:</strong> ${item.hoogteverschil_m} m</p>
+                        ${item.duur_min !== undefined ? `<p><strong>Duur:</strong> ${item.duur_min} minuten</p>` : ''}
                         ${item.duur_uur !== undefined ? `<p><strong>Duur:</strong> ${item.duur_uur} uur</p>` : ''}
-          `;
+                        ${item.image ? `<img src="/assets/images/${item.image}" alt="${item.type}" class="data-image" onclick="openModal('${encodeURIComponent(item.image)}')">` : ''}
+                    `;
                     container.appendChild(div);
                 });
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         }
+
+        function openModal(imageName) {
+            const modal = document.getElementById('image-modal');
+            const modalImage = document.getElementById('modal-image');
+            modal.style.display = 'block';
+            modalImage.src = `/assets/images/${decodeURIComponent(imageName)}`;
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('image-modal');
+            modal.style.display = 'none';
+        }
+
+        document.querySelector('.close-button').addEventListener('click', closeModal);
+
+        window.addEventListener('click', function (event) {
+            const modal = document.getElementById('image-modal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
 
         fetchData();
     </script>
