@@ -1,8 +1,9 @@
 body {
     font-family: Arial, sans-serif;
-    padding: 20px;
+    padding: -5px;
     background-color: #000;
     color: #FFF;
+    width: 100%;
 }
 
 h1 {
@@ -12,22 +13,18 @@ h1 {
 }
 
 .data-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    /* Minimale ruimte tussen containers */
+    display: grid;
+    grid-template-columns: repeat(3, 300px);
+    gap: 50px;
     justify-content: center;
-    /* Centraal uitlijnen */
     margin-top: 20px;
 }
 
 .data-item {
-    width: 300px;
-    /* Zorg voor een vaste breedte */
     padding: 15px;
     border: 3px solid #ddd;
     border-radius: 8px;
-    background-color: #f8763a;
+    background-color: rgba(248, 118, 58, 0.5);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s;
     text-align: center;
@@ -48,24 +45,17 @@ h1 {
     line-height: 1.4;
 }
 
-/* Afbeeldingen in de container */
 .data-item .data-image {
     width: 100%;
-    /* Past zich aan de containerbreedte aan */
     max-height: 150px;
-    /* Beperk de hoogte */
     margin: 10px 0;
-    /* Ruimte boven en onder de afbeelding */
     border-radius: 8px;
     object-fit: cover;
     cursor: pointer;
-    /* Geef aan dat het klikbaar is */
 }
 
-/* Modaal venster */
 .modal {
     display: none;
-    /* Verberg standaard */
     position: fixed;
     z-index: 1000;
     left: 0;
@@ -74,7 +64,6 @@ h1 {
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.8);
-    /* Donkere overlay */
 }
 
 .modal-content {
@@ -98,4 +87,50 @@ h1 {
 
 .close-button:hover {
     color: #f8763a;
+}
+
+.header-image {
+    margin-top: -2%;
+    margin-bottom: 10%;
+    position: relative;
+    margin-left: -2%;
+    width: 102%;
+    height: 350px;
+
+    text-align: center;
+
+    border: #FFF;
+    border-width: 5px;
+
+}
+
+.img.header-img {
+    border: #FFF;
+    border-width: 5px;
+
+
+}
+
+.header-img {
+    width: 100%;
+    height: 100%;
+    border-bottom: 5px solid white;
+    /* Witte onderborder toevoegen */
+
+    opacity: 0.7;
+
+}
+
+.header-title {
+    position: absolute;
+    bottom: 60px;
+
+    /* Verhoog de waarde naar boven verplaatsen */
+    left: 50%;
+    transform: translateX(-50%);
+    color: #FFF;
+    font-size: 100px;
+    padding-top: 0px;
+    /* Geen extra padding */
+    font-family: sporter, sans-serif;
 }
