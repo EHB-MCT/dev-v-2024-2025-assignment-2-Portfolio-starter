@@ -1,4 +1,4 @@
-```markdown
+
 # WeatherScraper
 
 An application designed to scrape and store weather forecasts for future analysis and visualization. Built with Node.js, Puppeteer, and MongoDB, this project emphasizes modularity, scalability, and adherence to coding best practices.
