@@ -16,7 +16,7 @@ An application designed to scrape and store weather forecasts for future analysi
 - [Contributing](#contributing)
 - [Documentation](#documentation)
 - [Conventions](#Conventions)
-- [Data Flow](#Data Flow)
+- [Data Flow](#Data)
 ---
 
 ## Description
