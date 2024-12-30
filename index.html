@@ -13,9 +13,9 @@
     <div class="header-image">
         <img src="/assets/images/running-sunset.jpg" alt="JogJournal" class="header-img">
         <h1 class="header-title">My Jog-Journal</h1>
-
     </div>
 
+    <!-- Data container -->
     <div class="data-container" id="data-container"></div>
 
     <!-- Modaal venster -->
@@ -38,20 +38,78 @@
                     div.classList.add('data-item');
                     div.innerHTML = `
                         <h2>${item.type}</h2>
-                        <p><strong>Datum:</strong> ${item.datum}</p>
-                        <p><strong>Afstand:</strong> ${item.afstand_km} km</p>
-                        <p><strong>Tempo:</strong> ${item.tempo_min_per_km} min/km</p>
-                        <p><strong>Plaats:</strong> ${item.plaats}</p>
-                        <p><strong>Hoogteverschil:</strong> ${item.hoogteverschil_m} m</p>
-                        ${item.duur_min !== undefined ? `<p><strong>Duur:</strong> ${item.duur_min} minuten</p>` : ''}
-                        ${item.duur_uur !== undefined ? `<p><strong>Duur:</strong> ${item.duur_uur} uur</p>` : ''}
-                        ${item.image ? `<img src="/assets/images/${item.image}" alt="${item.type}" class="data-image" onclick="openModal('${encodeURIComponent(item.image)}')">` : ''}
+                        <p><strong>Datum:</strong> <span>${item.datum}</span><input type="text" class="edit-input" style="display: none;" value="${item.datum}" data-field="datum" data-id="${item._id}"></p>
+                        <p><strong>Afstand:</strong> <span>${item.afstand_km} km</span><input type="text" class="edit-input" style="display: none;" value="${item.afstand_km}" data-field="afstand_km" data-id="${item._id}"></p>
+                        <p><strong>Tempo:</strong> <span>${item.tempo_min_per_km} min/km</span><input type="text" class="edit-input" style="display: none;" value="${item.tempo_min_per_km}" data-field="tempo_min_per_km" data-id="${item._id}"></p>
+                        <p><strong>Plaats:</strong> <span>${item.plaats}</span><input type="text" class="edit-input" style="display: none;" value="${item.plaats}" data-field="plaats" data-id="${item._id}"></p>
+                        <p><strong>Hoogteverschil:</strong> <span>${item.hoogteverschil_m} m</span><input type="text" class="edit-input" style="display: none;" value="${item.hoogteverschil_m}" data-field="hoogteverschil_m" data-id="${item._id}"></p>
+                        ${item.duur_min !== undefined ? `<p><strong>Duur:</strong> <span>${item.duur_min} minuten</span><input type="text" class="edit-input" style="display: none;" value="${item.duur_min}" data-field="duur_min" data-id="${item._id}"></p>` : ''}
+                        ${item.duur_uur !== undefined ? `<p><strong>Duur:</strong> <span>${item.duur_uur} uur</span><input type="text" class="edit-input" style="display: none;" value="${item.duur_uur}" data-field="duur_uur" data-id="${item._id}"></p>` : ''}
+                        <img src="/assets/images/${item.image}" alt="${item.type}" class="data-image" onclick="openModal('${encodeURIComponent(item.image)}')">
+                        <button onclick="editData(event)">Edit</button>
+                        <button onclick="saveData(event)">Save</button>
                     `;
                     container.appendChild(div);
                 });
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
+        }
+
+        function editData(event) {
+            const button = event.target;
+            const inputs = button.parentElement.querySelectorAll('.edit-input');
+            inputs.forEach(input => {
+                input.style.display = 'inline';
+            });
+            button.textContent = 'Cancel';
+            button.setAttribute('onclick', 'cancelEdit(event)');
+        }
+
+        function saveData(event) {
+            const button = event.target;
+            const div = button.parentElement;
+            const inputs = div.querySelectorAll('.edit-input');
+            const updateData = {};
+
+            inputs.forEach(input => {
+                if (input.style.display !== 'none' && input.value.trim() !== '') {
+                    const field = input.getAttribute('data-field');
+                    const id = input.getAttribute('data-id');
+                    updateData[field] = input.value;
+                    updateData['_id'] = id; // Voeg de id toe om te identificeren welke record wordt bijgewerkt
+                }
+            });
+
+            fetch('/api/strava', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updateData),
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Data updated successfully!');
+                        fetchData(); // Herlaad de data na succesvolle update
+                    } else {
+                        throw new Error('Failed to update data');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating data:', error);
+                    alert('Error updating data.');
+                });
+        }
+
+        function cancelEdit(event) {
+            const button = event.target;
+            const inputs = button.parentElement.querySelectorAll('.edit-input');
+            inputs.forEach(input => {
+                input.style.display = 'none';
+            });
+            button.textContent = 'Edit';
+            button.setAttribute('onclick', 'editData(event)');
         }
 
         function openModal(imageName) {
