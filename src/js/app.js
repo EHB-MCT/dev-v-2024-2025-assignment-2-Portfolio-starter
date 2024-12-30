@@ -26,6 +26,7 @@ const client = new MongoClient(uri, {
     console.error("Connection failed:", error.message);
   }
 })();
+app.use('/assets', express.static(path.join(__dirname, '..', 'src', 'assets')));
 
 // Statische bestanden serveren (voor CSS en JS)
 app.use(express.static(path.join(__dirname, '..'))); // Serveert rootmap als statische bestanden
