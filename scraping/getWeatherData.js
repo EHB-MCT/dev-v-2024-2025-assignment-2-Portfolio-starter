@@ -1,27 +1,27 @@
 // scraping/getWeatherData.js
 
 async function getWeatherData(page, url) {
-    await page.goto(url);  // Bezoek de pagina
+    await page.goto(url); // Visit the page
 
     const weatherData = await page.evaluate(() => {
         const data = [];
         let index = 0;
         let detailIndex;
 
-        // Blijf door de detailIndex elementen gaan totdat er geen meer zijn
+        // Loop through all detailIndex elements until none are found
         while (true) {
             detailIndex = document.querySelector(`#detailIndex${index}`);
             if (!detailIndex) {
-                break;  // Stop als er geen detailIndex(n) meer is
+                break; // Stop when no more detailIndex(n) elements are found
             }
 
-            // Haal de gegevens uit dit element
-            const date = detailIndex.querySelector('[data-testid="daypartName"]')?.innerText || ''; //datum 
-            const condition = detailIndex.querySelector('[data-testid="wxIcon"] .DetailsSummary--extendedData--eJzhb')?.innerText || ''; //conditie (regen, sneeuw,...)
+            // Extract data from this element
+            const date = detailIndex.querySelector('[data-testid="daypartName"]')?.innerText || ''; // Date
+            const condition = detailIndex.querySelector('[data-testid="wxIcon"] .DetailsSummary--extendedData--eJzhb')?.innerText || ''; // Condition
             const temperature = (detailIndex.querySelector('[data-testid="detailsTemperature"] .DetailsSummary--highTempValue--VHKaO')?.innerText || '') 
-                + '/' + (detailIndex.querySelector('[data-testid="detailsTemperature"] .DetailsSummary--lowTempValue--ogrzb')?.innerText || ''); // Temperatuur
-            const precip = detailIndex.querySelector('[data-testid="Precip"] .DetailsSummary--precipIcon--6CgcC + span')?.innerText || ''; //kans op regen
-            const wind = detailIndex.querySelector('[data-testid="wind"] .Wind--windWrapper--NsCjc')?.innerText || ''; //windrichting & snelheid.
+                + '/' + (detailIndex.querySelector('[data-testid="detailsTemperature"] .DetailsSummary--lowTempValue--ogrzb')?.innerText || ''); // Temperature
+            const precip = detailIndex.querySelector('[data-testid="Precip"] .DetailsSummary--precipIcon--6CgcC + span')?.innerText || ''; // Precipitation
+            const wind = detailIndex.querySelector('[data-testid="wind"] .Wind--windWrapper--NsCjc')?.innerText || ''; // Wind direction and speed
 
             data.push({
                 date,
@@ -31,13 +31,19 @@ async function getWeatherData(page, url) {
                 wind
             });
 
-            index++;  // Verhoog index om naar het volgende detailIndex element te gaan
+            index++; // Increment index to move to the next detailIndex element
         }
 
         return data;
     });
 
-    return weatherData;
+    // Add dateid for each weather data entry
+    const processedData = weatherData.map(item => ({
+        ...item,
+        dateid: `date-${item.date.replace(/\s+/g, '-').toLowerCase()}` // Generate unique dateid
+    }));
+
+    return processedData;
 }
 
 module.exports = getWeatherData;
