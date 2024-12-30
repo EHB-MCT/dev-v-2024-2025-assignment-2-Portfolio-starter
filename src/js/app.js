@@ -1,6 +1,10 @@
-require('dotenv').config(); 
-
+require('dotenv').config();
+const express = require('express');
 const { MongoClient, ServerApiVersion } = require('mongodb');
+const path = require('path');
+
+const app = express();
+const port = 3000;
 
 const uri = `mongodb+srv://kobeberckmans:${process.env.MONGODB_PASSWORD}@cluster1.tpiy3cp.mongodb.net/course_project?retryWrites=true&w=majority`;
 
@@ -9,28 +13,42 @@ const client = new MongoClient(uri, {
     version: ServerApiVersion.v1,
     strict: true,
     deprecationErrors: true,
-  }
+  },
 });
 
-async function testConnection() {
+// Verbind met de database tijdens de server runtime
+(async () => {
   try {
     console.log("Attempting to connect...");
     await client.connect();
     console.log("Successfully connected to MongoDB!");
-    
-    const database = client.db("Course_Project"); 
-    const collections = await database.listCollections().toArray();
-    console.log("Available collections:", collections.map(coll => coll.name));
-    
-    const collection = database.collection("strava");
-    const data = await collection.find({}).toArray();
-    console.log("Data from collection:", data);
   } catch (error) {
     console.error("Connection failed:", error.message);
-    console.error("Full error:", error);
-  } finally {
-    await client.close();
   }
-}
+})();
 
-testConnection();
+// Statische bestanden serveren (voor CSS en JS)
+app.use(express.static(path.join(__dirname, '..'))); // Serveert rootmap als statische bestanden
+
+// API-endpoint om data op te halen
+app.get('/api/strava', async (req, res) => {
+  try {
+    const database = client.db("Course_Project");
+    const collection = database.collection("strava");
+    const data = await collection.find({}).toArray();
+    res.json(data);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    res.status(500).send("Error fetching data");
+  }
+});
+
+// Route om `index.html` te serveren
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '..','..', 'index.html')); // Verwijst naar index.html in de root
+});
+
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
+
