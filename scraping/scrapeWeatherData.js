@@ -1,16 +1,14 @@
-// scraping/scrapeWeatherData.js
-
 const puppeteer = require('puppeteer'); 
-const getWeatherData = require('./getWeatherData');  // Importeer de getWeatherData functie
+const getWeatherData = require('./getWeatherData');  // Import the getWeatherData function
 
 async function scrapeWeatherData(url) { 
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
-    // Verkrijg de weersgegevens van de opgegeven URL
+    // Get the weather data from the given URL
     const weatherData = await getWeatherData(page, url);
 
-    console.log(weatherData); // vertonen van de weatherdata in console
+    console.log(weatherData); // Display the weather data in console
 
     await browser.close();
 }
