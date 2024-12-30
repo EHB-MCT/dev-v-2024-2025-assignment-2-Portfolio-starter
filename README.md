@@ -15,7 +15,8 @@ An application designed to scrape and store weather forecasts for future analysi
 - [Roadmap](#roadmap)
 - [Contributing](#contributing)
 - [Documentation](#documentation)
-
+- [Conventions](#Conventions)
+- [Data Flow](#Data Flow)
 ---
 
 ## Description
@@ -131,6 +132,39 @@ Feel free to contribute to this project! Create a pull request for new features 
 - **API Endpoints**: (Future) Documentation for API routes will be provided in `/docs/api_endpoints.md`.
 
 ---
+
+## Conventions
+
+- **File and Folder Naming**: All files and folders use camelCase for naming to maintain consistency and clarity. For example, files like `connectDB.js`, `getWeatherData.js`, `scrapeWeatherData.js`, etc., adhere to this naming convention.
+
+- **Environment Variables**: Sensitive information such as API keys and database credentials are stored in the `.env` file and are accessed using `process.env` to ensure secure handling of these values.
+
+- **Modularization**: The project is organized into logical modules and components to enhance code reusability and maintainability. Functions and modules are kept focused on a single responsibility.
+
+- **Database Naming**: Database-related files are placed in the `/database` folder, and each file handles a specific responsibility (e.g., connecting to the database, saving weather data).
+
+---
+
+## Data Flow
+
+The data flow in this project involves multiple stages, from scraping the weather data to storing it in the database, with necessary validation and formatting applied along the way.
+
+### 1. **Scraping Data**
+   - The scraping process begins with the `/scraping` folder. The main function responsible for gathering weather data is `scrapeWeatherData.js`, which calls helper functions like `getWeatherData.js` to fetch data from external sources.
+   - Once the data is fetched, it's passed through `extractWeatherData.js` to clean and structure it for further processing.
+
+### 2. **Data Validation and Transformation**
+   - The scraped data is then passed to utility functions, such as `formatDate.js` in the `/utils` folder, which formats timestamps into readable date formats. This ensures that all data is in the correct format before being stored.
+
+### 3. **Saving Data to the Database**
+   - After validation and formatting, the data is saved to the database. This is handled in the `/database/saveWeatherData.js` file, which stores the structured weather data in a database (e.g., MongoDB or SQL) for future use.
+
+### 4. **Database Connection**
+   - The connection to the database is managed by `connectDB.js` in the `/database` folder. This file ensures that the app is connected to the database at the start of the application.
+
+### 5. **Environment Configuration**
+   - All environment-related configurations, including API keys and database URLs, are stored securely in the `.env` file. These variables are accessed throughout the project to ensure proper configuration across different environments.
+
 
 ## License
 
