@@ -1,17 +1,51 @@
+/* Global Styles
+-------------------------------------------------- */
 body {
     font-family: Arial, sans-serif;
-    padding: -5px;
     background-color: #000;
     color: #FFF;
     width: 100%;
+    /* Remove negative padding as it's invalid */
+    padding: 0;
 }
 
+/* Typography
+-------------------------------------------------- */
 h1 {
     text-align: center;
     color: #FFF;
     font-family: Poppins, sans-serif;
 }
 
+/* Header Styles
+-------------------------------------------------- */
+.header-image {
+    position: relative;
+    width: 102%;
+    height: 350px;
+    margin: -2% 0 10% -2%;
+    text-align: center;
+}
+
+.header-img {
+    width: 100%;
+    height: 100%;
+    border-bottom: 5px solid white;
+    opacity: 0.7;
+}
+
+.header-title {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #FFF;
+    font-size: 100px;
+    font-family: sporter, sans-serif;
+}
+
+/* Data Grid Layout
+-------------------------------------------------- */
 .data-container {
     display: grid;
     grid-template-columns: repeat(3, 300px);
@@ -20,6 +54,8 @@ h1 {
     margin-top: 20px;
 }
 
+/* Data Item Cards
+-------------------------------------------------- */
 .data-item {
     padding: 15px;
     border: 3px solid #ddd;
@@ -54,6 +90,8 @@ h1 {
     cursor: pointer;
 }
 
+/* Modal Styles
+-------------------------------------------------- */
 .modal {
     display: none;
     position: fixed;
@@ -89,71 +127,23 @@ h1 {
     color: #f8763a;
 }
 
-.header-image {
-    margin-top: -2%;
-    margin-bottom: 10%;
-    position: relative;
-    margin-left: -2%;
-    width: 102%;
-    height: 350px;
-
-    text-align: center;
-
-    border: #FFF;
-    border-width: 5px;
-
-}
-
-.img.header-img {
-    border: #FFF;
-    border-width: 5px;
-
-
-}
-
-.header-img {
-    width: 100%;
-    height: 100%;
-    border-bottom: 5px solid white;
-    /* Witte onderborder toevoegen */
-
-    opacity: 0.7;
-
-}
-
-.header-title {
-    position: absolute;
-    bottom: 60px;
-
-    /* Verhoog de waarde naar boven verplaatsen */
-    left: 50%;
-    transform: translateX(-50%);
-    color: #FFF;
-    font-size: 100px;
-    padding-top: 0px;
-    /* Geen extra padding */
-    font-family: sporter, sans-serif;
-}
-
+/* Button Styles
+-------------------------------------------------- */
 button {
     background-color: #8B4513;
-    /* Bruine achtergrondkleur */
     color: white;
-    /* Witte tekstkleur */
     border: 2px solid white;
-    /* Witte rand */
     padding: 10px 20px;
-    /* Padding binnen de knop */
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-/* Hover-effect voor de knoppen */
 button:hover {
     background-color: #6A3E10;
-    /* Donkerdere bruine achtergrondkleur bij hover */
 }
 
+/* New Activity Section
+-------------------------------------------------- */
 .new-activity {
     position: absolute;
     bottom: 50%;
@@ -164,9 +154,10 @@ button:hover {
     padding-top: 10px;
     font-family: sporter, sans-serif;
     cursor: pointer;
-
 }
 
+/* Form Styles
+-------------------------------------------------- */
 .form-container {
     display: none;
     max-width: 500px;
@@ -188,27 +179,19 @@ button:hover {
 
 .form-container button {
     background-color: #ac5313;
-    color: white;
-    padding: 10px 20px;
+    margin: 10px 10px 0 0;
     border: none;
     border-radius: 4px;
-    cursor: pointer;
-    margin-top: 10px;
-    margin-right: 10px;
 }
 
-.form-container button:hover {
-    background-color: #6A3E10;
-}
-
-
+/* Filter Section
+-------------------------------------------------- */
 .filter-section {
     display: flex;
     gap: 15px;
     padding: 20px;
     background-color: #6A3E10;
     margin: 10px 570px 70px auto;
-    /* Meer ruimte aan de rechterkant */
     max-width: 800px;
     border-radius: 8px;
 }
@@ -217,8 +200,6 @@ button:hover {
     display: flex;
     flex-direction: column;
     gap: 5px;
-
-
 }
 
 .filter-group label {
@@ -241,27 +222,17 @@ button:hover {
 
 .filter-buttons button {
     padding: 8px 15px;
+    background-color: #ac5313;
     border: none;
     border-radius: 4px;
-    cursor: pointer;
-    background-color: #ac5313;
-    color: white;
-}
-
-.filter-buttons button.reset {
-    background-color: #ac5313;
 }
 
 .filter-buttons button:hover {
     opacity: 0.9;
 }
 
-
-
-
-
-
-
+/* Edit and Delete Controls
+-------------------------------------------------- */
 .edit-input {
     display: none;
     margin: 5px 0;
