@@ -174,6 +174,8 @@ Common issues and solutions:
 ### Tools & Resources Used
 - [Visual Studio Code](https://code.visualstudio.com/) - Code editor
 - [MongoDB Compass](https://www.mongodb.com/products/compass) - MongoDB GUI
+- [ChatGPT](https://chatgpt.com/) - ChatGPT - for helping with readme & progress.md writing
+
 
 
 ### Design Resources
