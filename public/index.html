@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Data</title>
+</head>
+<body>
+    <h1>Weather Data</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>City</th>
+                <th>Highest Temperature (°C)</th>
+                <th>Lowest Temperature (°C)</th>
+                <th>Rainfall (mm)</th>
+                <th>Wind</th>
+                <th>Condition</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody id="weatherData">
+            <!-- Weather data will be inserted here -->
+        </tbody>
+    </table>
+
+    <script>
+        // Fetch the weather data from the API
+        fetch('/api/weather-data')
+            .then(response => response.json())
+            .then(data => {
+                const weatherTable = document.getElementById('weatherData');
+                
+                // Loop through each weather item and populate the table
+                data.forEach(weather => {
+                    const row = document.createElement('tr');
+
+                    // City - always set to Brussels
+                    const cityCell = document.createElement('td');
+                    cityCell.textContent = 'Brussels';
+                    row.appendChild(cityCell);
+
+                    // Highest Temperature
+                    const tempCellHigh = document.createElement('td');
+                    const tempParts = weather.temperature.split('/');
+                    tempCellHigh.textContent = tempParts[0]; // Display the highest temperature
+                    row.appendChild(tempCellHigh);
+
+                    // Lowest Temperature
+                    const tempCellLow = document.createElement('td');
+                    tempCellLow.textContent = tempParts[1]; // Display the lowest temperature
+                    row.appendChild(tempCellLow);
+
+                    // Rainfall
+                    const precipCell = document.createElement('td');
+                    precipCell.textContent = weather.precip;
+                    row.appendChild(precipCell);
+
+                    // Wind
+                    const windCell = document.createElement('td');
+                    windCell.textContent = weather.wind;
+                    row.appendChild(windCell);
+
+                    // Condition
+                    const conditionCell = document.createElement('td');
+                    conditionCell.textContent = weather.condition;
+                    row.appendChild(conditionCell);
+
+                    // Date - directly from the scraped data (e.g., 'di 14')
+                    const dateCell = document.createElement('td');
+                    dateCell.textContent = weather.date;  // Display the date as is
+                    row.appendChild(dateCell);
+
+                    // Append the row to the table
+                    weatherTable.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error fetching weather data:', error));
+    </script>
+</body>
+</html>
