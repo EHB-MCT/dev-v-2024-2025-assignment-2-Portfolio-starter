@@ -1,7 +1,10 @@
+Here's the updated `README.md` with the new changes, including the full data visualization integration, structure changes, roadmap updates, and server adjustments:
+
+---
 
 # WeatherScraper
 
-An application designed to scrape and store weather forecasts for future analysis and visualization. Built with Node.js, Puppeteer, and MongoDB, this project emphasizes modularity, scalability, and adherence to coding best practices.
+An application designed to scrape and store weather forecasts for future analysis and visualization. Built with Node.js, Puppeteer, MongoDB, and Express, this project emphasizes modularity, scalability, and adherence to coding best practices, with a new focus on data visualization.
 
 ---
 
@@ -14,33 +17,38 @@ An application designed to scrape and store weather forecasts for future analysi
 - [Usage](#usage)
 - [Roadmap](#roadmap)
 - [Contributing](#contributing)
-- [Documentation](#documentation)
-- [Conventions](#Conventions)
-- [Data Flow](#Data)
+- [Conventions](#conventions)
+- [Data Flow](#data-flow)
+- [License](#license)
+- [Sources](#sources)
+
 ---
 
 ## Description
 
-WeatherScraper automates the collection of weather forecast data from weather.com using Puppeteer. It saves the scraped data in a MongoDB database, making it accessible for further processing, aggregation, or visualization. This project demonstrates efficient data management and clean code organization to ensure scalability and maintainability.
+WeatherScraper automates the collection of weather forecast data from weather.com using Puppeteer. It saves the scraped data in a MongoDB database and presents the data visually using various data visualization techniques. This project now integrates Express for serving data and static files, allowing for a smooth user experience at [http://localhost:3000/](http://localhost:3000/). It is designed for both data scraping and visualization, with a focus on scalability and maintainability.
 
 ---
 
 ## Features
 
-- **Automated Weather Forecast Scraping**: Extracts temperature, weather conditions, precipitation, wind speed, and day of the week.
+- **Automated Weather Forecast Scraping**: Extracts temperature, weather conditions, precipitation, wind speed, and day of the week from weather.com.
 - **Database Integration**: Stores weather data in MongoDB using a well-defined Mongoose schema.
+- **Data Visualization**: Displays weather data dynamically enabling better insights and analysis.
+- **Express Server**: Uses Express to serve both data and static files, including the front-end components.
 - **Reusable Modules**: Modular and reusable code to ensure scalability and maintainability.
 - **Configuration-Driven**: Leverages configuration files for flexible app settings and environment management.
-- **Future-Ready**: Designed for future integration with data visualization and dynamic updates.
+- **Future-Ready**: Designed for future integration with real-time weather data and user-driven customization.
 
 ---
 
 ## Technologies
 
 - **Scraping**: [Puppeteer](https://pptr.dev/)
-- **Backend**: [Node.js](https://nodejs.org/)
+- **Backend**: [Node.js](https://nodejs.org/), [Express](https://expressjs.com/)
 - **Database**: [MongoDB](https://www.mongodb.com/)
 - **Environment Management**: `.env` for sensitive information and `config` for app settings
+- **Static Files**: Front-end static files served from `/public`
 
 ---
 
@@ -61,6 +69,15 @@ WeatherScraper automates the collection of weather forecast data from weather.co
     extractWeatherData.js
   /utils
     formatDate.js
+  /public
+    /css
+      reset.css
+      master.css
+      style.css
+      media.css
+    /js
+      script.js
+      showWeatherData.js
   .env
   .gitignore
   index.js
@@ -72,7 +89,13 @@ WeatherScraper automates the collection of weather forecast data from weather.co
 - **/models**: Includes the Mongoose schema for weather data.
 - **/scraping**: Manages all scraping logic and data extraction modules.
 - **/utils**: Contains helper functions (e.g., `formatDate.js`).
+- **/public**: Serves static assets like CSS, JavaScript files, and maps for the front-end.
+  - **/css**: Contains the main CSS files (`reset.css`, `style.css`, `master.css`, `media.css`).
+  - **/js**: Contains JavaScript files used for front-end interactivity (`script.js`) and data showing in (`showWeatherData.js`)
+- **/server**: Contains Express-related server files.
+  - **routes.js**: The main Express server file that handles routes, serves static files, and manages API endpoints.
 - **index.js**: The main entry point for the application.
+- **README.md**: Project documentation.
 
 ---
 
@@ -109,7 +132,9 @@ Ensure sensitive credentials are not pushed to version control by including `.en
     node index.js
     ```
 
-3. **Output**: The scraper will extract weather data and save it in MongoDB.
+3. **Access the application**: Visit [http://localhost:3000/](http://localhost:3000/) to interact and view with scraped weather data.
+
+4. **Output**: The scraper will extract weather data and save it in MongoDB. The data will also be served via Express, where you can visualize it.
 
 ---
 
@@ -117,19 +142,14 @@ Ensure sensitive credentials are not pushed to version control by including `.en
 
 - [x] Develop basic scraper with Puppeteer
 - [x] Integrate MongoDB for data storage
-- [ ] Implement data validation and aggregation endpoints
-- [ ] Add data visualization capabilities
+- [x] Set up Express server for serving data and static files
+- [x] Add data visualization capabilities
+- [ ] Add a frontend for better user experience (currently using static visualizations)
 
 ---
 
 ## Contributing
 Feel free to contribute to this project! Create a pull request for new features or improvements.
-
-## Documentation
-
-- **Data Flow**: A visual representation of the scraping and storage process is included in the `/docs` folder.
-- **Design Patterns**: Details on modularity and reusable patterns are documented in the `/docs/design_patterns.md`.
-- **API Endpoints**: (Future) Documentation for API routes will be provided in `/docs/api_endpoints.md`.
 
 ---
 
@@ -162,11 +182,19 @@ The data flow in this project involves multiple stages, from scraping the weathe
 ### 4. **Database Connection**
    - The connection to the database is managed by `connectDB.js` in the `/database` folder. This file ensures that the app is connected to the database at the start of the application.
 
-### 5. **Environment Configuration**
-   - All environment-related configurations, including API keys and database URLs, are stored securely in the `.env` file. These variables are accessed throughout the project to ensure proper configuration across different environments.
+### 5. **Serving Data and Visualization**
+   - The data is served using the Express server from `/server/routes.js`, where it's rendered dynamically using css. The front-end components are located in the `/public` folder.
 
+### 6. **Environment Configuration**
+   - environment-related configurations, like database URLs, are stored securely in the `.env` file. These variables are accessed throughout the project to ensure proper configuration across different environments.
+
+---
 
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
-```
+
+---
+
+## Sources
+- [Meyerweb CSS Reset](https://meyerweb.com/eric/tools/css/reset/)
