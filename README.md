@@ -1,7 +1,3 @@
-Here's the updated `README.md` with the new changes, including the full data visualization integration, structure changes, roadmap updates, and server adjustments:
-
----
-
 # WeatherScraper
 
 An application designed to scrape and store weather forecasts for future analysis and visualization. Built with Node.js, Puppeteer, MongoDB, and Express, this project emphasizes modularity, scalability, and adherence to coding best practices, with a new focus on data visualization.
@@ -78,6 +74,9 @@ WeatherScraper automates the collection of weather forecast data from weather.co
     /js
       script.js
       showWeatherData.js
+    /pages
+      visualisation.html
+    index.html  
   .env
   .gitignore
   index.js
@@ -120,6 +119,17 @@ Ensure sensitive credentials are not pushed to version control by including `.en
 
 ---
 
+## Database Configuration
+
+The application uses MongoDB Atlas as its database. To configure:
+
+    1. Create a MongoDB Atlas account
+    2.  Create a new cluster
+    3.  Add your IP address to the IP whitelist
+    4.  Create a database user
+    5.  Update the .env file with your database password
+
+
 ## Usage
 
 1. **Install dependencies**:
@@ -136,6 +146,8 @@ Ensure sensitive credentials are not pushed to version control by including `.en
 
 4. **Output**: The scraper will extract weather data and save it in MongoDB. The data will also be served via Express, where you can visualize it.
 
+## API Endpoints
+``` GET /api/weather-data - Retrieve all weathers ```
 ---
 
 ## Roadmap
@@ -144,7 +156,7 @@ Ensure sensitive credentials are not pushed to version control by including `.en
 - [x] Integrate MongoDB for data storage
 - [x] Set up Express server for serving data and static files
 - [x] Add data visualization capabilities
-- [ ] Add a frontend for better user experience (currently using static visualizations)
+- [x] Add a frontend for better user experience 
 
 ---
 
@@ -190,6 +202,7 @@ The data flow in this project involves multiple stages, from scraping the weathe
 
 ---
 
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
@@ -198,3 +211,18 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Sources
 - [Meyerweb CSS Reset](https://meyerweb.com/eric/tools/css/reset/)
+- [CSS Tips](https://www.webfx.com/blog/web-design/css-tip-1-resetting-your-styles-with-css-reset/)
+
+### JavaScript & Node.js Conventions
+- **[JavaScript Standard Style Guide](https://standardjs.com/)**: A guide for writing consistent and error-free JavaScript code.
+- **[Node.js Best Practices](https://github.com/goldbergyoni/nodebestpractices)**: A comprehensive collection of best practices for writing maintainable Node.js applications.
+
+### File and Folder Naming Conventions
+- **[Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)**: A widely adopted guide for JavaScript conventions, including file and folder naming.
+
+### Modularization & Code Organization
+- **[Node.js Documentation on Modules](https://nodejs.org/dist/latest-v16.x/docs/api/modules.html)**: Official documentation for organizing code into reusable Node.js modules.
+
+### Data Flow & Architecture
+- **[MVC Pattern in Node.js](https://scotch.io/tutorials/using-the-model-view-controller-pattern-with-node-js)**: A tutorial on how to implement the MVC pattern for organizing code in Node.js.
+---
