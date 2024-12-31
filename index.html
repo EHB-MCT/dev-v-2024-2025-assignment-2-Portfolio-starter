@@ -241,7 +241,10 @@
                 const div = document.createElement('div');
                 div.classList.add('data-item');
                 div.innerHTML = `
-            <h2>${item.type}</h2>
+            <div class="data-item-header">
+                <h2>${item.type}</h2>
+                <span class="delete-btn" onclick="deleteData('${item._id}')">&times;</span>
+            </div>
             <p><strong>Datum:</strong> <span>${item.datum}</span><input type="text" class="edit-input" style="display: none;" value="${item.datum}" data-field="datum" data-id="${item._id}"></p>
             <p><strong>Afstand:</strong> <span>${item.afstand_km} km</span><input type="text" class="edit-input" style="display: none;" value="${item.afstand_km}" data-field="afstand_km" data-id="${item._id}"></p>
             <p><strong>Tempo:</strong> <span>${item.tempo_min_per_km} min/km</span><input type="text" class="edit-input" style="display: none;" value="${item.tempo_min_per_km}" data-field="tempo_min_per_km" data-id="${item._id}"></p>
@@ -255,6 +258,31 @@
         `;
                 container.appendChild(div);
             });
+        }
+
+        // Add this new function to handle deletion
+        async function deleteData(id) {
+            if (confirm('Weet je zeker dat je deze activiteit wilt verwijderen?')) {
+                try {
+                    const response = await fetch('/api/strava', {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ _id: id })
+                    });
+
+                    if (response.ok) {
+                        alert('Activiteit succesvol verwijderd!');
+                        fetchData(); // Refresh the data
+                    } else {
+                        throw new Error('Failed to delete activity');
+                    }
+                } catch (error) {
+                    console.error('Error deleting activity:', error);
+                    alert('Error bij het verwijderen van de activiteit.');
+                }
+            }
         }
 
         function editData(event) {
