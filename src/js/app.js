@@ -72,7 +72,24 @@ app.put('/api/strava', async (req, res) => {
     }
 });
 
-
+app.post('/api/strava', async (req, res) => {
+    try {
+        const database = client.db("Course_Project");
+        const collection = database.collection("strava");
+        
+        const newActivity = req.body;
+        const result = await collection.insertOne(newActivity);
+        
+        if (result.acknowledged) {
+            res.status(201).json({ message: 'Activity added successfully', id: result.insertedId });
+        } else {
+            res.status(400).send('Failed to add activity');
+        }
+    } catch (error) {
+        console.error("Error adding activity:", error);
+        res.status(500).send("Error adding activity");
+    }
+});
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '..', '..', 'index.html'));
 });
