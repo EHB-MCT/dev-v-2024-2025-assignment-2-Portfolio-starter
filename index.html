@@ -37,7 +37,43 @@
             <button type="button" onclick="hideNewActivityForm()">Annuleren</button>
         </form>
     </div>
-
+    <div class="filter-section">
+        <div class="filter-group">
+            <label for="typeFilter">Type Activiteit</label>
+            <select id="typeFilter">
+                <option value="">Alle types</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="plaatsFilter">Plaats</label>
+            <select id="plaatsFilter">
+                <option value="">Alle plaatsen</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="afstandFilter">Afstand</label>
+            <select id="afstandFilter">
+                <option value="">Alle afstanden</option>
+                <option value="0-5">0-5 km</option>
+                <option value="5-10">5-10 km</option>
+                <option value="10-20">10-20 km</option>
+                <option value="20+">20+ km</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="dateFilter">Periode</label>
+            <select id="dateFilter">
+                <option value="">Alle periodes</option>
+                <option value="week">Laatste week</option>
+                <option value="month">Laatste maand</option>
+                <option value="year">Laatste jaar</option>
+            </select>
+        </div>
+        <div class="filter-buttons">
+            <button onclick="applyFilters()">Filter</button>
+            <button onclick="resetFilters()" class="reset">Reset</button>
+        </div>
+    </div>
     <!-- Data container -->
     <div class="data-container" id="data-container"></div>
 
@@ -48,39 +84,105 @@
     </div>
 
     <script>
-        // Fetch and display data
+        let originalData = [];
+
         async function fetchData() {
             try {
                 const response = await fetch('/api/strava');
                 const data = await response.json();
-
-                const container = document.getElementById('data-container');
-                container.innerHTML = '';
-
-                data.forEach(item => {
-                    const div = document.createElement('div');
-                    div.classList.add('data-item');
-                    div.innerHTML = `
-                        <h2>${item.type}</h2>
-                        <p><strong>Datum:</strong> <span>${item.datum}</span><input type="text" class="edit-input" style="display: none;" value="${item.datum}" data-field="datum" data-id="${item._id}"></p>
-                        <p><strong>Afstand:</strong> <span>${item.afstand_km} km</span><input type="text" class="edit-input" style="display: none;" value="${item.afstand_km}" data-field="afstand_km" data-id="${item._id}"></p>
-                        <p><strong>Tempo:</strong> <span>${item.tempo_min_per_km} min/km</span><input type="text" class="edit-input" style="display: none;" value="${item.tempo_min_per_km}" data-field="tempo_min_per_km" data-id="${item._id}"></p>
-                        <p><strong>Plaats:</strong> <span>${item.plaats}</span><input type="text" class="edit-input" style="display: none;" value="${item.plaats}" data-field="plaats" data-id="${item._id}"></p>
-                        <p><strong>Hoogteverschil:</strong> <span>${item.hoogteverschil_m} m</span><input type="text" class="edit-input" style="display: none;" value="${item.hoogteverschil_m}" data-field="hoogteverschil_m" data-id="${item._id}"></p>
-                        ${item.duur_min !== undefined ? `<p><strong>Duur:</strong> <span>${item.duur_min} minuten</span><input type="text" class="edit-input" style="display: none;" value="${item.duur_min}" data-field="duur_min" data-id="${item._id}"></p>` : ''}
-                        ${item.duur_uur !== undefined ? `<p><strong>Duur:</strong> <span>${item.duur_uur} uur</span><input type="text" class="edit-input" style="display: none;" value="${item.duur_uur}" data-field="duur_uur" data-id="${item._id}"></p>` : ''}
-                        <img src="/assets/images/${item.image}" alt="${item.type}" class="data-image" onclick="openModal('${encodeURIComponent(item.image)}')">
-                        <button onclick="editData(event)">Edit</button>
-                        <button onclick="saveData(event)">Save</button>
-                    `;
-                    container.appendChild(div);
-                });
+                originalData = data;
+                updateFilterOptions(data);
+                displayData(data);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         }
 
-        // Form handling functions
+        function updateFilterOptions(data) {
+            const types = [...new Set(data.map(item => item.type))];
+            const typeSelect = document.getElementById('typeFilter');
+            typeSelect.innerHTML = '<option value="">Alle types</option>';
+            types.forEach(type => {
+                typeSelect.innerHTML += `<option value="${type}">${type}</option>`;
+            });
+
+            const plaatsen = [...new Set(data.map(item => item.plaats))];
+            const plaatsSelect = document.getElementById('plaatsFilter');
+            plaatsSelect.innerHTML = '<option value="">Alle plaatsen</option>';
+            plaatsen.forEach(plaats => {
+                plaatsSelect.innerHTML += `<option value="${plaats}">${plaats}</option>`;
+            });
+        }
+
+        function applyFilters() {
+            let filteredData = [...originalData];
+
+            const typeFilter = document.getElementById('typeFilter').value;
+            if (typeFilter) {
+                filteredData = filteredData.filter(item => item.type === typeFilter);
+            }
+
+            const plaatsFilter = document.getElementById('plaatsFilter').value;
+            if (plaatsFilter) {
+                filteredData = filteredData.filter(item => item.plaats === plaatsFilter);
+            }
+
+            const afstandFilter = document.getElementById('afstandFilter').value;
+            if (afstandFilter) {
+                // Modified distance filter logic
+                if (afstandFilter === '20+') {
+                    // Handle 20+ km case
+                    filteredData = filteredData.filter(item => {
+                        const afstand = parseFloat(item.afstand_km);
+                        return afstand >= 20;
+                    });
+                } else {
+                    // Handle other distance ranges
+                    const [min, max] = afstandFilter.split('-').map(Number);
+                    filteredData = filteredData.filter(item => {
+                        const afstand = parseFloat(item.afstand_km);
+                        if (max) {
+                            return afstand >= min && afstand < max;
+                        } else {
+                            return afstand >= min;
+                        }
+                    });
+                }
+            }
+
+            const dateFilter = document.getElementById('dateFilter').value;
+            if (dateFilter) {
+                const now = new Date();
+                const filterDate = new Date();
+
+                switch (dateFilter) {
+                    case 'week':
+                        filterDate.setDate(now.getDate() - 7);
+                        break;
+                    case 'month':
+                        filterDate.setMonth(now.getMonth() - 1);
+                        break;
+                    case 'year':
+                        filterDate.setFullYear(now.getFullYear() - 1);
+                        break;
+                }
+
+                filteredData = filteredData.filter(item => {
+                    const itemDate = new Date(item.datum);
+                    return itemDate >= filterDate;
+                });
+            }
+
+            displayData(filteredData);
+        }
+        function resetFilters() {
+            document.getElementById('typeFilter').value = '';
+            document.getElementById('plaatsFilter').value = '';
+            document.getElementById('afstandFilter').value = '';
+            document.getElementById('dateFilter').value = '';
+            displayData(originalData);
+        }
+
         function showNewActivityForm() {
             document.getElementById('new-activity-form').style.display = 'block';
         }
@@ -90,7 +192,6 @@
             document.getElementById('activityForm').reset();
         }
 
-        // Form submission
         document.getElementById('activityForm').addEventListener('submit', async function (e) {
             e.preventDefault();
 
@@ -132,7 +233,30 @@
             }
         });
 
-        // Edit functions
+        function displayData(data) {
+            const container = document.getElementById('data-container');
+            container.innerHTML = '';
+
+            data.forEach(item => {
+                const div = document.createElement('div');
+                div.classList.add('data-item');
+                div.innerHTML = `
+            <h2>${item.type}</h2>
+            <p><strong>Datum:</strong> <span>${item.datum}</span><input type="text" class="edit-input" style="display: none;" value="${item.datum}" data-field="datum" data-id="${item._id}"></p>
+            <p><strong>Afstand:</strong> <span>${item.afstand_km} km</span><input type="text" class="edit-input" style="display: none;" value="${item.afstand_km}" data-field="afstand_km" data-id="${item._id}"></p>
+            <p><strong>Tempo:</strong> <span>${item.tempo_min_per_km} min/km</span><input type="text" class="edit-input" style="display: none;" value="${item.tempo_min_per_km}" data-field="tempo_min_per_km" data-id="${item._id}"></p>
+            <p><strong>Plaats:</strong> <span>${item.plaats}</span><input type="text" class="edit-input" style="display: none;" value="${item.plaats}" data-field="plaats" data-id="${item._id}"></p>
+            <p><strong>Hoogteverschil:</strong> <span>${item.hoogteverschil_m} m</span><input type="text" class="edit-input" style="display: none;" value="${item.hoogteverschil_m}" data-field="hoogteverschil_m" data-id="${item._id}"></p>
+            ${item.duur_min !== undefined ? `<p><strong>Duur:</strong> <span>${item.duur_min} minuten</span><input type="text" class="edit-input" style="display: none;" value="${item.duur_min}" data-field="duur_min" data-id="${item._id}"></p>` : ''}
+            ${item.duur_uur !== undefined ? `<p><strong>Duur:</strong> <span>${item.duur_uur} uur</span><input type="text" class="edit-input" style="display: none;" value="${item.duur_uur}" data-field="duur_uur" data-id="${item._id}"></p>` : ''}
+            <img src="/assets/images/${item.image}" alt="${item.type}" class="data-image" onclick="openModal('${encodeURIComponent(item.image)}')">
+            <button onclick="editData(event)">Edit</button>
+            <button onclick="saveData(event)">Save</button>
+        `;
+                container.appendChild(div);
+            });
+        }
+
         function editData(event) {
             const button = event.target;
             const inputs = button.parentElement.querySelectorAll('.edit-input');
@@ -189,7 +313,6 @@
             button.setAttribute('onclick', 'editData(event)');
         }
 
-        // Modal functions
         function openModal(imageName) {
             const modal = document.getElementById('image-modal');
             const modalImage = document.getElementById('modal-image');
@@ -211,7 +334,6 @@
             }
         });
 
-        // Initial data load
         fetchData();
     </script>
 </body>
