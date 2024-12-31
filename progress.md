@@ -68,7 +68,6 @@
 - Complete CRUD functionality for activities
 - Image upload and display
 - Filtering system
-- Responsive design
 - Form validation
 - Modal image viewer
 
@@ -103,14 +102,13 @@
 2. Code documentation improvements needed
 3. Performance optimization required
 4. Browser compatibility testing needed
-5. Security audit pending
+
 
 ### Resolved Technical Debt
 1. Implemented proper error handling
 2. Organized code structure
 3. Added input validation
 4. Improved database queries
-5. Enhanced responsive design
 
 ## Learning Outcomes
 
@@ -118,7 +116,6 @@
 - MongoDB database management
 - Express.js server development
 - Frontend JavaScript development
-- Responsive CSS design
 - API development
 
 ### Best Practices Implemented
@@ -148,11 +145,11 @@
 ## Time Investment
 
 ### Development Phases
-1. Initial Setup: [X] hours
-2. Core Development: [X] hours
-3. Testing: [X] hours
-4. Documentation: [X] hours
-5. Refinement: [X] hours
+1. Initial Setup: [1] hours
+2. Core Development: [27] hours
+3. Testing: [5] hours
+4. Documentation: [2] hours
+5. Refinement: [4] hours
 
 ## Challenges and Solutions
 
@@ -169,7 +166,5 @@
 ## Contributions
 
 ### Team Members
-- [Your Name] - Lead Developer
-- [Other Contributors if any]
+- [KobeBerckmans] - Lead Developer
 
-Remember to replace the placeholder text (like [Your Name], [X] hours, etc.) with your actual project details and update this document as your project progresses.
