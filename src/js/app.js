@@ -71,7 +71,26 @@ app.put('/api/strava', async (req, res) => {
         res.status(500).send("Error updating data");
     }
 });
+app.delete('/api/strava', async (req, res) => {
+    try {
+        const database = client.db("Course_Project");
+        const collection = database.collection("strava");
+        const id = req.body._id;
 
+        const result = await collection.deleteOne({ 
+            _id: new ObjectId(id)
+        });
+
+        if (result.deletedCount === 1) {
+            res.status(200).send('Activity successfully deleted');
+        } else {
+            res.status(404).send('No matching record found');
+        }
+    } catch (error) {
+        console.error("Error deleting activity:", error);
+        res.status(500).send("Error deleting activity");
+    }
+});
 app.post('/api/strava', async (req, res) => {
     try {
         const database = client.db("Course_Project");
