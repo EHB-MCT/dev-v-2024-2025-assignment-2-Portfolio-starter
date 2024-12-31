@@ -11,7 +11,6 @@ JogJournal is a web application for tracking and managing your running activitie
   - Location
   - Distance range
   - Time period
-- Responsive grid layout for activity display
 - Image zoom functionality
 - Detailed activity statistics
 
