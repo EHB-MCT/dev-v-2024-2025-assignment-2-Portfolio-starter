@@ -9,22 +9,46 @@
 </head>
 
 <body>
-    <!-- Bovenste afbeelding met titel -->
+    <!-- Header image with title -->
     <div class="header-image">
         <img src="/assets/images/running-sunset.jpg" alt="JogJournal" class="header-img">
         <h1 class="header-title">My Jog-Journal</h1>
     </div>
 
+    <!-- New activity section -->
+    <div class="new-activity">
+        <h2 onclick="showNewActivityForm()">Voeg nieuwe activiteit toe</h2>
+    </div>
+
+    <!-- New activity form -->
+    <div id="new-activity-form" class="form-container">
+        <h3>Nieuwe Activiteit</h3>
+        <form id="activityForm">
+            <input type="text" id="type" placeholder="Type activiteit" required>
+            <input type="text" id="datum" placeholder="Datum" required>
+            <input type="number" id="afstand_km" placeholder="Afstand (km)" step="0.01" required>
+            <input type="number" id="tempo_min_per_km" placeholder="Tempo (min/km)" step="0.01" required>
+            <input type="text" id="plaats" placeholder="Plaats" required>
+            <input type="number" id="hoogteverschil_m" placeholder="Hoogteverschil (m)" required>
+            <input type="number" id="duur_min" placeholder="Duur (minuten)">
+            <input type="number" id="duur_uur" placeholder="Duur (uur)" step="0.01">
+            <input type="text" id="image" placeholder="Afbeeldingsnaam" required>
+            <button type="submit">Opslaan</button>
+            <button type="button" onclick="hideNewActivityForm()">Annuleren</button>
+        </form>
+    </div>
+
     <!-- Data container -->
     <div class="data-container" id="data-container"></div>
 
-    <!-- Modaal venster -->
+    <!-- Modal for image zoom -->
     <div id="image-modal" class="modal">
         <span class="close-button">&times;</span>
         <img class="modal-content" id="modal-image" alt="Zoomed Image">
     </div>
 
     <script>
+        // Fetch and display data
         async function fetchData() {
             try {
                 const response = await fetch('/api/strava');
@@ -56,6 +80,59 @@
             }
         }
 
+        // Form handling functions
+        function showNewActivityForm() {
+            document.getElementById('new-activity-form').style.display = 'block';
+        }
+
+        function hideNewActivityForm() {
+            document.getElementById('new-activity-form').style.display = 'none';
+            document.getElementById('activityForm').reset();
+        }
+
+        // Form submission
+        document.getElementById('activityForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const formData = {
+                type: document.getElementById('type').value,
+                datum: document.getElementById('datum').value,
+                afstand_km: parseFloat(document.getElementById('afstand_km').value),
+                tempo_min_per_km: parseFloat(document.getElementById('tempo_min_per_km').value),
+                plaats: document.getElementById('plaats').value,
+                hoogteverschil_m: parseInt(document.getElementById('hoogteverschil_m').value),
+                image: document.getElementById('image').value
+            };
+
+            const duur_min = document.getElementById('duur_min').value;
+            const duur_uur = document.getElementById('duur_uur').value;
+
+            if (duur_min) formData.duur_min = parseInt(duur_min);
+            if (duur_uur) formData.duur_uur = parseFloat(duur_uur);
+
+            try {
+                const response = await fetch('/api/strava', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    alert('Activiteit succesvol toegevoegd!');
+                    hideNewActivityForm();
+                    fetchData();
+                } else {
+                    throw new Error('Failed to add activity');
+                }
+            } catch (error) {
+                console.error('Error adding activity:', error);
+                alert('Error bij het toevoegen van de activiteit.');
+            }
+        });
+
+        // Edit functions
         function editData(event) {
             const button = event.target;
             const inputs = button.parentElement.querySelectorAll('.edit-input');
@@ -77,7 +154,7 @@
                     const field = input.getAttribute('data-field');
                     const id = input.getAttribute('data-id');
                     updateData[field] = input.value;
-                    updateData['_id'] = id; // Voeg de id toe om te identificeren welke record wordt bijgewerkt
+                    updateData['_id'] = id;
                 }
             });
 
@@ -91,7 +168,7 @@
                 .then(response => {
                     if (response.ok) {
                         alert('Data updated successfully!');
-                        fetchData(); // Herlaad de data na succesvolle update
+                        fetchData();
                     } else {
                         throw new Error('Failed to update data');
                     }
@@ -112,6 +189,7 @@
             button.setAttribute('onclick', 'editData(event)');
         }
 
+        // Modal functions
         function openModal(imageName) {
             const modal = document.getElementById('image-modal');
             const modalImage = document.getElementById('modal-image');
@@ -133,6 +211,7 @@
             }
         });
 
+        // Initial data load
         fetchData();
     </script>
 </body>
