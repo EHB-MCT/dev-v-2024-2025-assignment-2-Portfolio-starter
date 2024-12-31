@@ -11,7 +11,7 @@ const scrapeAndSaveWeatherData = async () => {
     try {
         const url = 'https://weather.com/nl-NL/weer/10dagen/l/feec7bad826562e9203ce8595a2fbdf1b297ea39ffcf16755cf68963f1caf759';
         const weatherData = await getWeatherData(page, url);
-        console.log('Scraped Weather Data:', weatherData);
+        //console.log('Scraped Weather Data:', weatherData);
         
         // Save to MongoDB using the saveWeatherData function
         await saveWeatherData(weatherData);

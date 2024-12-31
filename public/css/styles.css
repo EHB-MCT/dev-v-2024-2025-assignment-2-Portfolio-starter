@@ -9,20 +9,20 @@ body {
 
 /* Table Styling */
 table {
-    width: 100%;
+    width: 50%;
     border-collapse: collapse;
-    margin: 20px 0;
+    margin: 20px 20%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 th, td {
     padding: 10px;
     text-align: center;
-    border: 1px solid #ddd;
+    border: 1px solid #fCA311;
 }
 
 th {
-    background-color: #4CAF50;
+    background-color: #fCA311;;
     color: white;
 }
 
@@ -31,13 +31,6 @@ tr:hover {
     background-color: #f1f1f1;
 }
 
-/* Heading Styling */
-h1 {
-    text-align: center;
-    margin-top: 20px;
-    font-size: 2rem;
-    color: #333;
-}
 
 /* Column Widths */
 th:nth-child(1),
@@ -66,4 +59,33 @@ td:nth-child(7),
 th:nth-child(8),
 td:nth-child(8) {
     width: 10%;
+}
+
+
+.insights{
+    background-color: black;
+    color: white;
+}
+
+#textualVisualization{
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    height: 70vh;
+}
+
+.insights button{
+    background-color: #fCA311;;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    padding: 2% 5%;
+    cursor: pointer;
+}
+.insights a, .visualisation a{
+    display: grid;
+    align-self: center;
+    text-align: center;
+    color: white;
+    padding: 2%;
 }

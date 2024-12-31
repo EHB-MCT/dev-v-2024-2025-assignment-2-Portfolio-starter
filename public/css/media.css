@@ -6,9 +6,6 @@
       font-size: 14px;
     }
   
-    h1 {
-      font-size: 1.5rem;
-    }
   
     table {
       font-size: 14px;
@@ -25,9 +22,7 @@
   
   /* Medium screens (tablets) */
   @media (max-width: 1024px) {
-    h1 {
-      font-size: 1.75rem;
-    }
+
   
     table {
       font-size: 16px;
@@ -36,9 +31,7 @@
   
   /* Large screens (desktop) */
   @media (min-width: 1025px) {
-    h1 {
-      font-size: 2rem;
-    }
+
   
     table {
       font-size: 18px;

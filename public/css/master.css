@@ -1,53 +1,70 @@
 /* master.css */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 /* Set global font and background styles */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Montserrat', sans-serif;  /* Use Montserrat as the global font */
     background-color: #ffffff;
     color: #333;
-  }
-  
-  /* Header styles */
-  h1 {
+}
+
+/* Header styles */
+h1 {
+    font-family: "Montserrat", sans-serif;  /* Ensure h1 also uses Montserrat */
+    font-size: 3rem;
+    text-align: center;
+    margin-top: 20px;
+    color: #fCA311;
+    margin-top: 2%;
+}
+
+p{
+    font-family: "Montserrat", sans-serif;  /* Ensure h1 also uses Montserrat */
     font-size: 2rem;
     text-align: center;
     margin-top: 20px;
-    color: #333;
-  }
-  
-  /* Table styles */
-  table {
+    color: white;
+}
+
+/* Table styles */
+table {
     width: 100%;
     margin: 20px 0;
-    border: 1px solid #ddd;
+    border: 1px solid #fCA311;
     border-radius: 5px;
-  }
-  
-  th, td {
+}
+
+th, td {
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid #fCA311;
     text-align: center;
-  }
-  
-  th {
+    color: white;
+}
+
+th {
     background-color: #f2f2f2;
     font-weight: bold;
-  }
-  
-  td {
-    background-color: #fff;
-  }
-  
-  tr:nth-child(even) {
+}
+
+td {
+    background-color: black;
+    color: white;
+}
+
+tr:nth-child(even) {
     background-color: #f9f9f9;
-  }
-  
-  /* Wind direction and speed columns */
-  td:nth-child(5), td:nth-child(6) {
+}
+
+/* Wind direction and speed columns */
+td:nth-child(5), td:nth-child(6) {
     font-weight: bold;
-  }
-  
-  td:nth-child(7), td:nth-child(8) {
-    color: #777;
-  }
-  
+}
+
+td:nth-child(7), td:nth-child(8) {
+    color: white;
+}
+
+
+.visualisation{
+    background-color: black;
+}

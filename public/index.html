@@ -3,34 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather Data</title>
+    <title>Weather Insights</title>
     <link rel="stylesheet" href="/css/reset.css"> 
     <link rel="stylesheet" href="/css/master.css">
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/media.css"> 
 </head>
-<body>
-    <h1>Weather Data</h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>City</th>
-                <th>Highest Temperature (°C)</th>
-                <th>Lowest Temperature (°C)</th>
-                <th>Rainfall (mm)</th>
-                <th>Wind direction</th>
-                <th>Wind speed</th>
-                <th>Condition</th>
-                <th>Additional Condition</th>
-                <th>Date</th>
-            </tr>
-        </thead>
-        <tbody id="weatherData">
-            <!-- Weather data will be inserted here -->
-        </tbody>
-    </table>
+<body class="insights">
 
-    <script src="/js/showWeatherData.js"></script>
-    <script src="/js/script.js"></script>
+    <h1>Weer insights voor Brussel</h1>
+
+    <!-- Section to display insights -->
+    <section id="textualVisualization">
+        <p id="insight"></p>
+    </section>
+    <a href="pages/visualisation.html">kijk naar alle data</a>
+
+    <!-- Update these script tags to use type="module" -->
+    <script type="module" src="js/script.js"></script>
+    <script type="module" src="js/showWeatherData.js"></script>
 </body>
 </html>
