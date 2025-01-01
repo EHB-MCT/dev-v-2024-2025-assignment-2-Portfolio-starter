@@ -45,7 +45,7 @@ h2 {
     padding: 100px 125px;
 }
 
-h3,label {
+h3 {
     font-family: "roc-grotesk", sans-serif;
     color: #44624A;
     font-size: 25px;
@@ -106,7 +106,7 @@ progress::-webkit-progress-value {
     justify-content: center;
     column-gap: 50px;
     row-gap: 30px;
-    margin: 0 150px;
+    margin: 50px 150px;
     flex-wrap: wrap;
 }
 
@@ -121,7 +121,7 @@ progress::-webkit-progress-value {
 .smiski p{
     line-height: 25px;
     width: 350px;
-
+    margin-bottom: 5px;
 }
 
 .smiski h4{
@@ -154,3 +154,26 @@ form{
     text-align: center;
     margin-bottom: 20px;
 }
+
+label {
+    font-family: "roc-grotesk", sans-serif;
+    color: #44624A;
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border: 1px solid #44624A;
+    margin-bottom: 0px;
+    vertical-align: sub;
+  }
+ 
+  input[type="checkbox"]:checked{
+    background-color: #44624A;
+    transform-origin: bottom left;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+  }
