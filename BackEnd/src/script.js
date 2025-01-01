@@ -129,9 +129,41 @@ app.patch('/api/toggleInCollection/:name', async (req, res) => {
 });
 
 
+/* storing the selected store*/
+app.post('/api/storeChoice', async (req, res) => {
+    const { series, store } = req.body;
+
+    if (!series || !store) {
+        res.status(400).json({ error: 'Series and store are required.' });
+        return;
+    }
+
+    try {
+        await client.connect();
+        const database = client.db('JustLilGuys');
+        const collection = database.collection('StoreChoices');
+
+       
+        await collection.insertOne({ series, store });
+
+        res.status(200).json({ message: 'Store choice recorded successfully.' });
+    } catch (error) {
+        console.error('Error recording store choice:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    } finally {
+        await client.close();
+    }
+});
+
+
+
+
+
 
 
 
 app.listen(port, () => {
     console.log(`Server is running on port  http://localhost:${port}`);
 });
+
+

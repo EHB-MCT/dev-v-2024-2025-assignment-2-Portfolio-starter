@@ -32,6 +32,7 @@ h1 {
     font-weight: 600;
     text-align: center;
     margin-top: 30px;
+    margin-bottom: 15px;
 }
 
 h2 {
@@ -44,7 +45,7 @@ h2 {
     padding: 100px 125px;
 }
 
-h3 {
+h3,label {
     font-family: "roc-grotesk", sans-serif;
     color: #44624A;
     font-size: 25px;
@@ -81,7 +82,6 @@ progress {
 
 progress::-webkit-progress-bar {
     background-color: #F1EBE1;
-
 }
   
 progress::-webkit-progress-value {
@@ -133,4 +133,24 @@ img {
     height: 150px;
     display: block;
     margin: 0 auto;
+}
+
+select{
+    background-color: #44624A;
+    color: #F1EBE1;
+    font-size: 20px;
+    padding: 5px;
+}
+
+button{
+    background-color: #44624A;
+    color: #F1EBE1;
+    border: none;
+    font-size: 20px;
+    padding: 6px;
+}
+
+form{
+    text-align: center;
+    margin-bottom: 20px;
 }
