@@ -1,0 +1,40 @@
+/* media.css */
+
+/* Small screens (mobile devices) */
+@media (max-width: 768px) {
+    body {
+      font-size: 14px;
+    }
+  
+  
+    table {
+      font-size: 14px;
+    }
+  
+    td, th {
+      padding: 5px;
+    }
+  
+    .container {
+      padding: 10px;
+    }
+  }
+  
+  /* Medium screens (tablets) */
+  @media (max-width: 1024px) {
+
+  
+    table {
+      font-size: 16px;
+    }
+  }
+  
+  /* Large screens (desktop) */
+  @media (min-width: 1025px) {
+
+  
+    table {
+      font-size: 18px;
+    }
+  }
+  

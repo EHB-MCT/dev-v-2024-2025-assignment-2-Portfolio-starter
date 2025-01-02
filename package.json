@@ -1,0 +1,21 @@
+{
+  "name": "assignment-2-jochensunaert",
+  "version": "1.0.0",
+  "description": "Een applicatie om vertragingen van treinen tussen Essene-Lombeek en Brussel-Zuid te meten en op te slaan.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "config": "^3.3.12",
+    "date-fns": "^4.1.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongodb": "^6.12.0",
+    "mongoose": "^8.9.2",
+    "puppeteer": "^23.11.1"
+  }
+}

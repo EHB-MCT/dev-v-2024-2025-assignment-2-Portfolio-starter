@@ -1,0 +1,95 @@
+/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Table Styling */
+table {
+    width: 50%;
+    border-collapse: collapse;
+    margin: 20px 20%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #fCA311;
+}
+
+th {
+    background-color: #fCA311;;
+    color: white;
+}
+
+/* Row Hover Effect */
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+
+/* Column Widths */
+th:nth-child(1),
+td:nth-child(1) {
+    width: 15%;
+}
+
+th:nth-child(2),
+td:nth-child(2),
+th:nth-child(3),
+td:nth-child(3) {
+    width: 12%;
+}
+
+th:nth-child(4),
+td:nth-child(4),
+th:nth-child(5),
+td:nth-child(5) {
+    width: 15%;
+}
+
+th:nth-child(6),
+td:nth-child(6),
+th:nth-child(7),
+td:nth-child(7),
+th:nth-child(8),
+td:nth-child(8) {
+    width: 10%;
+}
+
+
+.insights{
+    background-color: black;
+    color: white;
+}
+
+#textualVisualization{
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    height: 70vh;
+}
+
+.insights button{
+    background-color: #fCA311;;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    padding: 2% 5%;
+    cursor: pointer;
+}
+.insights a, .visualisation a{
+    display: grid;
+    align-self: center;
+    text-align: center;
+    color: white;
+    padding: 2%;
+}
+
+i{
+    color: #fCA311;
+}
