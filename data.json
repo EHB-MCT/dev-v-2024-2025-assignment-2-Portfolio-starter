@@ -1,0 +1,317 @@
+[
+  {
+    "datum": "woensdag 25-12",
+    "apps": [
+      {
+        "naam": "Instagram",
+        "tijd": "6u20min",
+        "openingen": 57,
+        "tijdInMinuten": 380
+      },
+      {
+        "naam": "Whatsapp",
+        "tijd": "3u55min",
+        "openingen": 23,
+        "tijdInMinuten": 235
+      },
+      {
+        "naam": "Tiktok",
+        "tijd": "3u17min",
+        "openingen": 18,
+        "tijdInMinuten": 197
+      },
+      {
+        "naam": "Snapchat",
+        "tijd": "1u35min",
+        "openingen": 10,
+        "tijdInMinuten": 95
+      },
+      {
+        "naam": "Twitter",
+        "tijd": "2u03min",
+        "openingen": 4,
+        "tijdInMinuten": 123
+      }
+    ]
+  },
+  {
+    "datum": "donderdag 26-12",
+    "apps": [
+      {
+        "naam": "Instagram",
+        "tijd": "2u53min",
+        "openingen": 56,
+        "tijdInMinuten": 173
+      },
+      {
+        "naam": "Whatsapp",
+        "tijd": "1u18min",
+        "openingen": 37,
+        "tijdInMinuten": 78
+      },
+      {
+        "naam": "Tiktok",
+        "tijd": "1u28min",
+        "openingen": 14,
+        "tijdInMinuten": 88
+      },
+      {
+        "naam": "Snapchat",
+        "tijd": "1u19min",
+        "openingen": 28,
+        "tijdInMinuten": 79
+      },
+      {
+        "naam": "Twitter",
+        "tijd": "1u26min",
+        "openingen": 12,
+        "tijdInMinuten": 86
+      }
+    ]
+  },
+  {
+    "datum": "vrijdag 27-12",
+    "apps": [
+      {
+        "naam": "Instagram",
+        "tijd": "1u25min",
+        "openingen": 80,
+        "tijdInMinuten": 85
+      },
+      {
+        "naam": "Whatsapp",
+        "tijd": "1u44min",
+        "openingen": 129,
+        "tijdInMinuten": 104
+      },
+      {
+        "naam": "Tiktok",
+        "tijd": "21min",
+        "openingen": 1,
+        "tijdInMinuten": 21
+      },
+      {
+        "naam": "Snapchat",
+        "tijd": "1u10min",
+        "openingen": 79,
+        "tijdInMinuten": 70
+      },
+      {
+        "naam": "Twitter",
+        "tijd": "06 min",
+        "openingen": 1,
+        "tijdInMinuten": 6
+      }
+    ]
+  },
+  {
+    "datum": "zaterdag 28-12",
+    "apps": [
+      {
+        "naam": "Instagram",
+        "tijd": "1u47min",
+        "openingen": 76,
+        "tijdInMinuten": 107
+      },
+      {
+        "naam": "Whatsapp",
+        "tijd": "1u53min",
+        "openingen": 80,
+        "tijdInMinuten": 113
+      },
+      {
+        "naam": "Tiktok",
+        "tijd": "21min",
+        "openingen": 10,
+        "tijdInMinuten": 21
+      },
+      {
+        "naam": "Snapchat",
+        "tijd": "1u23min",
+        "openingen": 99,
+        "tijdInMinuten": 83
+      },
+      {
+        "naam": "Twitter",
+        "tijd": "03 min",
+        "openingen": 1,
+        "tijdInMinuten": 3
+      }
+    ]
+  },
+  {
+    "datum": "zondag 29-12",
+    "apps": [
+      {
+        "naam": "Instagram",
+        "tijd": "2u45min",
+        "openingen": 96,
+        "tijdInMinuten": 165
+      },
+      {
+        "naam": "Whatsapp",
+        "tijd": "1u35min",
+        "openingen": 56,
+        "tijdInMinuten": 95
+      },
+      {
+        "naam": "Tiktok",
+        "tijd": "27min",
+        "openingen": 1,
+        "tijdInMinuten": 27
+      },
+      {
+        "naam": "Snapchat",
+        "tijd": "1u25min",
+        "openingen": 55,
+        "tijdInMinuten": 85
+      },
+      {
+        "naam": "Twitter",
+        "tijd": "12 min",
+        "openingen": 1,
+        "tijdInMinuten": 12
+      }
+    ]
+  },
+  {
+    "datum": "maandag 30-12",
+    "apps": [
+      {
+        "naam": "Instagram",
+        "tijd": "2u27min",
+        "openingen": 77,
+        "tijdInMinuten": 147
+      },
+      {
+        "naam": "Whatsapp",
+        "tijd": "1u29min",
+        "openingen": 44,
+        "tijdInMinuten": 89
+      },
+      {
+        "naam": "Tiktok",
+        "tijd": "24 min",
+        "openingen": 8,
+        "tijdInMinuten": 24
+      },
+      {
+        "naam": "Snapchat",
+        "tijd": "1u36min",
+        "openingen": 85,
+        "tijdInMinuten": 96
+      },
+      {
+        "naam": "Twitter",
+        "tijd": "30min",
+        "openingen": 1,
+        "tijdInMinuten": 30
+      }
+    ]
+  },
+  {
+    "datum": "dinsdag 31-12",
+    "apps": [
+      {
+        "naam": "Instagram",
+        "tijd": "1u13min",
+        "openingen": 57,
+        "tijdInMinuten": 73
+      },
+      {
+        "naam": "Whatsapp",
+        "tijd": "1u58min",
+        "openingen": 107,
+        "tijdInMinuten": 118
+      },
+      {
+        "naam": "Tiktok",
+        "tijd": "42min",
+        "openingen": 5,
+        "tijdInMinuten": 42
+      },
+      {
+        "naam": "Snapchat",
+        "tijd": "1u34min",
+        "openingen": 90,
+        "tijdInMinuten": 94
+      },
+      {
+        "naam": "Twitter",
+        "tijd": "16min",
+        "openingen": 3,
+        "tijdInMinuten": 16
+      }
+    ]
+  },
+  {
+    "datum": "woensdag 1-1-2025",
+    "apps": [
+      {
+        "naam": "Instagram",
+        "tijd": "3u41min",
+        "openingen": 43,
+        "tijdInMinuten": 221
+      },
+      {
+        "naam": "Whatsapp",
+        "tijd": "1u49min",
+        "openingen": 59,
+        "tijdInMinuten": 109
+      },
+      {
+        "naam": "Tiktok",
+        "tijd": "1u55min",
+        "openingen": 12,
+        "tijdInMinuten": 115
+      },
+      {
+        "naam": "Snapchat",
+        "tijd": "1u21min",
+        "openingen": 76,
+        "tijdInMinuten": 81
+      },
+      {
+        "naam": "Twitter",
+        "tijd": "33min",
+        "openingen": 2,
+        "tijdInMinuten": 33
+      }
+    ]
+  },
+  {
+    "datum": "donderdag 2-1-2025",
+    "apps": [
+      {
+        "naam": "Instagram",
+        "tijd": "2u5min",
+        "openingen": 38,
+        "tijdInMinuten": 125
+      },
+      {
+        "naam": "Whatsapp",
+        "tijd": "32min",
+        "openingen": 19,
+        "tijdInMinuten": 32
+      },
+      {
+        "naam": "Tiktok",
+        "tijd": "2u18min",
+        "openingen": 6,
+        "tijdInMinuten": 138
+      },
+      {
+        "naam": "Snapchat",
+        "tijd": "1u33min",
+        "openingen": 8,
+        "tijdInMinuten": 93
+      },
+      {
+        "naam": "Twitter",
+        "tijd": "25min",
+        "openingen": 1,
+        "tijdInMinuten": 25
+      }
+    ]
+  }
+]
