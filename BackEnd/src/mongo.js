@@ -13,11 +13,11 @@ async function run() {
         const smiskis = database.collection('Smiskis');
 
         const query = {
-            'name': 'Hugging Knees',
+            'name': 'Listening',
             "inCollection": false,
-            'description': 'Always in the corner hugging onto the knees, staring out into the distance pensive in thought.',
-            'picture': './assets/images/series1_1.png',
-            'series': 'Series 1'
+            'description': 'Curious about the sounds coming in from next door, this Smiski is always listening in.',
+            'picture': '../assets/images/series2/6.png',
+            'series': 'Series 2'
 
         };
 
