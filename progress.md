@@ -1,19 +1,40 @@
-# Progress Update - Challenge 2
+# Progress Report
 
-## Gegevensverzameling
+## Overview
 
-De gegevens zijn verzameld van sociale media-apps van woensdag 25-12 tot donderdag 2-1. De gegevens omvatten de tijd die besteed is aan de apps en het aantal keren dat de apps werden geopend.
+In this challenge, I was tasked with gathering data about my social media usage over the course of a week. The data was collected from my phone and tracked via an app monitoring system. The objective was to process the data to measure usage patterns and understand my social media engagement.
 
-## Gegevensverwerking
+## Data Collection
 
-De verzamelde tijd is omgezet naar minuten om de totale tijd per app te berekenen. Hiervoor werd de tijdsnotatie (bijvoorbeeld "6u20min") omgezet naar een getal in minuten. De tijd is opgeslagen in een JSON-bestand (`data.json`), waarin voor elke dag de verwerkte gegevens per app staan.
+The data was manually tracked and aggregated daily over the span of a week (from Wednesday 25-12 to Thursday 2-1). The data points collected included:
 
-## Volgende stappen
+- Application names
+- Usage time in minutes for each application
 
-- De gegevens verder analyseren om trends te identificeren (bijv. de app die het vaakst wordt geopend).
-- De gegevens gebruiken voor verdere visualisatie en analyse in het eindproject.
+I gathered this data from app usage statistics on my phone, and I stored it in a JSON format to be used later in the app.
 
-## Beslissingen en keuzes
+## Data Processing
 
-- Het is gekozen om de tijd om te zetten naar minuten, omdat dit eenvoudiger te vergelijken is tussen verschillende apps en dagen.
-- Gegevens zijn opgeslagen in JSON-formaat voor eenvoudig gebruik in latere fasen van het project.
+I processed the raw data to structure it and make it more readable and usable for analysis. I sorted and combined the data into a structured format, separating it by day, and calculating total usage times for each app.
+
+## Purpose
+
+The purpose of this project was to track my social media usage and visualize trends and comparisons across different days. The goal was to gain insights into which apps I use most frequently and how usage changes over time.
+
+## Technologies Used
+
+- **JavaScript**: For processing and visualizing the data.
+- **Vue.js**: For building the front-end application.
+- **Node.js**: For any backend functionality, such as serving data.
+- **Git**: For version control and tracking my project progress.
+
+## Challenges and Learnings
+
+- Ensuring the data was well-structured for use in Vue components.
+- Visualizing data in an engaging way (charts, tables) without overcomplicating the UI.
+- Integrating the data processing and front-end code seamlessly.
+
+## Next Steps
+
+- Finalizing the app design and ensuring it is fully functional.
+- Completing the README and preparing for submission.
