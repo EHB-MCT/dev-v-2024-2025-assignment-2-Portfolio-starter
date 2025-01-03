@@ -243,6 +243,7 @@ button:hover {
     border-radius: 4px;
 }
 
+
 .delete-btn {
     font-size: 24px;
     cursor: pointer;
@@ -254,6 +255,8 @@ button:hover {
     color: #cc0000;
 }
 
+/* Login and Register Controls and Form
+-------------------------------------------------- */
 .auth-container {
     max-width: 400px;
     margin: 50px auto;
@@ -293,6 +296,8 @@ button:hover {
     min-height: 100vh;
 }
 
+/* Logout Button
+-------------------------------------------------- */
 .logout-button {
     position: absolute;
     top: 50px;
