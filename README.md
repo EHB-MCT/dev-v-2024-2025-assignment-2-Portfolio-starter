@@ -3,6 +3,11 @@
 JogJournal is a web application for tracking and managing your running activities. It allows users to log their runs, view their activity history, and filter activities based on various criteria such as distance, location, and time period.
 
 ## Features
+User Authentication System:
+- User registration with username/password
+- Secure login/logout functionality
+- Session management
+- Protected routes for authenticated users
 
 - Create and manage running activities
 - Upload and view activity images
@@ -26,7 +31,7 @@ Before you begin, ensure you have installed:
 1. Clone the repository:
 ```bash
 git clone [your-repository-url]
-cd jogjournal
+cd assignment-2-KobeBerckmans
 ```
 
 2. Install the required dependencies:
@@ -65,6 +70,8 @@ The project uses the following npm packages:
 - `mongodb` - MongoDB driver for Node.js
 - `dotenv` - Environment variables management
 - `nodemon` (dev dependency) - Auto-reload server during development
+- `express-session` (dev dependency) - Auto-reload server during development
+
 
 ## Running the Application
 
@@ -83,6 +90,12 @@ npm start
 ```
 
 The application will be available at `http://localhost:3000`
+
+## Authentication Endpoints:
+
+- `POST /api/register` - Register new user
+- `POST /api/login` - User login
+- `POST /api/logout` - User logout
 
 ## API Endpoints
 
@@ -129,7 +142,7 @@ git push origin feature/my-new-feature
 
 ## Images
 
-To add images, implement them first in de images folder. Then select them in youre file manager. If you save youre new activity the new image is implemented
+To add images, implement them first in de images folder. Then select them in youre file manager. If you save youre new activity, the new image is implemented
 
 ## Running Tests
 
