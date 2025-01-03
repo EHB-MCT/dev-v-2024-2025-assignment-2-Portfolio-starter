@@ -6,91 +6,209 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My JogJournal</title>
     <link rel="stylesheet" href="/css/styles.css">
+
 </head>
 
 <body>
-    <!-- Header image with title -->
-    <div class="header-image">
-        <img src="/assets/images/running-sunset.jpg" alt="JogJournal" class="header-img">
-        <h1 class="header-title">My Jog-Journal</h1>
-    </div>
-
-    <!-- New activity section -->
-    <div class="new-activity">
-        <h2 onclick="toggleNewActivityForm(true)">Voeg nieuwe activiteit toe</h2>
-    </div>
-
-    <!-- New activity form -->
-    <div id="new-activity-form" class="form-container" style="display: none;">
-        <h3>Nieuwe Activiteit</h3>
-        <form id="activityForm">
-            <input type="text" id="type" placeholder="Type activiteit" required>
-            <input type="date" id="datum" placeholder="Datum" required>
-            <input type="number" id="afstand_km" placeholder="Afstand (km)" step="0.01" required>
-            <input type="number" id="tempo_min_per_km" placeholder="Tempo (min/km)" step="0.01" required>
-            <input type="text" id="plaats" placeholder="Plaats" required>
-            <input type="number" id="hoogteverschil_m" placeholder="Hoogteverschil (m)" required>
-            <input type="number" id="duur_min" placeholder="Duur (minuten)">
-            <input type="number" id="duur_uur" placeholder="Duur (uur)" step="0.01">
-            <input type="text" id="image" placeholder="Afbeeldingsnaam" required>
-            <button type="submit">Opslaan</button>
-            <button type="button" onclick="toggleNewActivityForm(false)">Annuleren</button>
-
-        </form>
-    </div>
-
-    <!-- Filter section -->
-    <div class="filter-section">
-        <div class="filter-group">
-            <label for="typeFilter">Type Activiteit</label>
-            <select id="typeFilter">
-                <option value="">Alle types</option>
-            </select>
+    <!-- Auth container -->
+    <div id="auth-container" class="auth-container">
+        <div class="auth-form" id="login-form">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <input type="text" id="loginUsername" placeholder="Username" required>
+                <input type="password" id="loginPassword" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+            <p>Don't have an account? <a href="#" onclick="toggleAuthForm()">Register</a></p>
         </div>
-        <div class="filter-group">
-            <label for="plaatsFilter">Plaats</label>
-            <select id="plaatsFilter">
-                <option value="">Alle plaatsen</option>
-            </select>
-        </div>
-        <div class="filter-group">
-            <label for="afstandFilter">Afstand</label>
-            <select id="afstandFilter">
-                <option value="">Alle afstanden</option>
-                <option value="0-5">0-5 km</option>
-                <option value="5-10">5-10 km</option>
-                <option value="10-20">10-20 km</option>
-                <option value="20+">20+ km</option>
-            </select>
-        </div>
-        <div class="filter-group">
-            <label for="dateFilter">Periode</label>
-            <select id="dateFilter">
-                <option value="">Alle periodes</option>
-                <option value="week">Laatste week</option>
-                <option value="month">Laatste maand</option>
-                <option value="year">Laatste jaar</option>
-            </select>
-        </div>
-        <div class="filter-buttons">
-            <button onclick="applyFilters()">Filter</button>
-            <button onclick="resetFilters()" class="reset">Reset</button>
+        <div class="auth-form" id="register-form" style="display: none;">
+            <h2>Register</h2>
+            <form id="registerForm">
+                <input type="text" id="registerUsername" placeholder="Username" required>
+                <input type="password" id="registerPassword" placeholder="Password" required>
+                <button type="submit">Register</button>
+            </form>
+            <p>Already have an account? <a href="#" onclick="toggleAuthForm()">Login</a></p>
         </div>
     </div>
 
-    <!-- Data container -->
-    <div class="data-container" id="data-container"></div>
+    <!-- Main content -->
+    <div id="main-content" style="display: none;">
+        <button class="logout-button" onclick="handleLogout()">Logout</button>
 
-    <!-- Modal for image zoom -->
-    <div id="image-modal" class="modal" style="display: none;">
-        <span class="close-button" onclick="toggleModal(false)">&times;</span>
-        <img class="modal-content" id="modal-image" alt="Zoomed Image">
+        <!-- Header image with title -->
+        <div class="header-image">
+            <img src="/assets/images/running-sunset.jpg" alt="JogJournal" class="header-img">
+            <h1 class="header-title">My Jog-Journal</h1>
+        </div>
+
+        <!-- New activity section -->
+        <div class="new-activity">
+            <h2 onclick="toggleNewActivityForm(true)">Voeg nieuwe activiteit toe</h2>
+        </div>
+
+        <!-- New activity form -->
+        <div id="new-activity-form" class="form-container" style="display: none;">
+            <h3>Nieuwe Activiteit</h3>
+            <form id="activityForm">
+                <input type="text" id="type" placeholder="Type activiteit" required>
+                <input type="date" id="datum" placeholder="Datum" required>
+                <input type="number" id="afstand_km" placeholder="Afstand (km)" step="0.01" required>
+                <input type="number" id="tempo_min_per_km" placeholder="Tempo (min/km)" step="0.01" required>
+                <input type="text" id="plaats" placeholder="Plaats" required>
+                <input type="number" id="hoogteverschil_m" placeholder="Hoogteverschil (m)" required>
+                <input type="number" id="duur_min" placeholder="Duur (minuten)">
+                <input type="number" id="duur_uur" placeholder="Duur (uur)" step="0.01">
+                <input type="text" id="image" placeholder="Afbeeldingsnaam" required>
+                <button type="submit">Opslaan</button>
+                <button type="button" onclick="toggleNewActivityForm(false)">Annuleren</button>
+            </form>
+        </div>
+
+        <!-- Filter section -->
+        <div class="filter-section">
+            <div class="filter-group">
+                <label for="typeFilter">Type Activiteit</label>
+                <select id="typeFilter">
+                    <option value="">Alle types</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="plaatsFilter">Plaats</label>
+                <select id="plaatsFilter">
+                    <option value="">Alle plaatsen</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="afstandFilter">Afstand</label>
+                <select id="afstandFilter">
+                    <option value="">Alle afstanden</option>
+                    <option value="0-5">0-5 km</option>
+                    <option value="5-10">5-10 km</option>
+                    <option value="10-20">10-20 km</option>
+                    <option value="20+">20+ km</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="dateFilter">Periode</label>
+                <select id="dateFilter">
+                    <option value="">Alle periodes</option>
+                    <option value="week">Laatste week</option>
+                    <option value="month">Laatste maand</option>
+                    <option value="year">Laatste jaar</option>
+                </select>
+            </div>
+            <div class="filter-buttons">
+                <button onclick="applyFilters()">Filter</button>
+                <button onclick="resetFilters()" class="reset">Reset</button>
+            </div>
+        </div>
+
+        <!-- Data container -->
+        <div class="data-container" id="data-container"></div>
+
+        <!-- Modal for image zoom -->
+        <div id="image-modal" class="modal" style="display: none;">
+            <span class="close-button" onclick="toggleModal(false)">&times;</span>
+            <img class="modal-content" id="modal-image" alt="Zoomed Image">
+        </div>
     </div>
 
     <script>
-        let originalData = []; // Holds the fetched data for filtering
+        let isLoggedIn = false;
+        let originalData = [];
 
-        // Fetch data from the server and update the UI
+        // Auth functions
+        function toggleAuthForm() {
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            loginForm.style.display = loginForm.style.display === 'none' ? 'block' : 'none';
+            registerForm.style.display = registerForm.style.display === 'none' ? 'block' : 'none';
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                if (response.ok) {
+                    isLoggedIn = true;
+                    document.getElementById('auth-container').style.display = 'none';
+                    document.getElementById('main-content').style.display = 'block';
+                    fetchData();
+                } else {
+                    alert('Invalid credentials');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                alert('Login failed');
+            }
+        }
+
+        async function handleRegister(event) {
+            event.preventDefault();
+            const username = document.getElementById('registerUsername').value;
+            const password = document.getElementById('registerPassword').value;
+
+            try {
+                const response = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                if (response.ok) {
+                    alert('Registration successful! Please login.');
+                    toggleAuthForm();
+                } else {
+                    alert('Registration failed');
+                }
+            } catch (error) {
+                console.error('Registration error:', error);
+                alert('Registration failed');
+            }
+        }
+
+        async function handleLogout() {
+            try {
+                const response = await fetch('/api/logout', {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+
+                if (response.ok) {
+                    isLoggedIn = false;
+                    document.getElementById('auth-container').style.display = 'flex';
+                    document.getElementById('main-content').style.display = 'none';
+                    // Reset login form
+                    document.getElementById('loginForm').reset();
+                    // Ensure we're showing login form, not register form
+                    document.getElementById('login-form').style.display = 'block';
+                    document.getElementById('register-form').style.display = 'none';
+                } else {
+                    throw new Error('Logout failed');
+                }
+            } catch (error) {
+                console.error('Logout error:', error);
+                alert('Uitloggen mislukt. Probeer het opnieuw.');
+            }
+        }
+
+        // Add event listener to the logout button
+        document.querySelector('.logout-button').addEventListener('click', handleLogout);
+
+        // Add event listeners for auth forms
+        document.getElementById('loginForm').addEventListener('submit', handleLogin);
+        document.getElementById('registerForm').addEventListener('submit', handleRegister);
+
+        // Existing functions
         async function fetchData() {
             try {
                 const response = await fetch('/api/strava');
@@ -100,16 +218,17 @@
                 displayData(data);
             } catch (error) {
                 console.error('Error fetching data:', error);
+                if (error.response?.status === 401) {
+                    handleLogout();
+                }
             }
         }
 
-        // Populate filter dropdowns based on the fetched data
         function updateFilterOptions(data) {
             populateSelect('typeFilter', [...new Set(data.map(item => item.type))], 'Alle types');
             populateSelect('plaatsFilter', [...new Set(data.map(item => item.plaats))], 'Alle plaatsen');
         }
 
-        // Populate a select element with options
         function populateSelect(selectId, options, defaultOption) {
             const select = document.getElementById(selectId);
             select.innerHTML = `<option value="">${defaultOption}</option>`;
@@ -118,7 +237,6 @@
             });
         }
 
-        // Apply selected filters to the data
         function applyFilters() {
             let filteredData = [...originalData];
             const typeFilter = document.getElementById('typeFilter').value;
@@ -129,23 +247,18 @@
             if (typeFilter) {
                 filteredData = filteredData.filter(item => item.type === typeFilter);
             }
-
             if (plaatsFilter) {
                 filteredData = filteredData.filter(item => item.plaats === plaatsFilter);
             }
-
             if (afstandFilter) {
                 filteredData = filterByDistance(filteredData, afstandFilter);
             }
-
             if (dateFilter) {
                 filteredData = filterByDate(filteredData, dateFilter);
             }
-
             displayData(filteredData);
         }
 
-        // Reset all filters and display original data
         function resetFilters() {
             ['typeFilter', 'plaatsFilter', 'afstandFilter', 'dateFilter'].forEach(filterId => {
                 document.getElementById(filterId).value = '';
@@ -153,12 +266,10 @@
             displayData(originalData);
         }
 
-        // Filter data by distance range
         function filterByDistance(data, range) {
             if (range === '20+') {
                 return data.filter(item => parseFloat(item.afstand_km) >= 20);
             }
-
             const [min, max] = range.split('-').map(Number);
             return data.filter(item => {
                 const afstand = parseFloat(item.afstand_km);
@@ -166,7 +277,6 @@
             });
         }
 
-        // Filter data by date range
         function filterByDate(data, range) {
             const now = new Date();
             const filterDate = new Date();
@@ -186,14 +296,12 @@
             return data.filter(item => new Date(item.datum) >= filterDate);
         }
 
-        // Show or hide the new activity form
         function toggleNewActivityForm(show) {
             const form = document.getElementById('new-activity-form');
             form.style.display = show ? 'block' : 'none';
             if (!show) document.getElementById('activityForm').reset();
         }
 
-        // Submit new activity form
         document.getElementById('activityForm').addEventListener('submit', async function (e) {
             e.preventDefault();
 
@@ -210,7 +318,6 @@
             if (document.getElementById('duur_min').value) {
                 formData.duur_min = parseInt(document.getElementById('duur_min').value);
             }
-
             if (document.getElementById('duur_uur').value) {
                 formData.duur_uur = parseFloat(document.getElementById('duur_uur').value);
             }

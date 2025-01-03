@@ -1,15 +1,13 @@
-require('dotenv').config(); // Load environment variables from a .env file into process.env
-const express = require('express'); // Import the Express framework
-const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb'); // Import MongoDB client and related utilities
-const path = require('path'); // Import Node.js path module for handling file paths
+require('dotenv').config();
+const express = require('express');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+const path = require('path');
+const session = require('express-session');
 
-const app = express(); // Initialize the Express application
-const PORT = 3000; // Define the port the server will listen on
-
-// Construct the MongoDB connection URI using an environment variable for the password
+const app = express();
+const PORT = 3000;
 const URI = `mongodb+srv://kobeberckmans:${process.env.MONGODB_PASSWORD}@cluster1.tpiy3cp.mongodb.net/course_project?retryWrites=true&w=majority`;
 
-// Create a new MongoClient instance with server API settings
 const client = new MongoClient(URI, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -21,39 +19,89 @@ const client = new MongoClient(URI, {
 (async () => {
   try {
     console.log('Attempting to connect...');
-    await client.connect(); // Connect to MongoDB
+    await client.connect();
     console.log('Successfully connected to MongoDB!');
   } catch (error) {
-    console.error('Connection failed:', error.message); // Log connection errors
+    console.error('Connection failed:', error.message);
   }
 })();
 
-app.use(express.json()); // Middleware to parse incoming JSON requests
-app.use('/assets', express.static(path.join(__dirname, '..', 'src', 'assets'))); // Serve static files from the 'src/assets' directory
-app.use(express.static(path.join(__dirname, '..'))); // Serve other static files from the parent directory
+app.use(express.json());
+app.use('/assets', express.static(path.join(__dirname, '..', 'src', 'assets')));
+app.use(express.static(path.join(__dirname, '..')));
+app.use(session({
+  secret: 'your-secret-key',
+  resave: false,
+  saveUninitialized: false
+}));
 
-// GET endpoint to retrieve all records from the 'strava' collection
-app.get('/api/strava', async (req, res) => {
+const requireAuth = (req, res, next) => {
+  if (!req.session.userId) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+  next();
+};
+
+app.post('/api/register', async (req, res) => {
   try {
-    const database = client.db('Course_Project'); // Access the database
-    const collection = database.collection('strava'); // Access the 'strava' collection
-    const data = await collection.find({}).toArray(); // Fetch all documents
-    res.json(data); // Send the data as a JSON response
+    const { username, password } = req.body;
+    const database = client.db('Course_Project');
+    const users = database.collection('users');
+
+    const existingUser = await users.findOne({ username });
+    if (existingUser) {
+      return res.status(400).json({ message: 'Username already exists' });
+    }
+
+    const result = await users.insertOne({ username, password });
+    res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
-    console.error('Error fetching data:', error); // Log errors
-    res.status(500).send('Error fetching data'); // Send a 500 error response
+    res.status(500).json({ message: 'Error registering user' });
   }
 });
 
-// PUT endpoint to update a record in the 'strava' collection
-app.put('/api/strava', async (req, res) => {
-  const updateData = req.body; // Get the data to update from the request body
+app.post('/api/login', async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const database = client.db('Course_Project');
+    const users = database.collection('users');
+
+    const user = await users.findOne({ username, password });
+    if (!user) {
+      return res.status(401).json({ message: 'Invalid credentials' });
+    }
+
+    req.session.userId = user._id;
+    res.json({ message: 'Login successful' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error logging in' });
+  }
+});
+
+app.post('/api/logout', (req, res) => {
+  req.session.destroy();
+  res.json({ message: 'Logged out successfully' });
+});
+
+app.get('/api/strava', requireAuth, async (req, res) => {
+    try {
+        const database = client.db('Course_Project');
+        const collection = database.collection('strava');
+        const data = await collection.find({ userId: req.session.userId.toString() }).toArray();
+        res.json(data);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        res.status(500).send('Error fetching data');
+    }
+});
+
+app.put('/api/strava', requireAuth, async (req, res) => {
+  const updateData = req.body;
 
   try {
-    const database = client.db('Course_Project'); // Access the database
-    const collection = database.collection('strava'); // Access the 'strava' collection
+    const database = client.db('Course_Project');
+    const collection = database.collection('strava');
 
-    // Prepare the fields to update, excluding undefined values and the '_id' field
     const updateFields = Object.entries(updateData)
       .filter(([key, value]) => value !== undefined && key !== '_id')
       .reduce((fields, [key, value]) => {
@@ -62,67 +110,69 @@ app.put('/api/strava', async (req, res) => {
       }, {});
 
     const result = await collection.updateOne(
-      { _id: new ObjectId(updateData._id) }, // Match the document by its '_id'
-      { $set: updateFields } // Update the specified fields
+      { _id: new ObjectId(updateData._id), userId: req.session.userId },
+      { $set: updateFields }
     );
 
     if (result.modifiedCount === 1) {
-      res.status(200).send('Data successfully updated'); // Send success response
+      res.status(200).send('Data successfully updated');
     } else {
-      res.status(404).send('No matching record found'); // Send not found response
+      res.status(404).send('No matching record found');
     }
   } catch (error) {
-    console.error('Error updating data:', error); // Log errors
-    res.status(500).send('Error updating data'); // Send a 500 error response
+    console.error('Error updating data:', error);
+    res.status(500).send('Error updating data');
   }
 });
 
-// DELETE endpoint to delete a record from the 'strava' collection
-app.delete('/api/strava', async (req, res) => {
+app.delete('/api/strava', requireAuth, async (req, res) => {
   try {
-    const database = client.db('Course_Project'); // Access the database
-    const collection = database.collection('strava'); // Access the 'strava' collection
-    const { _id } = req.body; // Get the '_id' of the document to delete
+    const database = client.db('Course_Project');
+    const collection = database.collection('strava');
+    const { _id } = req.body;
 
-    const result = await collection.deleteOne({ _id: new ObjectId(_id) }); // Delete the document
+    const result = await collection.deleteOne({
+      _id: new ObjectId(_id),
+      userId: req.session.userId
+    });
 
     if (result.deletedCount === 1) {
-      res.status(200).send('Activity successfully deleted'); // Send success response
+      res.status(200).send('Activity successfully deleted');
     } else {
-      res.status(404).send('No matching record found'); // Send not found response
+      res.status(404).send('No matching record found');
     }
   } catch (error) {
-    console.error('Error deleting activity:', error); // Log errors
-    res.status(500).send('Error deleting activity'); // Send a 500 error response
+    console.error('Error deleting activity:', error);
+    res.status(500).send('Error deleting activity');
   }
 });
 
-// POST endpoint to add a new record to the 'strava' collection
-app.post('/api/strava', async (req, res) => {
-  try {
-    const database = client.db('Course_Project'); // Access the database
-    const collection = database.collection('strava'); // Access the 'strava' collection
-
-    const newActivity = req.body; // Get the new activity data from the request body
-    const result = await collection.insertOne(newActivity); // Insert the new document
-
-    if (result.acknowledged) {
-      res.status(201).json({ message: 'Activity added successfully', id: result.insertedId }); // Send success response with the new document ID
-    } else {
-      res.status(400).send('Failed to add activity'); // Send failure response
+app.post('/api/strava', requireAuth, async (req, res) => {
+    try {
+        const database = client.db('Course_Project');
+        const collection = database.collection('strava');
+        const newActivity = { 
+            ...req.body, 
+            userId: req.session.userId.toString(),
+            createdAt: new Date()
+        };
+        const result = await collection.insertOne(newActivity);
+        
+        if (result.acknowledged) {
+            res.status(201).json({ message: 'Activity added successfully', id: result.insertedId });
+        } else {
+            res.status(400).send('Failed to add activity');
+        }
+    } catch (error) {
+        console.error('Error adding activity:', error);
+        res.status(500).send('Error adding activity');
     }
-  } catch (error) {
-    console.error('Error adding activity:', error); // Log errors
-    res.status(500).send('Error adding activity'); // Send a 500 error response
-  }
 });
 
-// GET endpoint to serve the main HTML file
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', '..', 'index.html')); // Send the index.html file as a response
+  res.sendFile(path.join(__dirname, '..', '..', 'index.html'));
 });
 
-// Start the server and listen on the specified port
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`); // Log the server URL
+  console.log(`Server running at http://localhost:${PORT}`);
 });
