@@ -33,11 +33,46 @@ git clone https://github.com/EHB-MCT/assignment-2-RachellevanUden.git
   `cd ../../src/backend`<br>
   `npm install`
 
+**Configure MongoDB**
+
+1. Create a MongoDB Atlas cluster or connect to an existing one.
+2. Update the connection string in `src/backend/db/mongo.js`: <br>
+   `const connectionString = 'your-mongodb-connection-string';`
+3. Ensure your database includes a collection named encounters.
+
 **Start the project (runs both frontend and backend simultaneously)**:<br>
 `cd ../..`<br>
 `npm run dev`
 
-This will run the frontend on `http://localhost:5174` and the backend on `http://localhost:3000`.
+This will run:
+
+- **Frontend** on `http://localhost:5174` <br>
+- **Backend** on `http://localhost:3000`
+
+## Using the Database
+
+**Adding Data** <br>
+You can manually add data to the MongoDB database:
+
+1. Use the MongoDB Compass GUI or a MongoDB shell.
+2. Insert documents into the `encounters` collection with the following schema:
+
+```json
+{
+	"name": "Character Name",
+	"encounterId": 1234,
+	"className": "Class Name",
+	"gearScore": 1600,
+	"dps": 50000
+}
+```
+
+**Accessing Data** <br>
+Data can be accessed via the `/api/encounters` endpoint:
+
+1. Use Postman or a browser to perform a GET request:
+   `GET http://localhost:3000/api/encounters`
+2. The response will include all encounter data in JSON format.
 
 ## Available Scripts
 
@@ -54,6 +89,7 @@ This will run the frontend on `http://localhost:5174` and the backend on `http:/
 - **Backend**:
   - Express (for the API)
   - Nodemon (for live reloading during development)
+  - Mongoose (for MongoDB interactions)
 
 ## Folder Structure
 
@@ -76,20 +112,20 @@ Here’s a breakdown of the main folders:
 
 ```json
 [
-  {
-    "name": "Behemoth, Cruel Storm Slayer",
-    "encounterId": 1056,
-    "className": "",
-    "gearScore": 0,
-    "dps": 0
-  },
-  {
-    "name": "Purefocus",
-    "encounterId": 1056,
-    "className": "Slayer",
-    "gearScore": 1680,
-    "dps": 127731184
-  }
+	{
+		"name": "Behemoth, Cruel Storm Slayer",
+		"encounterId": 1056,
+		"className": "",
+		"gearScore": 0,
+		"dps": 0
+	},
+	{
+		"name": "Purefocus",
+		"encounterId": 1056,
+		"className": "Slayer",
+		"gearScore": 1680,
+		"dps": 127731184
+	}
 ]
 ```
 
@@ -99,36 +135,40 @@ Here’s a breakdown of the main folders:
 **500 Internal Server Error:** There is a problem with the server or database.
 
 ### `/api/encounters (POST)`
+
 - **Method:** POST
 - **Description:** Adds new encounter data to the database.
 - **Request Body Format:** JSON
 - **Response:** Returns the saved encounter document.
 
 #### **Example Request Body:**
+
 ```json
 {
-  "name": "Breakerge",
-  "encounterId": 1234,
-  "className": "Breaker",
-  "gearScore": 1640,
-  "dps": 500000
+	"name": "Breakerge",
+	"encounterId": 1234,
+	"className": "Breaker",
+	"gearScore": 1640,
+	"dps": 500000
 }
 ```
 
 #### **Example Response:**
+
 ```json
 {
-  "_id": "1234567890abcdef",
-  "name": "Breakerge",
-  "encounterId": 1234,
-  "className": "Breaker",
-  "gearScore": 1640,
-  "dps": 500000,
+	"_id": "1234567890abcdef",
+	"name": "Breakerge",
+	"encounterId": 1234,
+	"className": "Breaker",
+	"gearScore": 1640,
+	"dps": 500000
 }
 ```
 
-#### **Data Migration (Removed)**
-Previously, the project used a local SQLite database (`encounters.db`). Data was migrated to MongoDB for improved scalability and accessibility. <br>The `migrateData.js` script was used for this one-time migration and has been removed to clean up the project. 
+#### **Data Migration (SQLite to MongoDB)**
+
+Previously, this project used a local SQLite database (`encounters.db`). A one-time migration was performed to transfer data to MongoDB using a custom script (`migrateData.js`). This script has been removed as it is no longer necessary.
 
 ## Gitignore
 
