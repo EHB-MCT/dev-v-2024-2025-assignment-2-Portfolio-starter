@@ -145,16 +145,18 @@ button:hover {
 /* New Activity Section
 -------------------------------------------------- */
 .new-activity {
-    position: absolute;
-    bottom: 50%;
-    left: 49%;
+    position: relative;
+    bottom: 70%;
+    left: 80%;
     transform: translateX(-50%);
     color: #ac5313;
     font-size: 50px;
-    padding-top: 10px;
+    padding-top: 0px;
     font-family: sporter, sans-serif;
     cursor: pointer;
+    z-index: 100;
 }
+
 
 /* Form Styles
 -------------------------------------------------- */
