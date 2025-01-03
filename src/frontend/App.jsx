@@ -1,11 +1,13 @@
 import "./App.css";
+import React from "react";
+import Encounters from "./components/Encounters";
 
 function App() {
-  return (
-    <>
-      <h1>Hallo Test</h1>
-    </>
-  );
+	return (
+		<div className="App">
+			<Encounters />
+		</div>
+	);
 }
 
 export default App;
