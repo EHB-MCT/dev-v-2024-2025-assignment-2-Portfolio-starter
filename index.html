@@ -35,6 +35,7 @@
             <input type="text" id="image" placeholder="Afbeeldingsnaam" required>
             <button type="submit">Opslaan</button>
             <button type="button" onclick="toggleNewActivityForm(false)">Annuleren</button>
+
         </form>
     </div>
 
@@ -243,22 +244,120 @@
                 const div = document.createElement('div');
                 div.classList.add('data-item');
                 div.innerHTML = `
-                    <div class="data-item-header">
-                        <h2>${item.type}</h2>
-                        <span class="delete-btn" onclick="deleteData('${item._id}')">&times;</span>
-                    </div>
-                    <p><strong>Datum:</strong> ${item.datum}</p>
-                    <p><strong>Afstand:</strong> ${item.afstand_km} km</p>
-                    <p><strong>Tempo:</strong> ${item.tempo_min_per_km} min/km</p>
-                    <p><strong>Plaats:</strong> ${item.plaats}</p>
-                    <p><strong>Hoogteverschil:</strong> ${item.hoogteverschil_m} m</p>
-                    ${item.duur_min ? `<p><strong>Duur:</strong> ${item.duur_min} minuten</p>` : ''}
-                    ${item.duur_uur ? `<p><strong>Duur:</strong> ${item.duur_uur} uur</p>` : ''}
-                    <img src="/assets/images/${item.image}" alt="${item.type}" class="data-image" onclick="toggleModal(true, '${item.image}')">
-                `;
+            <div class="data-item-header">
+                <h2>${item.type}</h2>
+                <span class="delete-btn" onclick="deleteData('${item._id}')">&times;</span>
+            </div>
+            <p>
+                <strong>Datum:</strong> ${item.datum}
+                <input type="date" class="edit-input" style="display: none;" data-field="datum" data-id="${item._id}" value="${item.datum}">
+            </p>
+            <p>
+                <strong>Afstand:</strong> ${item.afstand_km} km
+                <input type="number" class="edit-input" style="display: none;" data-field="afstand_km" data-id="${item._id}" value="${item.afstand_km}" step="0.01">
+            </p>
+            <p>
+                <strong>Tempo:</strong> ${item.tempo_min_per_km} min/km
+                <input type="number" class="edit-input" style="display: none;" data-field="tempo_min_per_km" data-id="${item._id}" value="${item.tempo_min_per_km}" step="0.01">
+            </p>
+            <p>
+                <strong>Plaats:</strong> ${item.plaats}
+                <input type="text" class="edit-input" style="display: none;" data-field="plaats" data-id="${item._id}" value="${item.plaats}">
+            </p>
+            <p>
+                <strong>Hoogteverschil:</strong> ${item.hoogteverschil_m} m
+                <input type="number" class="edit-input" style="display: none;" data-field="hoogteverschil_m" data-id="${item._id}" value="${item.hoogteverschil_m}">
+            </p>
+            ${item.duur_min ? `
+            <p>
+                <strong>Duur:</strong> ${item.duur_min} minuten
+                <input type="number" class="edit-input" style="display: none;" data-field="duur_min" data-id="${item._id}" value="${item.duur_min}">
+            </p>` : ''}
+            ${item.duur_uur ? `
+            <p>
+                <strong>Duur:</strong> ${item.duur_uur} uur
+                <input type="number" class="edit-input" style="display: none;" data-field="duur_uur" data-id="${item._id}" value="${item.duur_uur}" step="0.01">
+            </p>` : ''}
+            <img src="/assets/images/${item.image}" alt="${item.type}" class="data-image" onclick="toggleModal(true, '${item.image}')">
+            <div class="edit-buttons">
+                <button onclick="editData(event)">Edit</button>
+                <button onclick="saveData(event)">Save</button>
+            </div>
+        `;
                 container.appendChild(div);
             });
         }
+
+        // Edit mode functions
+        function editData(event) {
+            const container = event.target.closest('.data-item');
+            const inputs = container.querySelectorAll('.edit-input');
+            const editButton = event.target;
+            const saveButton = container.querySelector('button[onclick="saveData(event)"]');
+            const cancelButton = container.querySelector('button[onclick="cancelEdit(event)"]');
+
+            inputs.forEach(input => {
+                input.style.display = 'inline-block';
+            });
+
+            editButton.style.display = 'none';
+            saveButton.style.display = 'inline-block';
+            cancelButton.style.display = 'inline-block';
+        }
+
+        function saveData(event) {
+            const container = event.target.closest('.data-item');
+            const inputs = container.querySelectorAll('.edit-input');
+            const updateData = {};
+
+            inputs.forEach(input => {
+                if (input.value.trim() !== '') {
+                    const field = input.getAttribute('data-field');
+                    const value = input.value;
+                    updateData[field] = value;
+                }
+            });
+
+            // Get the ID from the first input (they all have the same ID)
+            updateData._id = inputs[0].getAttribute('data-id');
+
+            fetch('/api/strava', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updateData),
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Data succesvol bijgewerkt!');
+                        fetchData(); // Reload the data
+                    } else {
+                        throw new Error('Failed to update data');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating data:', error);
+                    alert('Error bij het bijwerken van de data.');
+                });
+        }
+
+        function cancelEdit(event) {
+            const container = event.target.closest('.data-item');
+            const inputs = container.querySelectorAll('.edit-input');
+            const editButton = container.querySelector('button[onclick="editData(event)"]');
+            const saveButton = container.querySelector('button[onclick="saveData(event)"]');
+            const cancelButton = event.target;
+
+            inputs.forEach(input => {
+                input.style.display = 'none';
+            });
+
+            editButton.style.display = 'inline-block';
+            saveButton.style.display = 'none';
+            cancelButton.style.display = 'none';
+        }
+
 
         // Delete an activity by ID
         async function deleteData(id) {
