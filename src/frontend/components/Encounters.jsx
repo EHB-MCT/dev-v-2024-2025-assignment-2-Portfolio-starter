@@ -20,21 +20,23 @@ const Encounters = () => {
 			<table>
 				<thead>
 					<tr>
-						<th>Name</th>
 						<th>Encounter ID</th>
+						<th>Name</th>
 						<th>Class Name</th>
 						<th>Gear Score</th>
 						<th>DPS</th>
+						<th>Type</th>
 					</tr>
 				</thead>
 				<tbody>
 					{encounters.map((encounter, index) => (
 						<tr key={index}>
-							<td>{encounter.name}</td>
 							<td>{encounter.encounterId}</td>
+							<td>{encounter.name}</td>
 							<td>{encounter.className}</td>
 							<td>{encounter.gearScore}</td>
 							<td>{encounter.dps}</td>
+							<td>{encounter.type}</td>
 						</tr>
 					))}
 				</tbody>
