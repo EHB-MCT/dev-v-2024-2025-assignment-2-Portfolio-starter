@@ -1,0 +1,35 @@
+.encounter-group {
+	margin-bottom: 20px;
+}
+
+.encounter-table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 10px;
+}
+
+.encounter-table th,
+.encounter-table td {
+	border: 1px solid #ddd;
+	padding: 8px;
+	text-align: left;
+}
+
+.encounter-table th {
+	background-color: #f4f4f4;
+	font-weight: bold;
+}
+
+.encounter-table tr:nth-child(even) {
+	background-color: #f9f9f9;
+}
+
+.encounter-table tr:hover {
+	background-color: #f1f1f1;
+}
+
+.encounter-group h2 {
+	background-color: #e8e8e8;
+	padding: 10px;
+	border-radius: 5px;
+}
