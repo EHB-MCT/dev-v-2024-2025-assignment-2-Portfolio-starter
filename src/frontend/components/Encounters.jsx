@@ -4,11 +4,13 @@ import { classColors } from "../utils/classColors";
 
 const Encounters = () => {
 	const [groupedEncounters, setGroupedEncounters] = useState({});
+	const [searchQuery, setSearchQuery] = useState(""); // State voor zoekbalk
+	const [classes, setClasses] = useState([]); // Unieke classes
+	const [selectedClass, setSelectedClass] = useState(""); // Geselecteerde class
 
 	useEffect(() => {
 		const fetchData = async () => {
 			const data = await getEncounters();
-			console.log("Fetched data:", data);
 
 			// Group encounters by encounterId
 			const grouped = data.reduce((acc, curr) => {
@@ -20,7 +22,13 @@ const Encounters = () => {
 				return acc;
 			}, {});
 
+			// Collect unique classes
+			const uniqueClasses = Array.from(
+				new Set(data.map((encounter) => encounter.className).filter(Boolean))
+			);
+
 			setGroupedEncounters(grouped);
+			setClasses(uniqueClasses); // Set unique class
 		};
 
 		fetchData();
@@ -52,87 +60,141 @@ const Encounters = () => {
 		return classColors[className]?.color || "#000"; // Default color black
 	};
 
+	// Apply filtering based on searchQuery and selectedClass
+	const filterEncounters = () => {
+		if (!searchQuery.trim() && !selectedClass) return groupedEncounters;
+
+		return Object.keys(groupedEncounters).reduce((acc, encounterId) => {
+			const { data } = groupedEncounters[encounterId];
+			const matchesQuery =
+				!searchQuery.trim() ||
+				data.some((encounter) =>
+					encounter.name.toLowerCase().includes(searchQuery.toLowerCase())
+				);
+
+			const matchesClass =
+				!selectedClass ||
+				data.some((encounter) => encounter.className === selectedClass);
+
+			if (matchesQuery && matchesClass) {
+				acc[encounterId] = groupedEncounters[encounterId];
+			}
+
+			return acc;
+		}, {});
+	};
+
+	const filteredEncounters = filterEncounters();
+
 	return (
 		<div>
-			<h1>Encounter Data</h1>
-			{Object.keys(groupedEncounters).length === 0 ? (
-				<p>Loading encounters...</p>
-			) : (
-				Object.keys(groupedEncounters).map((encounterId) => {
-					const encountersData = groupedEncounters[encounterId];
-					const { data: encounters, totalDPS } = encountersData; // Destructure data and totalDPS
-					const bossName = getBossName(encounters);
+			<h1 className="page-title">
+				Lost Ark <br /> DPS Encounter Data
+			</h1>
+			<div className="filters">
+				{/* Search bar */}
+				<input
+					type="text"
+					placeholder="Search for a character name, boss or ally..."
+					value={searchQuery}
+					onChange={(e) => setSearchQuery(e.target.value)}
+					className="search-bar"
+				/>
+				<select
+					value={selectedClass}
+					onChange={(e) => setSelectedClass(e.target.value)}
+					className="class-filter"
+				>
+					<option value="">All Classes</option>
+					{classes.map((className, index) => (
+						<option key={index} value={className}>
+							{className}
+						</option>
+					))}
+				</select>
+			</div>
 
-					// Filter out boss from the table and sort by DPS
-					const filteredEncounters = encounters
-						.filter((encounter) => encounter.type !== "boss")
-						.sort((a, b) => b.dps - a.dps);
+			{/* Encounters */}
+			<div className="encounter-container">
+				{Object.keys(filteredEncounters).length === 0 ? (
+					<p>Loading encounters...</p>
+				) : (
+					Object.keys(filteredEncounters).map((encounterId) => {
+						const encountersData = filteredEncounters[encounterId];
+						const { data: encounters, totalDPS } = encountersData; // Destructure data and totalDPS
+						const bossName = getBossName(encounters);
 
-					return (
-						<div key={encounterId} className="encounter-group">
-							<h2>
-								Encounter #{encounterId} - {bossName}
-							</h2>
-							<table className="encounter-table">
-								<thead>
-									<tr>
-										<th></th>
-										<th>Gear Score</th>
-										<th>Name</th>
-										<th>Class</th>
-										<th>DPS</th>
-										<th>DPS %</th>
-									</tr>
-								</thead>
-								<tbody>
-									{filteredEncounters.map((encounter, index) => {
-										const damagePercentage =
-											(encounter.dps /
-												groupedEncounters[encounterId].totalDPS) *
-											100;
-										const classColor = getClassColor(encounter.className);
+						// Filter out boss from the table and sort by DPS
+						const sortedEncounters = encounters
+							.filter((encounter) => encounter.type !== "boss")
+							.sort((a, b) => b.dps - a.dps);
 
-										return (
-											<tr
-												key={index}
-												className="encounter-row"
-												style={{
-													backgroundColor: `${classColor}33`,
-												}}
-											>
-												{/* DPS Bar */}
-												<div
-													className="dps-bar"
+						return (
+							<div key={encounterId} className="encounter-group">
+								<h2 className="Encounter">
+									Encounter #{encounterId} - {bossName}
+								</h2>
+								<table className="encounter-table">
+									<thead>
+										<tr>
+											<th></th>
+											<th>Gear Score</th>
+											<th>Name</th>
+											<th>Class</th>
+											<th>DPS</th>
+											<th>DPS %</th>
+										</tr>
+									</thead>
+									<tbody>
+										{sortedEncounters.map((encounter, index) => {
+											const damagePercentage =
+												(encounter.dps /
+													groupedEncounters[encounterId].totalDPS) *
+												100;
+											const classColor = getClassColor(encounter.className);
+
+											return (
+												<tr
+													key={index}
+													className="encounter-row"
 													style={{
-														width: `${damagePercentage}%`, // Adjust width by DPS %
-														backgroundColor: `${classColor}99`,
+														backgroundColor: `${classColor}33`,
 													}}
-												/>
-												{/* Row Content */}
-												<td className="encounter-row-content">
-													{formatGearScore(encounter.gearScore)}
-												</td>
-												<td className="encounter-row-content">
-													{encounter.name}
-												</td>
-												<td className="encounter-row-content">
-													{encounter.className || "N/A"}
-												</td>
-												<td className="encounter-row-content">
-													{encounter.dps.toLocaleString()}
-												</td>
-												<td className="encounter-row-content">
-													{damagePercentage.toFixed(2).replace(".", ",")}%
-												</td>
-											</tr>
-										);
-									})}
-								</tbody>
-							</table>
-						</div>
-					);
-				})
-			)}
+												>
+													{/* DPS Bar */}
+													<div
+														className="dps-bar"
+														style={{
+															width: `${damagePercentage}%`, // Adjust width by DPS %
+															backgroundColor: `${classColor}99`,
+														}}
+													/>
+													{/* Row Content */}
+													<td className="encounter-row-content">
+														{formatGearScore(encounter.gearScore)}
+													</td>
+													<td className="encounter-row-content">
+														{encounter.name}
+													</td>
+													<td className="encounter-row-content">
+														{encounter.className || "N/A"}
+													</td>
+													<td className="encounter-row-content">
+														{encounter.dps.toLocaleString()}
+													</td>
+													<td className="encounter-row-content">
+														{damagePercentage.toFixed(2).replace(".", ",")}%
+													</td>
+												</tr>
+											);
+										})}
+									</tbody>
+								</table>
+							</div>
+						);
+					})
+				)}
+			</div>
 		</div>
 	);
 };
