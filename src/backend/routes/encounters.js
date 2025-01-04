@@ -1,5 +1,3 @@
-const { isBoss } = require("../utils/helpers");
-
 const express = require("express");
 const Encounter = require("../models/Encounter");
 const router = express.Router();

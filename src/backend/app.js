@@ -16,6 +16,4 @@ app.use(cors());
 app.use("/api", encountersRoute);
 
 // Start the server
-app.listen(port, () => {
-	console.log(`Backend is running at http://localhost:${port}`);
-});
+app.listen(port, () => {});
