@@ -179,6 +179,7 @@ module.exports = {
 				"Stella",
 				"Corrupting Light Leshar",
 				"Naber",
+				"Possessed Commander",
 			],
 		},
 	},

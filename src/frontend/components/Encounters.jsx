@@ -76,30 +76,57 @@ const Encounters = () => {
 							<table className="encounter-table">
 								<thead>
 									<tr>
+										<th></th>
 										<th>Gear Score</th>
 										<th>Name</th>
-										<th>Type</th>
-										<th>Class Name</th>
+										<th>Class</th>
 										<th>DPS</th>
 										<th>DPS %</th>
 									</tr>
 								</thead>
 								<tbody>
-									{filteredEncounters.map((encounter, index) => (
-										<tr
-											key={index}
-											style={{
-												color: getClassColor(encounter.className),
-											}}
-										>
-											<td>{formatGearScore(encounter.gearScore)}</td>
-											<td>{encounter.name}</td>
-											<td>{encounter.type}</td>
-											<td>{encounter.className || "N/A"}</td>
-											<td>{encounter.dps.toLocaleString()}</td>
-											<td>{calculateDPSPercentage(encounter.dps, totalDPS)}</td>
-										</tr>
-									))}
+									{filteredEncounters.map((encounter, index) => {
+										const damagePercentage =
+											(encounter.dps /
+												groupedEncounters[encounterId].totalDPS) *
+											100;
+										const classColor = getClassColor(encounter.className);
+
+										return (
+											<tr
+												key={index}
+												className="encounter-row"
+												style={{
+													backgroundColor: `${classColor}33`,
+												}}
+											>
+												{/* DPS Bar */}
+												<div
+													className="dps-bar"
+													style={{
+														width: `${damagePercentage}%`, // Adjust width by DPS %
+														backgroundColor: `${classColor}99`,
+													}}
+												/>
+												{/* Row Content */}
+												<td className="encounter-row-content">
+													{formatGearScore(encounter.gearScore)}
+												</td>
+												<td className="encounter-row-content">
+													{encounter.name}
+												</td>
+												<td className="encounter-row-content">
+													{encounter.className || "N/A"}
+												</td>
+												<td className="encounter-row-content">
+													{encounter.dps.toLocaleString()}
+												</td>
+												<td className="encounter-row-content">
+													{damagePercentage.toFixed(2).replace(".", ",")}%
+												</td>
+											</tr>
+										);
+									})}
 								</tbody>
 							</table>
 						</div>
