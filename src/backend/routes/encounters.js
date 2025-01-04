@@ -8,14 +8,7 @@ const router = express.Router();
 router.get("/encounters", async (req, res) => {
 	try {
 		const encounters = await Encounter.find(); // Fetch all encounters from MongoDB
-
-		// Boss filtering
-		const formattedEncounters = encounters.map((encounter) => ({
-			...encounter.toObject(),
-			isBoss: isBoss(encounter.name),
-		}));
-
-		res.json(formattedEncounters);
+		res.json(encounters);
 	} catch (err) {
 		console.error("Error fetching encounters:", err.message);
 		res.status(500).send("Error fetching encounter data.");
