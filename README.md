@@ -2,16 +2,23 @@
 
 ## Project Description
 
-This project involves gathering and visualizing data collected from Lost Ark's DPS (Damage Per Second) Meter. The goal is to provide insights into player performance, skill usage, and efficiency based on user data. This will help players analyze their gameplay and improve their performance.
+This project visualizes DPS (Damage Per Second) data collected from Lost Ark encounters. The application enables players to analyze their performance, evaluate skill usage, and optimize efficiency. By providing a user-friendly interface for exploring encounter data, this tool empowers players to improve their gameplay by reflecting on their contributions during battles and gaining insights into team and individuals.
+
+## Key Features
+
+- Visual representation of DPS data per encounter, with customizable filtering options.
+- Search functionality to find encounters by character, boss, or ally names.
+- Class filtering with a dropdown menu to focus on specific class performance.
+- A responsive, dark-mode-friendly user interface for improved usability.
+- Reset filter functionality to clear search inputs and restore default views.
 
 ## Project Structure
 
 - **`src/`** - Application code (components, services)
   - **`backend/`** - Backend logic, including API endpoints and database interactions.
   - **`frontend/`** - React-based frontend for displaying visualizations.
-- **`public/`** - Static files such as images, icons, and the HTML entry point (`index.html`).
+- **`public/`** - Static files such as images.
 - **`docs/`** - Documentation including progress reports, technical decisions, and design notes.
-- **`config/`** - Configuration files such as ESLint, Vite, etc.
 
 ## Getting Started
 
@@ -38,7 +45,7 @@ git clone https://github.com/EHB-MCT/assignment-2-RachellevanUden.git
 1. Create a MongoDB Atlas cluster or connect to an existing one.
 2. Update the connection string in `src/backend/db/mongo.js`: <br>
    `const connectionString = 'your-mongodb-connection-string';`
-3. Ensure your database includes a collection named encounters.
+3. Ensure your database includes a collection named `encounters`.
 
 **Start the project (runs both frontend and backend simultaneously)**:<br>
 `cd ../..`<br>
@@ -180,7 +187,12 @@ Here is an overview of the ignored files:<br>
 **`dist/`**: Build files generated during the development process.<br>
 IDE-specific files: **`.vscode/`**, **`.idea/`**, etc.
 
-## Future Features
+## Screenshots
 
-- **Advanced filtering and sorting options for encounter data.**
-- **Interactive data visualizations to analyze performance.**
+#### Dashboard View
+
+![Dashboard Example](public/images/example-dashboard.png)
+
+#### Search and Filter
+
+![Search and Filter Example](public/images/example-filters.png)

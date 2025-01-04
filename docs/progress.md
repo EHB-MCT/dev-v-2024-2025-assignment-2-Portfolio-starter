@@ -69,17 +69,58 @@ Installed and configured the necessary tools, such as:
 
 ### **Frontend Development**
 
-1. **Display Encounter Data** <br>
-   Developed a React-based frontend to display encounter data in a table. This table included details like name, type, class, gear score, and DPS.
+1. **Data Visualization** <br>
+   Developed a React-based frontend to display encounter data in a table. This table included details like gear score, name, class, DPS and DPS percentage.
 
-2. **Adding Class Colors** <br>
-   Integrated class-specific colors to enhance visual clarity and align with the design of the original app. For example, `Berserker` is red, and `Paladin` is orange.
+2. **Class Colors** <br>
 
-3. **Group Encounters** <br>
-   Grouped data by encounter ID, displaying the boss name at the top of each group. This approach made it easier to distinguish between encounters.
+- Integrated class-specific colors to enhance visual clarity.
+- Example, `Berserker` is red, and `Paladin` is orange.
 
-4. **DPS Sorting** <br>
-   Added functionality to sort characters and allies within each encounter by DPS, showing the highest DPS at the top. This ensures users can quickly see who was top dps in the encounter.
+3. **Grouping and Sorting** <br>
 
-5. **Dark Mode** <br>
-   Started working on dark mode for better usability, reducing eye strain, and providing a modern look.
+- Grouped data by encounter ID, displaying the boss name at the top of each group. This approach made it easier to distinguish between encounters.<br>
+- Sorted characters and allies within each encounter by DPS in descending order, highlighting top performers.
+
+4. **Dark Mode** <br>
+   Developed a dark mode feature for better usability and aesthetics, particularly for users viewing the data for extended periods. I'm not the biggest fan of the white flashbangs.
+
+5. **Filtering and Search Functionality** <br>
+
+- Added a search bar to filter data by character name, boss, or ally.
+- Made a class filter dropdown to filter encounters by specific classes.
+- Included a reset filters button to clear both search and filter selections.
+
+6. **Responsive Layout** <br>
+
+- Designed the UI to display encounters in rows of 3 or 4 cards, depending on screen size.
+- Ensured encounters were displayed under the search and filter section for consistency.
+
+---
+
+### Final Adjustments
+
+1. **Refinements**
+
+- Fixed minor CSS inconsistencies to ensure proper alignment and spacing of table columns and encounter groups.
+- Adjusted the layout to dynamically size the encounter group cards to fit content.
+
+2. **Documentation**
+
+- Updated the README with:
+  - Detailed setup instructions.
+  - API endpoint documentation.
+  - Examples for GET and POST requests.
+- Documented project structure and key decisions in this progress file.
+
+3. **Testing**
+
+- Manually tested all functionalities, including:
+  - API routes.
+  - Search and filter combinations.
+  - Responsiveness
+
+4. **Code Cleanup**
+
+- Removed unused folders (config, services, etc.) to simplify the project structure.
+- Finalized comments and removed console.logs.
