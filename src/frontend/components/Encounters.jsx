@@ -86,16 +86,21 @@ const Encounters = () => {
 
 	const filteredEncounters = filterEncounters();
 
+	//Reset filter function
+	const resetFilters = () => {
+		setSearchQuery(""); // Clear the search bar
+		setSelectedClass(""); // Reset the dropdown menu
+	};
+
 	return (
 		<div>
 			<h1 className="page-title">
 				Lost Ark <br /> DPS Encounter Data
 			</h1>
 			<div className="filters">
-				{/* Search bar */}
 				<input
 					type="text"
-					placeholder="Search for a character name, boss or ally..."
+					placeholder="Search for a character name, boss, or ally..."
 					value={searchQuery}
 					onChange={(e) => setSearchQuery(e.target.value)}
 					className="search-bar"
@@ -112,6 +117,9 @@ const Encounters = () => {
 						</option>
 					))}
 				</select>
+				<button onClick={() => resetFilters()} className="reset-button">
+					Reset Filters
+				</button>
 			</div>
 
 			{/* Encounters */}

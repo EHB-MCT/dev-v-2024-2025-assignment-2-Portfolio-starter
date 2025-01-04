@@ -39,6 +39,21 @@ body {
 	min-width: 200px;
 }
 
+.reset-button {
+	padding: 10px 15px;
+	background-color: #d9534f;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.reset-button:hover {
+	background-color: #c9302c;
+}
+
 .Encounter {
 	margin: 0 0 10px;
 }
