@@ -90,6 +90,8 @@ Fetches the most common store for a specific series.
 - https://tech.timonwa.com/blog/styling-progress-bar
 - https://css-tricks.com/snippets/css/a-guide-to-flexbox/
 - https://moderncss.dev/pure-css-custom-checkbox-style/
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
+
 
 
 
