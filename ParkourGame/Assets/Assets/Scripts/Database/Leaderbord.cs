@@ -45,7 +45,6 @@ public class LeaderboardScript : MonoBehaviour
 
     private void DisplayLeaderboard(DataSnapshot snapshot)
     {
-        // Clear any existing entries
         foreach (Transform child in leaderboardContent)
         {
             Destroy(child.gameObject);
