@@ -1,233 +1,153 @@
 const express = require('express');
 const cors = require('cors');
-const {
-    MongoClient,
-} = require('mongodb');
-
+const { MongoClient } = require('mongodb');
 require('dotenv').config();
 
 const app = express();
-const port = process.env.port || 3000;
+const port = process.env.PORT || 3000;
 
-const client = new MongoClient("mongodb+srv://barrybbeeebenson:2025Bitch@cluster0.eocdgpz.mongodb.net/?retryWrites=true&w=majority");
+const mongoUri = process.env.MONGO_URI; // MongoDB connection string from environment variables
+const client = new MongoClient(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true });
+let db;
 
 app.use(cors());
-app.use(express.json())
+app.use(express.json());
 
-/*Get all smiskis*/
+// Connect to MongoDB and initialize the db object
+async function connectToDB() {
+    try {
+        if (!db) {
+            await client.connect();
+            db = client.db('JustLilGuys');
+            console.log("Connected to MongoDB");
+        }
+    } catch (error) {
+        console.error('Error connecting to MongoDB:', error);
+    }
+}
+
+// Reusable function to get the Smiskis collection
+function getSmiskisCollection() {
+    return db.collection('Smiskis');
+}
+
+// Get all smiskis
 app.get('/api/data', async (req, res) => {
     try {
-        await client.connect();
-
-        const database = client.db('JustLilGuys');
-        const collection = database.collection('Smiskis');
-
+        await connectToDB();
+        const collection = getSmiskisCollection();
         const data = await collection.find({}).toArray();
-
         res.json(data);
-
     } catch (error) {
         console.error('Error fetching data:', error);
-        res.status(500).json({
-            error: 'Internal Server Error'
-        });
-    } finally {
-        await client.close();
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 });
 
-/*Get a specific series*/
+// Get a specific series
 app.get('/api/:series', async (req, res) => {
     try {
-        await client.connect();
-
-        const database = client.db('JustLilGuys');
-        const collection = database.collection('Smiskis');
-
+        await connectToDB();
+        const collection = getSmiskisCollection();
         const seriesName = req.params.series;
 
-        const series = await collection.find({
-            series: seriesName
-        }).toArray();
+        const series = await collection.find({ series: seriesName }).toArray();
 
-        if (!series) {
-            res.status(404).json({
-                error: 'series not found'
-            });
-            return;
+        if (series.length === 0) {
+            return res.status(404).json({ error: 'Series not found' });
         }
 
         res.json(series);
     } catch (error) {
         console.error('Error fetching series:', error);
-        res.status(500).json({
-            error: 'Internal Server Error'
-        });
-    } finally {
-        await client.close();
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 });
 
-
-/* Get all series names */
-app.get('/api/series', async (req, res) => {
-    try {
-        await client.connect();
-
-        const database = client.db('JustLilGuys');
-        const collection = database.collection('Smiskis');
-
-
-        // Use distinct to get all unique series names
-        const seriesNames = await collection.distinct('name');
-
-        const collections = await database.listCollections().toArray();
-        console.log(collections);
-
-        res.json(seriesNames);
-    } catch (error) {
-        console.error('Error fetching series names:', error);
-        res.status(500).json({
-            error: 'Internal Server Error'
-        });
-    } finally {
-        await client.close();
-    }
-});
-
-
-
-
-/* Switch the inCollection boolean using the name */
+// Toggle inCollection boolean
 app.patch('/api/toggleInCollection/:name', async (req, res) => {
     try {
-        await client.connect();
-
-        const database = client.db('JustLilGuys');
-        const collection = database.collection('Smiskis');
-
+        await connectToDB();
+        const collection = getSmiskisCollection();
         const smiskiName = req.params.name;
-        
 
         const result = await collection.findOneAndUpdate(
             { name: smiskiName },
-            [{ $set: { inCollection: { $not: "$inCollection" } } }], 
-            { returnDocument: 'after' } 
+            [{ $set: { inCollection: { $not: "$inCollection" } } }],
+            { returnDocument: 'after' }
         );
 
         if (!result.value) {
-            res.status(404).json({ error: 'Smiski not found' });
-            return;
+            return res.status(404).json({ error: 'Smiski not found' });
         }
 
         res.json(result.value);
     } catch (error) {
         console.error('Error toggling inCollection:', error);
         res.status(500).json({ error: 'Internal Server Error' });
-    } finally {
-        await client.close();
     }
 });
 
-
-/* Get the collection completion percentage for a specific series */
+// Get collection completion percentage
 app.get('/api/collectionCompletion/:series', async (req, res) => {
     const seriesName = decodeURIComponent(req.params.series);
 
     try {
-        await client.connect();
-        const database = client.db('JustLilGuys');
-        const collection = database.collection('Smiskis');
+        await connectToDB();
+        const collection = getSmiskisCollection();
 
-        // Debugging logs
-        console.log("Requested series:", seriesName);
-
-        // Find all Smiskis in the series
         const totalSmiskis = await collection.countDocuments({ series: seriesName });
         const smiskisInCollection = await collection.countDocuments({
             series: seriesName,
             inCollection: true
         });
 
-        // Log retrieved counts
-        console.log(`Total Smiskis for ${seriesName}:`, totalSmiskis);
-        console.log(`Smiskis in collection for ${seriesName}:`, smiskisInCollection);
+        const completionPercentage = totalSmiskis ? (smiskisInCollection / totalSmiskis) * 100 : 0;
 
-        // Calculate the percentage
-        const completionPercentage = totalSmiskis
-            ? (smiskisInCollection / totalSmiskis) * 100
-            : 0;
-
-        console.log("Completion Percentage:", completionPercentage); // Log to confirm
-
-        // Respond with the percentage
         res.json({ completionPercentage });
     } catch (error) {
         console.error('Error fetching collection completion:', error);
         res.status(500).json({ error: 'Internal Server Error' });
-    } finally {
-        await client.close();
     }
 });
 
-
-
-
-/* storing the selected store*/
+// Store user's selected store for a series
 app.post('/api/storeChoice', async (req, res) => {
     const { series, store } = req.body;
 
     if (!series || !store) {
-        res.status(400).json({ error: 'Series and store are required.' });
-        return;
+        return res.status(400).json({ error: 'Series and store are required.' });
     }
 
     try {
-        await client.connect();
-        const database = client.db('JustLilGuys');
-        const collection = database.collection('StoreChoices');
-
-       
-        await collection.insertOne({ series, store });
-
+        await connectToDB();
+        const storeCollection = db.collection('StoreChoices');
+        await storeCollection.insertOne({ series, store });
         res.status(200).json({ message: 'Store choice recorded successfully.' });
     } catch (error) {
         console.error('Error recording store choice:', error);
         res.status(500).json({ error: 'Internal Server Error' });
-    } finally {
-        await client.close();
     }
 });
 
-
-
-/* Get the most common store for a series */
+// Get most common store for a series
 app.get('/api/mostCommonStore/:series', async (req, res) => {
     const seriesName = req.params.series;
 
     try {
-        await client.connect();
-        const database = client.db('JustLilGuys');
-        const collection = database.collection('StoreChoices');
-
-        // Find all store choices for the given series
+        await connectToDB();
+        const collection = db.collection('StoreChoices');
         const storeChoices = await collection.find({ series: seriesName }).toArray();
 
         if (storeChoices.length === 0) {
-            res.json({ mostCommonStore: 'Unknown' });
-            return;
+            return res.json({ mostCommonStore: 'Unknown' });
         }
 
-        // Count the occurrences of each store
         const storeCount = storeChoices.reduce((acc, choice) => {
-            const store = choice.store;
-            if (store) {
-                acc[store] = (acc[store] || 0) + 1;
-            }
+            acc[choice.store] = (acc[choice.store] || 0) + 1;
             return acc;
         }, {});
 
-        // Determine the most common store
         const mostCommonStore = Object.entries(storeCount).reduce(
             (maxStore, [store, count]) => (count > maxStore.count ? { store, count } : maxStore),
             { store: null, count: 0 }
@@ -237,16 +157,17 @@ app.get('/api/mostCommonStore/:series', async (req, res) => {
     } catch (error) {
         console.error('Error fetching most common store:', error);
         res.status(500).json({ error: 'Internal Server Error' });
-    } finally {
-        await client.close();
     }
 });
 
-
-
-
-app.listen(port, () => {
-    console.log(`Server is running on port  http://localhost:${port}`);
+// Handle server shutdown and MongoDB disconnection
+process.on('SIGINT', async () => {
+    console.log('Closing MongoDB connection...');
+    await client.close();
+    process.exit();
 });
 
-
+// Start the server
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+});

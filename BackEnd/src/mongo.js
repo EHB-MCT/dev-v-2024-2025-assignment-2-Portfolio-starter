@@ -2,7 +2,7 @@ const {
     MongoClient
 } = require("mongodb");
 
-// Replace the uri string with your connection string.
+
 const uri = "mongodb+srv://barrybbeeebenson:2025Bitch@cluster0.eocdgpz.mongodb.net/?retryWrites=true&w=majority";
 
 const client = new MongoClient(uri);
@@ -25,7 +25,7 @@ async function run() {
         const smiski = await smiskis.insertOne(query);
         console.log(smiski);
     } finally {
-        // Ensures that the client will close when you finish/error
+
         await client.close();
     }
 }
