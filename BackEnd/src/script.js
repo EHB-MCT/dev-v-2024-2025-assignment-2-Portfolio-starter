@@ -77,8 +77,9 @@ app.get('/api/series', async (req, res) => {
         const database = client.db('JustLilGuys');
         const collection = database.collection('Smiskis');
 
+
         // Use distinct to get all unique series names
-        const seriesNames = await collection.distinct('series');
+        const seriesNames = await collection.distinct('name');
 
         const collections = await database.listCollections().toArray();
         console.log(collections);
@@ -129,6 +130,49 @@ app.patch('/api/toggleInCollection/:name', async (req, res) => {
 });
 
 
+/* Get the collection completion percentage for a specific series */
+app.get('/api/collectionCompletion/:series', async (req, res) => {
+    const seriesName = decodeURIComponent(req.params.series);
+
+    try {
+        await client.connect();
+        const database = client.db('JustLilGuys');
+        const collection = database.collection('Smiskis');
+
+        // Debugging logs
+        console.log("Requested series:", seriesName);
+
+        // Find all Smiskis in the series
+        const totalSmiskis = await collection.countDocuments({ series: seriesName });
+        const smiskisInCollection = await collection.countDocuments({
+            series: seriesName,
+            inCollection: true
+        });
+
+        // Log retrieved counts
+        console.log(`Total Smiskis for ${seriesName}:`, totalSmiskis);
+        console.log(`Smiskis in collection for ${seriesName}:`, smiskisInCollection);
+
+        // Calculate the percentage
+        const completionPercentage = totalSmiskis
+            ? (smiskisInCollection / totalSmiskis) * 100
+            : 0;
+
+        console.log("Completion Percentage:", completionPercentage); // Log to confirm
+
+        // Respond with the percentage
+        res.json({ completionPercentage });
+    } catch (error) {
+        console.error('Error fetching collection completion:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    } finally {
+        await client.close();
+    }
+});
+
+
+
+
 /* storing the selected store*/
 app.post('/api/storeChoice', async (req, res) => {
     const { series, store } = req.body;
@@ -157,7 +201,46 @@ app.post('/api/storeChoice', async (req, res) => {
 
 
 
+/* Get the most common store for a series */
+app.get('/api/mostCommonStore/:series', async (req, res) => {
+    const seriesName = req.params.series;
 
+    try {
+        await client.connect();
+        const database = client.db('JustLilGuys');
+        const collection = database.collection('StoreChoices');
+
+        // Find all store choices for the given series
+        const storeChoices = await collection.find({ series: seriesName }).toArray();
+
+        if (storeChoices.length === 0) {
+            res.json({ mostCommonStore: 'Unknown' });
+            return;
+        }
+
+        // Count the occurrences of each store
+        const storeCount = storeChoices.reduce((acc, choice) => {
+            const store = choice.store;
+            if (store) {
+                acc[store] = (acc[store] || 0) + 1;
+            }
+            return acc;
+        }, {});
+
+        // Determine the most common store
+        const mostCommonStore = Object.entries(storeCount).reduce(
+            (maxStore, [store, count]) => (count > maxStore.count ? { store, count } : maxStore),
+            { store: null, count: 0 }
+        );
+
+        res.json({ mostCommonStore: mostCommonStore.store });
+    } catch (error) {
+        console.error('Error fetching most common store:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    } finally {
+        await client.close();
+    }
+});
 
 
 
