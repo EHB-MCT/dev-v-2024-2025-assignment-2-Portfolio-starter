@@ -14,8 +14,8 @@ sysinfo.txt
 *.pidb.meta
 
 ##Firebase
-*Firebase
-*ExternalDependencyManager
+ParkourGame/Assets/Firebase/Plugins/x86_64/FirebaseCppApp-12_5_0.bundle
+ParkourGame/Assets/Firebase/Plugins/x86_64/FirebaseCppApp-12_5_0.so
 
 ###
 # VS/MD solution and project files
