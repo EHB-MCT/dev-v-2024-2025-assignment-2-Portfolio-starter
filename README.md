@@ -16,15 +16,17 @@ This repository demonstrates the potential of integrating data-driven methodolog
 ---
 
 ## Features
-- **Data Aggregation**: 
-- **Player Choice Insights**: 
-- **Real-Time Visualisation**: 
+- **Data Aggregation**: Collects and stores player interaction data (e.g., time to complete levels) in a Firebase Realtime Database, allowing for aggregation and analysis of gameplay performance.
+- **Player Choice Insights**: Tracks and analyzes player behavior within levels, identifying choices that players make, such as paths chosen or areas where they spend the most time. This can be used to refine level design and gameplay balance.
+- **Real-Time Visualisation**: Implements real-time visual feedback within the Unity game, including displaying leaderboards based on time records and providing dynamic data visualization for performance comparisons (can be done by pressing Tab when project is loaded in).
 
 
 ---
 
 ## Technologies
-Database: Firebase
+- **Unity**: Game engine used to create the parkour-style game.
+- **Firebase**: A cloud database solution used to store player data (times, interactions) in real-time.
+- **TextMeshPro**: Used for advanced UI text rendering to display leaderboard entries and other player data on-screen.
 
 ---
 
@@ -42,9 +44,20 @@ Here's how to setup this project on your local device:
 ---
 
 ## License
-[MIT License](LICENSE).
+This project is licensed under the [MIT License](LICENSE.txt). See the LICENSE file for more details.
 
 ---
 
 ## Sources
-TBA
+
+- [Firebase Unity Setup](https://youtu.be/hAa5exkTsKI)
+
+### Naming Conventions
+- [Unity Naming Conventions](https://unity.com/how-to/naming-and-code-style-tips-c-scripting-unity) 
+- [Unity Style Guide](https://github.com/justinwasilenko/Unity-Style-Guide)
+
+### Materials
+- [Grid Prototype Materials](https://assetstore.unity.com/packages/2d/textures-materials/gridbox-prototype-materials-129127)
+
+### Code organisation
+- [Unity Code Organisation](https://unity.com/how-to/organizing-your-project)
