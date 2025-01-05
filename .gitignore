@@ -13,6 +13,10 @@ sysinfo.txt
 # Unity3D generated meta files
 *.pidb.meta
 
+##Firebase
+*Firebase
+*ExternalDependencyManager
+
 ###
 # VS/MD solution and project files
 ###

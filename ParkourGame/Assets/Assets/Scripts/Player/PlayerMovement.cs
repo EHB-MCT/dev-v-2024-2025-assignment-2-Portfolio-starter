@@ -86,25 +86,20 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovePlayer(Vector2 input, float speed, float deltaTime)
     {
-        // Get the camera's forward and right directions, but zero out the vertical component (Y)
         Vector3 forward = cameraTransform.forward;
-        forward.y = 0f; // Ignore the vertical direction (pitch)
-        forward.Normalize(); // Normalize to prevent faster movement diagonally
+        forward.y = 0f;
+        forward.Normalize();
 
         Vector3 right = cameraTransform.right;
-        right.y = 0f; // Ignore the vertical direction (roll)
-        right.Normalize(); // Normalize to prevent faster movement diagonally
+        right.y = 0f;
+        right.Normalize();
 
-        // Calculate the movement direction based on the input (forward and right)
         Vector3 direction = forward * input.y + right * input.x;
 
-        // Apply movement using velocity for direct control
         Vector3 targetVelocity = direction * speed;
 
-        // Apply velocity
         rb.velocity = new Vector3(targetVelocity.x, rb.velocity.y, targetVelocity.z);
 
-        // Apply drag only when grounded
         rb.drag = isGrounded ? groundDrag : 0;
     }
 
@@ -113,7 +108,7 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            currentState = PlayerState.InAir;  // Set to InAir after jump
+            currentState = PlayerState.InAir;
         }
     }
 }

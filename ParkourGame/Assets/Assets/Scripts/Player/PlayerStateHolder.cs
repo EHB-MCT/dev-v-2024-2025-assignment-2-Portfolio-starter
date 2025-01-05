@@ -20,19 +20,16 @@ public class PlayerStateHolder : MonoBehaviour
 
     private void HandleStateTransitions()
     {
-        bool isGrounded = groundChecker.GetGroundedStatus();  // Get grounded status from GroundChecker
+        bool isGrounded = groundChecker.GetGroundedStatus();
 
-        // Handle jumping state
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             playerStateMachine.currentState = PlayerState.Jumping;
         }
-        // Handle sprinting state
         else if (Input.GetKey(KeyCode.LeftShift) && isGrounded)
         {
             playerStateMachine.currentState = PlayerState.Sprinting;
         }
-        // Handle walking and in-air states
         else if (isGrounded)
         {
             playerStateMachine.currentState = PlayerState.Walking;
@@ -42,7 +39,6 @@ public class PlayerStateHolder : MonoBehaviour
             playerStateMachine.currentState = PlayerState.InAir;
         }
 
-        // Set the state in PlayerMovement based on currentState
         playerMovement.SetCurrentState(playerStateMachine.currentState);
     }
 }

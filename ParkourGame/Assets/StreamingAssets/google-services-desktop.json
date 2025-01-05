@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1094325560607",
+    "firebase_url": "https://parkourgame-38b35-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "parkourgame-38b35",
+    "storage_bucket": "parkourgame-38b35.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1094325560607:android:bb475b42eaa2f8c7acbc2a",
+        "android_client_info": {
+          "package_name": "com.DefaultCompany.ParkourGame"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGh_P4nqBkSWr6jOYX-GSIWl6fiiiwUCw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
